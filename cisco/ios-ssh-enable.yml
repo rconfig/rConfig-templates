@@ -6,7 +6,7 @@
     ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Cisco IOS - SSH"
+  name: "Cisco IOS - SSH - Enable"
   desc: "Cisco IOS SSH based connection with enable mode"
 connect:
   # connection timeout in seconds
