@@ -6,7 +6,7 @@
 
 main:
   name: "Cisco IOS - SSH"
-  desc: "Cisco IOS SSH based connection with enable mode"
+  desc: "Cisco IOS SSH based connection without enable mode"
 connect:
   # connection timeout in seconds
   timeout: 60
