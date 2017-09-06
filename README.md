@@ -8,6 +8,6 @@ File format should be as follows;
 All templates to be stored in individual vendor named directorys 
 
 File names are;
-vendorName-ModelNumber-ConnectionType-isEnableModeOrNot.yml
+*vendorName-ModelNumber-ConnectionType-isEnableModeOrNot.yml*
 i.e. 
 > dell-6248-telnet-enable.yml
