@@ -26,7 +26,13 @@ auth:
   enableCmd: "enable"
   # set enable mode password prompt. Must be in quotes
   enablePassPrmpt: "Password:"
+  # set HP 'press any key' status. Is 'on' or 'off'
+  hpAnyKeyStatus: off
+  # set HP 'press any key' prompt. 
+  hpAnyKeyPrmpt: "Press any key to continue"  
 config:
+	# Carriage return or NewLine for commands. i.e. MikroTek ssh requires \r. Options: 'r' or 'n' (may use rn in future if required)
+    linebreak: "n"
     # Disable config scrolling/ paging command. on/off
     paging: on
     # Disable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
