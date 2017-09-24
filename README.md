@@ -103,7 +103,7 @@ If the previous HP option is set to on, enter the case sensitive *any key* promp
 ### Options - config: 
 Section for configuration options to devices.
 
-Option specifies line break or carriage return for scripts when send commands to devices. Vast majority will be set to *"n"*. In some cases, such as Mikrotek, there CLIs require carriage returns to invoke a command *"r"*.
+Option specifies line break or carriage return for scripts when send commands to devices. Vast majority will be set to *"n"*. In some cases, such as Mikrotek, there CLIs require carriage returns to invoke a command *"r"*. [EXPERIMENTAL]
 ```sh
 	# Carriage return or NewLine for commands. i.e. MikroTek ssh requires \r. Options: 'r' or 'n' (may use rn in future if required)
     linebreak: "n"
