@@ -31,7 +31,7 @@ auth:
   # set HP 'press any key' prompt. 
   hpAnyKeyPrmpt: "Press any key to continue"  
 config:
-	# Carriage return or NewLine for commands. i.e. MikroTek ssh requires \r. Options: 'r' or 'n' (may use rn in future if required)
+    # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
     linebreak: "n"
     # Disable config scrolling/ paging command. on/off
     paging: on
