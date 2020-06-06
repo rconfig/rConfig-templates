@@ -1,5 +1,5 @@
 # rConfig connection template - DO NOT EDIT DIRECTLY
-## Notes: 
+## Notes:
     ## Remember to update permissions for the templates folder after uploading new template files.
     ## run 'chown -R apache /home/rconfig' on your rconfig server CLI
     ## all items below that contain free text should be contained within quotation marks " "
@@ -27,9 +27,9 @@ auth:
   # set enable mode password prompt. Must be in quotes
   enablePassPrmpt: "password:"
   # set HP 'press any key' status. Is 'on' or 'off'
-  hpAnyKeyStatus: on
-  # set HP 'press any key' prompt. 
-  hpAnyKeyPrmpt: "Press <SPACE> to continue or <Q> to quit:"  
+  hpAnyKeyStatus: off
+  # set HP 'press any key' prompt.
+  hpAnyKeyPrmpt: "Press <SPACE> to continue or <Q> to quit:"
 config:
     # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
     linebreak: "n"
