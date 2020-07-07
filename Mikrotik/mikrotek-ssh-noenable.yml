@@ -1,5 +1,5 @@
 # rConfig connection template - DO NOT EDIT DIRECTLY
-## Notes: 
+## Notes:
     ## Remember to update permissions for the templates folder after uploading new template files.
     ## run 'chown -R apache /home/rconfig' on your rconfig server CLI
     ## all items below that contain free text should be contained within quotation marks " "
@@ -12,11 +12,11 @@ main:
   desc: "MikroTek SSH nnoenable"
 connect:
   # connection timeout in seconds
-  timeout: 5
+  timeout: 10
   # type either telnet or ssh - must be in lowercase
   protocol: ssh
   # type port number for connection protocol choose from 1 - 65535
-  port: 36542
+  port: 22
 auth:
   # Set username name prompt. Must be in quotes. If left blank, username will not be sent.
   username: "Username:"
@@ -30,9 +30,11 @@ auth:
   enablePassPrmpt: "Password:"
   # set HP 'press any key' status. Is 'on' or 'off'
   hpAnyKeyStatus: off
-  # set HP 'press any key' prompt. 
-  hpAnyKeyPrmpt: "Press any key to continue"  
+  # set HP 'press any key' prompt.
+  hpAnyKeyPrmpt: "Press any key to continue"
 config:
+    # AnsiHost required in specical cases for HP and Mikrotik devices. Consult rConfig support team for more information
+    AnsiHost: "yes"
     # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
     linebreak: "r"
     # Disable config scrolling/ paging command. on/off
