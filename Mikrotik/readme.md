@@ -3,7 +3,7 @@
 
 Mikrotik devices require some special configurations to work with rConfig.
 
-1. The device username must have '+cte+ appended to it i.e. admin+cte. This is in all cases.
+1. The device username must have '+cte' appended to it i.e. ```admin+cte```. This is in all cases.
 2. The template, per example in this repo, must have the command per below in the Config section.
 
 ```
