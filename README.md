@@ -159,7 +159,7 @@ Set connection to use ANSI decoded for older VT100 term emulator based consoles 
     AnsiHost: "yes"
 ```
 
-Sets the number of columns and rows for the terminal window size. setWindowSize(int $columns = 80, int $rows = 24)
+Sets the number of columns and rows for the terminal window size. Defaults are setWindowSize(int $columns = 80, int $rows = 24)
 ```sh
     # Sets the number of columns and rows for the terminal window size
     setWindowSize: [240, 2048]
