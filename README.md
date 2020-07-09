@@ -149,7 +149,7 @@ Set the command to exit the interactive etlnet or SSH session fro the device. If
     # Set exit command. Must place command in quotations
     exitCmd: "quit"
 ```
-### config:
+### options:
 Extra options to be used when advised by rConfig support
 
 Some commands issued to a terminal may yield ANSI escape codes. eg. ^[[H. These provide the terminal with information on the formating of the characters and their positioning.
