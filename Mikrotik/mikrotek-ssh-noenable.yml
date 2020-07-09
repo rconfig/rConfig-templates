@@ -33,8 +33,6 @@ auth:
   # set HP 'press any key' prompt.
   hpAnyKeyPrmpt: "Press any key to continue"
 config:
-    # AnsiHost required in specical cases for HP and Mikrotik devices. Consult rConfig support team for more information
-    AnsiHost: "yes"
     # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
     linebreak: "r"
     # Disable config scrolling/ paging command. on/off
@@ -51,3 +49,8 @@ config:
     saveConfig: "wr mem"
     # Set exit command. Must place command in quotations
     exitCmd: "quit"
+options:
+    # AnsiHost required in specical cases for HP and Mikrotik devices. Consult rConfig support team for more information
+    AnsiHost: "yes"
+    # Sets the number of columns and rows for the terminal window size
+    setWindowSize: [240, 2048]
