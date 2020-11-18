@@ -10,10 +10,10 @@ Set connection to use ANSI decoded for older VT100 term emulator based consoles 
     AnsiHost: "yes"
 ```
 
-Sets the number of columns and rows for the terminal window size. setWindowSize(int $columns = 80, int $rows = 24)
+Sets the number of columns and rows for the terminal window size. setTerminalDimensions(int $columns = 260, int $rows = 1000)
 ```sh
     # Sets the number of columns and rows for the terminal window size
-    setWindowSize: [240, 2048]
+    setTerminalDimensions: [260, 1000]
 ```
 
 > panos-ssh-9x.yml - Fully tested and supported on rConfig v5
