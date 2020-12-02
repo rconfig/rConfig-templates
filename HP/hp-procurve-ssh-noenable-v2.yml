@@ -36,7 +36,7 @@ config:
     # Disable config scrolling/ paging command. on/off
     paging: on
     # Disable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
-    pagingCmd: "nno page"
+    pagingCmd: "no page"
     # re-enable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
     resetPagingCmd: "page"
     # Set pager prompt. Must place command in quotations
