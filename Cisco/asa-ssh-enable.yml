@@ -10,7 +10,7 @@ main:
   desc: "Cisco ASA SSH based connection with enable mode"
 connect:
   # connection timeout in seconds
-  timeout: 60
+  timeout: 30
   # type either telnet or ssh - must be in lowercase
   protocol: ssh
   # type port number for connection protocol choose from 1 - 65535
