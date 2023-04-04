@@ -50,9 +50,9 @@ config:
     # Set exit command. Must place command in quotations
     exitCmd: "quit"
 options:
-    # AnsiHost required in specical cases for HP and Mikrotik devices. Consult rConfig support team for more information - v5 Only
+    # AnsiHost required in specical cases for HP and Mikrotik devices. Consult rConfig support team for more information - v6 Only
     AnsiHost: "yes"
-    # Sets the number of columns and rows for the terminal window size - v5 Only
+    # Sets the number of columns and rows for the terminal window size - v6 Only
     setWindowSize: [240, 2048]
-    # Sets the terminal window size if this is an Ansi Session. 260, 1000 are good numbers, but may need to be asjuted on an as-needed basis - v5 Only
+    # Sets the terminal window size if this is an Ansi Session. 260, 1000 are good numbers, but may need to be adjusted on an as-needed basis - v6 Only
     setTerminalDimensions: [260, 1000]

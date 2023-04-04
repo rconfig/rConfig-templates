@@ -16,6 +16,6 @@ Sets the number of columns and rows for the terminal window size. setTerminalDim
     setTerminalDimensions: [260, 1000]
 ```
 
-> panos-ssh-9x.yml - Fully tested and supported on rConfig v5
+> panos-ssh-9x.yml - Fully tested and supported on rConfig v6
 
-Essentially, the best practice for V5 users is to use the attached SSH templates and enable your firewalls for SSH also. This protocol is fully tested and support on rConfig v5
+Essentially, the best practice for v6 users is to use the attached SSH templates and enable your firewalls for SSH also. This protocol is fully tested and support on rConfig v6

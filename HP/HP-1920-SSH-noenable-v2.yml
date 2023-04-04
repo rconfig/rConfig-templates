@@ -9,7 +9,7 @@
 
 main:
   name: "HP 1920 SSH noenable v2"
-  desc: "HP 1920 SSH noenable v2 for v5 users"
+  desc: "HP 1920 SSH noenable v2 for v6 users"
 connect:
   # connection timeout in seconds
   timeout: 5

@@ -7,7 +7,7 @@
 
 main:
   name: "HP Procurve SSH noenable v2"
-  desc: "HP Procurve SSH noenable v2 for v5 users"
+  desc: "HP Procurve SSH noenable v2 for v6 users"
 connect:
   # connection timeout in seconds
   timeout: 5
