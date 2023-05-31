@@ -3,6 +3,8 @@
 
 Some Palo Alto devices require some special configurations to work with rConfig.
 
+NOTE: If there are any issues downloading from Palo Altos using this template (such as partial configs) try removing the entire 'Options:' section from the template. 
+
 Some commands issued to a terminal may yield ANSI escape codes. eg. ^[[K. These provide the terminal with information on the formating of the characters and their positioning.
 Set connection to use ANSI decoded for older VT100 term emulator based consoles such as HP switches.
 ```sh
