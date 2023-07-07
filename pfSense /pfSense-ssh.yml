@@ -6,8 +6,8 @@
     ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "PFSense - SSH"
-  desc: "PFSense SSH based connection with option splash screen"
+  name: "pfSense - SSH"
+  desc: "pfSense SSH based connection with option splash screen"
 connect:
   # connection timeout in seconds
   timeout: 10
