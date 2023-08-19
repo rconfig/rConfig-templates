@@ -20,4 +20,13 @@ Sets the number of columns and rows for the terminal window size. setTerminalDim
 
 > panos-ssh-9x.yml - Fully tested and supported on rConfig v6
 
+For Palo Altos with very large configurations, you may need to increase the setTerminalDimensions 2nd value from 1000, to a value that represents the number of lines. We have seen increases up to 50000. If this value does need to be increased, you may need to increase the PHP server memory limit also to cope with the large downloads. 
+
+The default memory limit is 256M, which is usually more than sufficient for most needs. If you need to raise this limit, you must edit the /etc/php.ini file. 
+Find and update the following line. There are no hard recommendations, but if you have a server with 4GB of RAM, this can safely be increase to 2 (2048MB) or 3 GB (3072MB). If in doubt, contact rConfig support if you have a valid support agreement.
+
+```bash
+memory_limit = 256M
+```
+
 Essentially, the best practice for v6 users is to use the attached SSH templates and enable your firewalls for SSH also. This protocol is fully tested and support on rConfig v6
