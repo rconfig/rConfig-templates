@@ -29,4 +29,23 @@ Find and update the following line. There are no hard recommendations, but if yo
 memory_limit = 256M
 ```
 
-Essentially, the best practice for v6 users is to use the attached SSH templates and enable your firewalls for SSH also. This protocol is fully tested and support on rConfig v6
+Essentially, the best practice for v6 users is to use the attached SSH templates and enable your firewalls for SSH also. 
+
+Other PA implementations require a special login sequence so an edit to the connection template enableCmd parameter is required. instead of the follow sequence, 
+```bash
+  enable: off
+  # set enable mode command. Must be in quotes
+  enableCmd: "enable"
+```
+
+You may need to adjust this to
+```bash
+  # Set enable mode on or off
+  enable: on
+  # set enable mode command. Must be in quotes
+  enableCmd: "set cli config-output-format set\nset cli pager off"
+...
+    paging: off
+```
+
+These approaches are fully tested and supported on rConfig v6.
