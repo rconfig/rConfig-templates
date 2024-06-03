@@ -6,8 +6,8 @@
     ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Fortigate SSH no enable"
-  desc: "Fortigate SSH no enable"
+  name: "Fortigate SSH no enable: Non-Vdom"
+  desc: "Fortigate SSH no enable: Non-Vdom"
 connect:
   # connection timeout in seconds
   timeout: 5
