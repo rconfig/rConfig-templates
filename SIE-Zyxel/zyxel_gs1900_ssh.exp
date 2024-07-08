@@ -1,0 +1,66 @@
+#!/usr/bin/expect -f
+
+# Setup Params
+set timeout 3
+set ip [lindex $argv 0]  # Get the IP address from the first argument
+set user [lindex $argv 1]  # Get the username from the second argument
+set pwd [lindex $argv 2]  # Get the password from the third argument
+
+# Display connection details
+send_user "IP: $ip Connect as $user\n"
+
+# Start SSH session
+spawn ssh $user@$ip
+
+# Handle SSH key verification and password prompt
+expect {
+    timeout {
+        send_user "\nERR: Timeout Exceeded - Check Host\n"
+        exit 1
+    }
+    eof {
+        send_user "\nERR: SSH Connection To $ip Failed\n"
+        exit 1
+    }
+    # Already have a shell prompt
+    "*#" {}  
+    "*assword:" {
+        send -- "$pwd\r"
+    }
+}
+
+# Expect the shell prompt
+expect ".*#"
+
+# Send the 'show run' command
+send "show run\r"
+
+# Define the interval in seconds to wait before sending each space
+set interval 2
+
+# Loop to keep sending space characters until the command completes
+while {1} {
+    # Wait for the specified interval
+    after [expr $interval * 1000]
+    # puts "Sending space character..."
+    send -- " "
+
+    # Check if the command has completed
+    expect {
+        eof {
+            # puts "End of file detected, exiting..."
+            break
+        }
+        timeout {
+            # Continue sending spaces if the command is still running
+            # puts "Timeout occurred, continuing..."
+            continue
+        }
+        "*#" {
+            # puts "Shell prompt detected, sending exit command..."
+            send "exit\r"
+            expect eof
+            break
+        }
+    }
+}
