@@ -2,9 +2,12 @@
 
 # Setup Params
 set timeout 3
-set ip [lindex $argv 0]  # Get the IP address from the first argument
-set user [lindex $argv 1]  # Get the username from the second argument
-set pwd [lindex $argv 2]  # Get the password from the third argument
+# Get the IP address from the first argument
+set ip [lindex $argv 0]  
+ # Get the username from the second argument
+set user [lindex $argv 1] 
+ # Get the password from the third argument
+set pwd [lindex $argv 2] 
 
 # Display connection details
 send_user "IP: $ip Connect as $user\n"
