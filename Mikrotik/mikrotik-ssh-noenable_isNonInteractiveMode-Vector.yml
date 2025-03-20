@@ -8,8 +8,8 @@
 ## You must append '+ct' to the username for mikrotek devices i.e. username for the device will be 'admin+ct'
 
 main:
-  name: "MikroTek SSH nnoenable isNonInteractiveMode"
-  desc: "MikroTek SSH nnoenable isNonInteractiveMode"
+  name: "MikroTek SSH nnoenable isNonInteractiveMode - Vector"
+  desc: "MikroTek SSH nnoenable isNonInteractiveMode - Vector"
 connect:
   # connection timeout in seconds
   timeout: 10
