@@ -1,49 +1,33 @@
-# rConfig connection template - DO NOT EDIT DIRECTLY
-## Notes: 
-    ## Remember to update permissions for the templates folder after uploading new template files.
-    ## run 'chown -R apache /home/rconfig' on your rconfig server CLI
-    ## all items below that contain free text should be contained within quotation marks " "
-    ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Adva - SSH - no enable"
-  desc: "Adva - SSH - no enable"
+  name: "Adva - SSH - no enable"                    # Unique name for this Adva device template
+  desc: "Adva - SSH - no enable"                    # Description shown in the rConfig UI
+
 connect:
-  # connection timeout in seconds
-  timeout: 5
-  # type either telnet or ssh - must be in lowercase
-  protocol: ssh
-  # type port number for connection protocol choose from 1 - 65535
-  port: 22
+  timeout: 5                                        # Connection timeout (in seconds)
+  protocol: ssh                                     # Connection protocol: 'ssh' or 'telnet'
+  port: 22                                          # Port number (range: 1–65535)
+
 auth:
-  # Set username name prompt. Must be in quotes. If left blank, username will not be sent.
-  username: "Username:"
-  # Set password name prompt. Must be in quotes
-  password: "Password:"
-  # Set enable mode on or off
-  enable: off
-  # set enable mode command. Must be in quotes
-  enableCmd: "enable"
-  # set enable mode password prompt. Must be in quotes
-  enablePassPrmpt: "Password:"
-  # set HP 'press any key' status. Is 'on' or 'off'
-  hpAnyKeyStatus: off
-  # set HP 'press any key' prompt. 
-  hpAnyKeyPrmpt: "Press any key to continue"  
+  username: "Username:"                             # CLI prompt for username
+  password: "Password:"                             # CLI prompt for password
+  enable: off                                       # Enable mode required? Set to 'on' or 'off'
+  enableCmd: "enable"                               # Command to enter enable mode (not used here)
+  enablePassPrmpt: "Password:"                      # Prompt shown when enable password is requested
+  hpAnyKeyStatus: off                               # For HP-style 'press any key' prompts: 'on' or 'off'
+  hpAnyKeyPrmpt: "Press any key to continue"        # Prompt string if hpAnyKeyStatus is on
+
 config:
-    # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
-    linebreak: "n"
-    # Disable config scrolling/ paging command. on/off
-    paging: on
-    # Disable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
-    pagingCmd: "\n"
-    # re-enable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
-    resetPagingCmd: "\n"
-    # Set pager prompt. Must place command in quotations
-    pagerPrompt: ""
-    # Set pager prompt key-stroke. Must place command in quotations
-    pagerPromptCmd: " "
-    # Save configuration command. Leave blank, or set as required. Must be in quotes
-    saveConfig: "wr mem"
-    # Set exit command. Must place command in quotations
-    exitCmd: "quit"
+  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  paging: on                                        # Set to 'on' to disable CLI paging
+  pagingCmd: "\n"                                   # Command to disable paging (noop in this case)
+  resetPagingCmd: "\n"                              # Optional: Command to re-enable paging (noop here)
+  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
+  pagerPromptCmd: " "                               # DEPRECATED: This value is no longer used
+  saveConfig: "wr mem"                              # Command to save running config
+  exitCmd: "quit"                                   # Command to end session
