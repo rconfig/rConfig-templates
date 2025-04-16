@@ -1,50 +1,34 @@
-# rConfig connection template - DO NOT EDIT DIRECTLY
-## Notes:
-    ## Remember to update permissions for the templates folder after uploading new template files.
-    ## run 'chown -R apache /home/rconfig' on your rconfig server CLI
-    ## all items below that contain free text should be contained within quotation marks " "
-    ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
-#Credit: christophe.jaming@vdndata.com
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+## - Credit: christophe.jaming@vdndata.com
 
 main:
-  name: "Checkpoint Gaia"
+  name: "Checkpoint Gaia"                           # Template name for Checkpoint Gaia devices
   desc: "Checkpoint Gaia connection template"
+
 connect:
-  # connection timeout in seconds
-  timeout: 30
-  # type either telnet or ssh - must be in lowercase
-  protocol: ssh
-  # type port number for connection protocol choose from 1 - 65535
-  port: 22
+  timeout: 30                                       # Connection timeout (in seconds)
+  protocol: ssh                                     # Connection protocol: 'ssh' or 'telnet'
+  port: 22                                          # Port number (range: 1–65535)
+
 auth:
-  # Set username name prompt. Must be in quotes. If left blank, username will not be sent.
-  username: "login:"
-  # Set password name prompt. Must be in quotes
-  password: "password:"
-  # Set enable mode on or off
-  enable: off
-  # set enable mode command. Must be in quotes
-  enableCmd: "expert"
-  # set enable mode password prompt. Must be in quotes
-  enablePassPrmpt: "password:"
-  # set HP 'press any key' status. Is 'on' or 'off'
-  hpAnyKeyStatus: off
-  # set HP 'press any key' prompt.
-  hpAnyKeyPrmpt: "Press any key to continue"
+  username: "login:"                                # CLI prompt for username
+  password: "password:"                             # CLI prompt for password
+  enable: off                                       # Enable mode required? Set to 'on' or 'off'
+  enableCmd: "expert"                               # Command to enter expert (privileged) mode
+  enablePassPrmpt: "password:"                      # Prompt for expert mode password
+  hpAnyKeyStatus: off                               # HP-style 'press any key' handling
+  hpAnyKeyPrmpt: "Press any key to continue"        # Prompt for key press if applicable
+
 config:
-    # Experimental: Some vendors use different linebreak settings. Choose 'n' (default) or 'r'
-    linebreak: "n"
-    # Disable config scrolling/ paging command. on/off
-    paging: on
-    # Disable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
-    pagingCmd: "set clienv rows 0"
-    # re-enable config scrolling/ paging command. Leave blank, or set as required. Must place command in quotations
-    resetPagingCmd: "set clienv rows 48"
-    # Set pager prompt. Must place command in quotations
-    pagerPrompt: "-- More --"
-    # Set pager prompt key-stroke. Must place command in quotations
-    pagerPromptCmd: " "
-    # Save configuration command. Leave blank, or set as required. Must be in quotes
-    saveConfig: "save config"
-    # Set exit command. Must place command in quotations
-    exitCmd: "quit"
+  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  paging: on                                        # Disable CLI paging by setting this to 'on'
+  pagingCmd: "set clienv rows 0"                    # Command to disable paging
+  resetPagingCmd: "set clienv rows 48"              # Command to re-enable paging
+  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
+  pagerPromptCmd: " "                               # DEPRECATED: This value is no longer used
+  saveConfig: "save config"                         # Command to save configuration
+  exitCmd: "quit"                                   # Command to end session
