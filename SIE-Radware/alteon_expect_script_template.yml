@@ -1,15 +1,14 @@
-# rConfig connection template - DO NOT EDIT DIRECTLY
-## Notes:
-## Remember to update permissions for the templates folder after uploading new template files.
-## run 'chown -R apache /home/rconfig' on your rconfig server CLI
-## all items below that contain free text should be contained within quotation marks " "
-## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
-## See https://docs.rconfig.com/integrations/script-integration-engine/sie/ for more information
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/integrations/script-integration-engine/sie/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
   name: "alteon_test_script_template"
   desc: "This is an example alteon expect script"
+
 connect:
-  timeout: 30
-  idleTimeout: 30
-  protocol: script
+  timeout: 30                             # Connection timeout (in seconds)
+  idleTimeout: 30                         # Idle timeout (in seconds)
+  protocol: script                        # Protocol type (script for SIE)
