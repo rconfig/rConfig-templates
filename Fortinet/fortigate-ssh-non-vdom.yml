@@ -11,7 +11,7 @@ main:
   desc: "Fortigate SSH no enable: Non-Vdom"
 
 connect:
-  timeout: 5                              # Connection timeout (in seconds)
+  timeout: 5                              # Connection timeout (in seconds). Long configs 30k+ lines need higher timeout value on Fortigates.
   protocol: ssh                           # Protocol: ssh
   port: 22                                # Port number
 
