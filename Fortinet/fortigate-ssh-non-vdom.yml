@@ -3,6 +3,8 @@
 ## - All free text values must be wrapped in double quotes: " "
 ## - Documentation: https://docs.rconfig.com/devices/templates/
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+## Fortigate Prompts should not include a regexp wildcard (.*) between the hostname and the #. in the UI
+## Fortigate Use format: `hostname #` (no space or wildcard).
 
 main:
   name: "Fortigate SSH no enable: Non-Vdom"
