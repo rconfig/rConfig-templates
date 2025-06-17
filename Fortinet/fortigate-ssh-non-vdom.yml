@@ -5,6 +5,7 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 ## Fortigate Prompts should not include a regexp wildcard (.*) between the hostname and the #. in the UI
 ## Fortigate Use format: `hostname #` (no space or wildcard).
+## If prompt contains $ make sure to escape it in the UI with a `\` backslash i.e. prompt\$
 
 main:
   name: "Fortigate SSH no enable: Non-Vdom"
