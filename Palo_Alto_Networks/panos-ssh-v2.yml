@@ -1,0 +1,38 @@
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+
+main:
+  name: "Palo Alto - SSH - No Configure Mode"
+  desc: "Palo Alto Networks PAN-OS SSH based connection without configuration mode"
+
+connect:
+  timeout: 5                              # Connection timeout (in seconds)
+  protocol: ssh                           # Protocol: ssh
+  port: 22                                # Port number
+
+auth:
+  username: "login as:" # Username prompt
+  password: "Password:" # Password prompt
+  enable: on
+  enableCmd: "set cli scripting-mode on"
+  enablePassPrmpt: "Password:" # Enable password prompt (not used)
+  hpAnyKeyStatus: off # 'Press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue" # Custom 'press any key' prompt
+
+config:
+  linebreak: "n" # Linebreak format (default: 'n')
+  paging: off
+  pagingCmd: "set cli scripting-mode on\nset cli pager off" # Disable paging command
+  resetPagingCmd: "set cli scripting-mode off\nset cli pager on" # Reset paging command
+  pagerPrompt: "" # DEPRECATED: This value is ignored
+  pagerPromptCmd: "" # DEPRECATED: This value is ignored
+  saveConfig: "commit" # Save configuration command
+  exitCmd: "quit" # Exit command
+
+options:
+  AnsiHost: "yes" # ANSI terminal emulation enabled
+  setWindowSize: [240, 2048] # Terminal window size (v6 only)
+  setTerminalDimensions: [260, 1000] # Terminal dimensions for ANSI sessions (v6 only)
