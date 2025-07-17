@@ -1,3 +1,8 @@
+# Cisco Cisco 1120 FTD firewalls
+You may use the standard Cisco IOS SSH Template for these devices, BUT when configuring the device within the rConfig UI, please use the following as a prompt for the device. '>'
+A single qupte, greater than and single quote. This will ensure you get a full backup.
+
+
 # Cisco WLC Controllers
 There are known problems with scripts and automation software connecting to Cisco WLC Controllers due to their implementation of SSH/ Telnet protocols in their software.
 
