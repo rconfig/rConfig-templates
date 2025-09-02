@@ -1,16 +1,31 @@
-Here’s an updated version of your `README.md` file, modernized to reflect the new standardized template format and documentation references:
+<a name="readme-top"></a>
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/rconfig/rconfig">
+    <img src="https://portal.rconfig.com/images/rconfig-logos/rConfig-logo-and-icon/rconfig_logo_and_icon_with_strapline_gradient.png" alt="rConfig Logo" width="500"/>
+  </a>
 
----
+  <h3 align="center">rConfig - Templates</h3>
 
-# rConfig-templates
+  <!-- Shields.io badge -->
+  <p align="center">
+    <img src="https://img.shields.io/badge/vendors-+25-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+  </p>
 
-## Overview
-This repository stores community-submitted connection templates for use with [rConfig](https://www.rconfig.com), including templates for SSH, Telnet, and Script-based device integrations.
+  <p align="center">
+    This repository stores community-submitted connection templates for use with <a href="https://www.rconfig.com">rConfig</a>, including templates for SSH, Telnet, and Script-based device integrations.
+  </p>
+</div>
+<br>
+
+<br>
 
 ### 🔗 Docs & Contribution
 - 📚 Documentation: [Script Integration Engine (SIE)](https://docs.rconfig.com/integrations/script-integration-engine/sie/)
 - 🤝 Submit or browse templates: [rConfig-templates GitHub](https://github.com/rconfig/rConfig-templates)
 
+<br>
 
 ## File Structure & Naming Convention
 
