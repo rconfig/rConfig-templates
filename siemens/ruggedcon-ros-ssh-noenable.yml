@@ -1,0 +1,30 @@
+main:
+  name: "RUGGEDCOM (ROS) - SSH - No Enable"
+  desc: "RUGGEDCOM (ROS) SSH connection without enable mode"
+connect:
+  timeout: 10
+  protocol: ssh
+  port: 22
+auth:
+  username: "login:"
+  password: "Password:"
+  enable: off
+  enableCmd: "enable"
+  enablePassPrmpt: "Password:"
+  hpAnyKeyStatus: on
+  hpAnyKeyPrmpt: "Press 'Enter' to continue..."
+#\u0013
+config:
+  linebreak: ""
+  paging: off
+  pagingCmd: ""
+  resetPagingCmd: ""
+  pagerPrompt: ""
+  pagerPromptCmd: ""
+  saveConfig: ""
+  exitCmd: ""
+vt100:
+  hasSplashScreenEnterKey: "on"                     # Will look to press enter
+  hasSplashScreen: "on"                             # VT100 splash screen detection enabled
+  splashScreenReadToText: "008"                     # Wait for this string before proceeding
+  splashScreenSendControlCode: "\x13"               # Control character to send after splash
