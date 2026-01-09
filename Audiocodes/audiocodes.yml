@@ -7,7 +7,7 @@
 
 main:
   name: "Audiocodes"
-  desc: "Audiocodes"
+  desc: "Audiocodes mediant - SSH"
 connect:
   timeout: 45
   protocol: ssh
