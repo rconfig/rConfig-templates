@@ -1,0 +1,36 @@
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - This template will only work on V8.1 professional and above 
+
+main:
+  name: "Fortigate SSH with Banner Prompt"                   # Template name for FortiGate via SSH
+  desc: "Fortigate SSH with Banner Prompt"                   # Description displayed in rConfig UI
+
+connect:
+  timeout: 5                                        # Connection timeout (in seconds)
+  protocol: ssh                                     # Connection protocol: 'ssh' or 'telnet'
+  port: 22                                          # Port number (range: 1–65535)
+
+auth:
+  username: "Username:"                             # CLI prompt for username
+  password: "Password:"                             # CLI prompt for password
+  enable: off                                       # Enable mode required? Set to 'on' or 'off'
+  enableCmd: "enable"                               # Command to enter enable mode (not used here)
+  enablePassPrmpt: "Password:"                      # Prompt shown for enable password
+  hpAnyKeyStatus: off                               # For HP-style prompts: 'on' or 'off'
+  hpAnyKeyPrmpt: "Press any key to continue"        # Prompt text if hpAnyKeyStatus is on
+
+config:
+  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  paging: on                                        # Set to 'on' to disable CLI paging
+  pagingCmd: "config system console\n set output standard\n end"  # Disable paging command (multi-line)
+  resetPagingCmd: ""                                # Optional: Command to re-enable paging
+  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
+  pagerPromptCmd: "     "                           # DEPRECATED: This value is no longer used
+  saveConfig: "config system global\n  set cfg-save automatic\n end\n"  # Save configuration command
+  exitCmd: "quit\n"                                  # Command to exit the session
+
+vt100:
+  hasSplashScreen: "on"                             # VT100 splash screen detection enabled
+  splashScreenReadToText: "(Press 'a' to accept):"                     # Wait for this string before proceeding
+  splashScreenSendControlCode: "a\n"               # Control character to send after splash
