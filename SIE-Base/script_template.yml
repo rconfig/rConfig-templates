@@ -19,5 +19,8 @@ failure_criteria:
     - "Connection refused"
     - "Authentication failed"
     - "ERROR:"
-  success_patterns:         # Optional: patterns that must be present for success
+  success_patterns: # ANY of these = success from any scripts attached to the device - optional
     - "Configuration saved"
+    - "Second Script Output match"
+    - "Third Script Partial Output match"
+
