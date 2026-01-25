@@ -12,3 +12,12 @@ connect:
   timeout: 30                             # Connection timeout (in seconds)
   idleTimeout: 30                         # Idle timeout (in seconds)
   protocol: script                        # Protocol type (script for SIE)
+  
+failure_criteria:
+  exit_codes: [1, 2, 255]  # List of exit codes that indicate failure
+  error_patterns:           # String patterns in output that indicate failure
+    - "Connection refused"
+    - "Authentication failed"
+    - "ERROR:"
+  success_patterns:         # Optional: patterns that must be present for success
+    - "Configuration saved"
