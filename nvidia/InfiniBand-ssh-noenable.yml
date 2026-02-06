@@ -1,0 +1,36 @@
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+
+## Note, it might be best to use an incorrect prompt in the device configuration if you get partial
+## or incomplete outputs.
+
+main:
+  name: "NVIDIA InfiniBand - SSH - Enable"         # Template name for Cisco IOS with SSH and enable mode
+  desc: "NVIDIA Quantum InfiniBand Switches SSH based connection with enable mode"
+
+connect:
+  timeout: 10                                       # Connection timeout (in seconds)
+  protocol: ssh                                     # Connection protocol: 'ssh' or 'telnet'
+  port: 22                                          # Port number (range: 1–65535)
+
+auth:
+  username: "Username:"                             # CLI prompt for username
+  password: "Password:"                             # CLI prompt for password
+  enable: on                                        # Enable mode required
+  enableCmd: "enable"                               # Command to enter enable mode
+  enablePassPrmpt: "Password:"                      # Prompt for enable password
+  hpAnyKeyStatus: off                               # HP-style 'press any key' handling
+  hpAnyKeyPrmpt: "Press any key to continue"        # Prompt if applicable
+
+config:
+  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  paging: on                                        # Disable CLI paging
+  pagingCmd: "terminal length 999"                   # Command to disable paging
+  resetPagingCmd: "terminal length 999"              # Command to re-enable paging
+  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
+  pagerPromptCmd: " "                               # DEPRECATED: This value is no longer used
+  saveConfig: "wr mem"                              # Command to save configuration
+  exitCmd: "quit"                                   # Command to exit session
