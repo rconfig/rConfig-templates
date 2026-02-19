@@ -1,0 +1,31 @@
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+
+## NOTE: this template was specificaly tested with the rConfig Vecotr Agent
+
+main:
+name: "Palo Alto - SSH - Config"
+desc: "Palo Alto Networks PAN-OS SSH based retrieval"
+
+connect:
+timeout: 10 # Connection timeout (in seconds)
+protocol: ssh # Protocol: ssh
+port: 22 # Port number
+
+auth:
+username: "login as:" # Username prompt
+password: "Password:" # Password prompt
+enable: on
+enableCmd: "set cli pager off\n set cli config-output-format set\n"
+enablePassPrmpt: "Password:" # Enable password prompt (not used)
+
+config:
+linebreak: ".*"
+paging: on
+pagingCmd: "configure"
+resetPagingCmd: "set cli pager on"
+saveConfig: "quit"
+exitCmd: "quit"
