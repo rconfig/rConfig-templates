@@ -1,0 +1,17 @@
+# rConfig connection template – DO NOT EDIT DIRECTLY
+## Template Notes:
+## - All free text values must be wrapped in double quotes: " "
+## - Documentation: https://docs.rconfig.com/devices/templates/
+## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+
+main:
+  name: "Ciena 6500 - TL1 over SSH"                 # Template name for Ciena 6500 optical nodes
+  desc: "Ciena 6500 optical node, TL1 in-band ACT-USER login over SSH"  # Description for UI display
+
+connect:
+  timeout: 15                                       # Connection timeout (in seconds)
+  protocol: tl1                                     # Connection protocol: 'ssh', 'telnet', 'script' or 'tl1'
+  port: 22000                                       # Port number (range: 1–65535)
+  sshAuth: password                                 # SSH transport auth: 'password' (SSH+TL1) or 'none' (TL1-only)
+  tl1Gateway: "on"                                  # GNE only: discover RNEs behind this node via RTRV-NBR ('on'/'off')
+  tl1NeighbourCmd: "RTRV-NBR:ALL"                   # Neighbour-discovery command (TID/AID composable)
