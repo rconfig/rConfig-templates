@@ -5,10 +5,10 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: 'FTP Inbound Only - No Outbound Connection' # For devices that push their config into rConfig via xFTP
-  desc: 'Marks a device as FTP-only (inbound). rConfig never connects out to it; config arrives via an xFTP upload and reachability comes from ping.'
+  name: 'XFTP Inbound Only - No Outbound Connection' # For devices that push their config into rConfig via xFTP
+  desc: 'Marks a device as XFTP-only (inbound). rConfig never connects out to it; config arrives via an xFTP upload and reachability comes from ping.'
 
 connect:
   timeout: 30 # Unused: no outbound connection is ever attempted for this protocol
-  protocol: ftp # Inbound-only device: skips SSH/Telnet/script/tl1 outbound connection entirely
+  protocol: xftp # Inbound-only device: skips SSH/Telnet/script/tl1 outbound connection entirely
   port: 21 # Unused: no outbound connection is ever attempted for this protocol
