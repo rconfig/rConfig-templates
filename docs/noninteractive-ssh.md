@@ -1,7 +1,3 @@
-Sure thing! Here’s the content converted to GitHub-styled markdown:
-
----
-
 # rConfig: SSH Non-Interactive Shell for Configuration Retrieval
 
 ## Overview
@@ -29,7 +25,7 @@ isNonInteractiveMode: true
 
 To enable or disable the non-interactive mode, simply modify the value of `isNonInteractiveMode` to `true` or `false`, and save the configuration file. Ensure the values are specified **without quotes** to avoid parsing errors.
 
-See example here [https://github.com/rconfig/rConfig-templates/blob/master/Fortinet/fortigate-ssh-noenable-noninteractive.yml](https://github.com/rconfig/rConfig-templates/blob/master/Fortinet/fortigate-ssh-noenable-noninteractive.yml)
+See example here [https://github.com/rconfig/rConfig-templates/blob/main/fortinet/fortigate-ssh-noenable-noninteractive.yml](https://github.com/rconfig/rConfig-templates/blob/main/fortinet/fortigate-ssh-noenable-noninteractive.yml)
 
 Mikrotiks, Fortinets and some Ciscos have been tested. Please feedback on your tests. 
 
@@ -64,7 +60,3 @@ This line in the configuration will disable non-interactive mode, keeping the de
 ## Conclusion
 
 The introduction of SSH non-interactive mode in rConfig adds significant flexibility and efficiency for configuration retrieval. By enabling automated, streamlined SSH sessions, this feature empowers network administrators to manage configurations more effectively across a large array of devices. For those looking to send configuration snippets in the future, maintaining the ability to configure devices in both interactive and non-interactive modes ensures adaptability as network management needs evolve.
-
---- 
-
-Let me know if you need any tweaks or if there's anything else I can help with! 😊
