@@ -19,6 +19,8 @@ This is a living section. It is seeded now and extended as standards are adopted
 - Markdown and YAML comments never use the em dash character.
 - All free-text YAML values are wrapped in double quotes.
 - Filenames and directories are lowercase and hyphenated. The full naming convention will be recorded here when adopted in Phase 2.
+- Vendor directories are named for the lowercase common short form of the vendor name. Examples: `palo-alto`, `edgecore`, `checkpoint`, `digi`, `rad`.
+- Commit messages use the plan item prefix `P<phase>.<item>`, for example `P1.1`.
 - Every adopted standard MUST be added to this file in the same change that adopts it.
 
 ## Verification
