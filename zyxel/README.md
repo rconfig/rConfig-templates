@@ -18,7 +18,7 @@ devices do not present a shell that rConfig can read to a prompt, so there is no
 connection template can do with them.
 
 These templates are untested starters. If you run one against real hardware, please file a
-test report via the repository's issue templates so it can be promoted to community-tested.
+[template test report](https://github.com/rconfig/rConfig-templates/issues/new?template=template-test-report.yml) so it can be promoted to community-tested.
 
 See [docs/TEMPLATES.md](../docs/TEMPLATES.md) for what each key means and
 [docs/CONTRIBUTING.md](../docs/CONTRIBUTING.md) before submitting a change.

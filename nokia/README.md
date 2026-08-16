@@ -19,7 +19,7 @@ The paging syntax differs between the two as well, which is why there are two te
 than one. Each template names the other in its header comments.
 
 These templates are untested starters. If you run one against real hardware, please file a
-test report via the repository's issue templates so it can be promoted to community-tested.
+[template test report](https://github.com/rconfig/rConfig-templates/issues/new?template=template-test-report.yml) so it can be promoted to community-tested.
 
 See [docs/TEMPLATES.md](../docs/TEMPLATES.md) for what each key means and
 [docs/CONTRIBUTING.md](../docs/CONTRIBUTING.md) before submitting a change.

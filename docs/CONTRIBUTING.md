@@ -101,8 +101,9 @@ saying which device, which OS version, which rConfig version, and what was captu
 **`rconfig-verified`** is reserved for templates the rConfig team has tested themselves. Do not
 set it on a contribution. If your template earns it, the team will change it.
 
-A dedicated test-report issue form is planned as part of Phase 4. Until it exists, open a normal
-issue with the four details above and link the template.
+Use the [template test report form](../.github/ISSUE_TEMPLATE/template-test-report.yml), which
+asks for each of those details in turn. Reports are welcome whether the template worked, needed
+changes, or failed outright.
 
 Never lower a status without saying why, and never raise one without evidence.
 
