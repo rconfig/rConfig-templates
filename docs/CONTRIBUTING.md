@@ -119,7 +119,7 @@ template silently. rConfig parses YAML 1.2, where `on` and `off` stay strings bu
 `false` become booleans, and the connection code compares against the strings. `paging: true`
 does not disable paging and logs nothing. Worse, the failure is not consistent between keys:
 `enable: true` does work. Read
-[the callout in TEMPLATES.md](TEMPLATES.md#the-onoff-trap-read-this-first) before you write
+[Switch values in TEMPLATES.md](TEMPLATES.md#switch-values-use-on-and-off) before you write
 either value. The validator fails the build on a boolean in `enable`, `paging` or
 `hpAnyKeyStatus`.
 

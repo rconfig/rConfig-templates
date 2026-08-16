@@ -119,7 +119,7 @@ acted on by only one.
 ### `options`
 
 Terminal emulation for SSH. ANSI handling and terminal sizing, used mainly by HP and MikroTik
-devices whose output is full of VT100 escape codes. Read on telnet too, but never acted on there.
+devices whose output carries VT100 escape codes. Read on telnet too, though acted on for SSH only.
 
 ### `failure_criteria`
 
@@ -172,7 +172,7 @@ Every value here is a **prompt pattern** or a switch. No credential ever lives i
 | `enableUsername` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Strict comparison. Telnet has no equivalent branch, so a telnet device that asks for a username at enable time cannot be handled. `SSH/Login.php:255-258` |
 | `enableUsernamePrmpt` | string | prompt pattern | Optional, default none | **ssh only** | Core and Pro | Only used when `enableUsername` is on. `SSH/Connect.php:99`, `SSH/Login.php:256` |
 | `hpAnyKeyStatus` | string | `on` | Mandatory | ssh, telnet | Core and Pro | Strict comparison. On SSH it sends two newlines after login, and also selects a VT100 character-scrubbing read path. `SSH/Login.php:274`, `SSH/SendCommand.php:127`; Core `SSH/Login.php:193`, `SSH/SendCommand.php:88` |
-| `hpAnyKeyPrmpt` | string | prompt string | Mandatory | **none, see dead keys** | Core and Pro | Read on both protocols and never used. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
+| `hpAnyKeyPrmpt` | string | prompt string | Mandatory | **no runtime effect** | Core and Pro | Read on both protocols, not acted on. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
 | `sshInteractive` | string | `on` or `yes` | Optional, default none | **ssh only** | Core and Pro | The only key that accepts both spellings. Forces a manual read-and-write login instead of the library login. `SSH/Login.php:187`; Core `:109` |
 | `sshPrivKey` | boolean or string | any truthy value | Optional, default none | **ssh only** | Core and Pro | A flag, not key material. When truthy, rConfig loads the actual private key and passphrase from the credential set attached to the device. Telnet reads this key and ignores it. `SSH/Login.php:142-146,162-173`, `Telnet/Connect.php:89` |
 
@@ -185,7 +185,7 @@ For devices that show a menu or banner before the CLI prompt.
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | `hasSplashScreen` | string | `on` | Optional, default none | ssh, telnet | Core and Pro | **SSH compares strictly, telnet compares loosely.** `SSH/Login.php:192`, `Telnet/Login.php:23` |
-| `hasSplashScreenEnterKey` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Sends a newline before reading the splash text. Telnet never reads it, so a telnet splash screen cannot be given an initial Enter. `SSH/Login.php:196-199` |
+| `hasSplashScreenEnterKey` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Sends a newline before reading the splash text. SSH only, so a telnet splash screen has no initial Enter step. `SSH/Login.php:196-199` |
 | `splashScreenReadToText` | string | text to read up to | Optional, default none | ssh, telnet | Core and Pro | `SSH/Login.php:201`, `Telnet/Login.php:26` |
 | `splashScreenSendControlCode` | string | control code to send | Optional, default none | ssh, telnet | Core and Pro | `SSH/Login.php:202`, `Telnet/Login.php:27` |
 
@@ -195,23 +195,23 @@ For devices that show a menu or banner before the CLI prompt.
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `paging` | string | `on` | Mandatory | ssh (telnet reads, does not act) | Core and Pro | Strict comparison, so `paging: true` silently does nothing. **On SSH this gates whether `pagingCmd` is sent. On telnet it does not: telnet sends `pagingCmd` unconditionally.** `SSH/Login.php:241,264`, `SSHConnectionManager.php:108,118`, `Telnet/Login.php:44-45` |
+| `paging` | string | `on` | Mandatory | ssh (telnet reads, does not act) | Core and Pro | Strict comparison, so use `on` or `off`. **On SSH this gates whether `pagingCmd` is sent. On telnet it does not: telnet sends `pagingCmd` unconditionally.** `SSH/Login.php:241,264`, `SSHConnectionManager.php:108,118`, `Telnet/Login.php:44-45` |
 | `pagingCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | On SSH, sent only when `paging` is on, and any `~` is escaped first. On telnet, always sent after login regardless of `paging`. `SSH/Login.php:239-247,281-287`, `Telnet/Login.php:44-45` |
 | `resetPagingCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | **Different gates per protocol.** SSH sends it at disconnect only when `paging` is on. Telnet sends it whenever the value is non-empty, with no `paging` check. `SSHConnectionManager.php:106-112`, `SSH/SendCommand.php:164-168`, `Telnet/Quit.php:38-43` |
-| `saveConfig` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty. Read into an SSH property and never sent. `Telnet/Quit.php:45-51`, `SSH/Connect.php:117` |
-| `exitCmd` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty, and by the fallback probe (which deliberately skips `saveConfig`, because a probe must never write config). Read into an SSH property and never sent. `Telnet/Quit.php:53-58`, `PrimaryProtocolVerifier.php:83-95`, `SSH/Connect.php:118` |
+| `saveConfig` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty. Read into an SSH property and not sent. `Telnet/Quit.php:45-51`, `SSH/Connect.php:117` |
+| `exitCmd` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty, and by the fallback probe (which deliberately skips `saveConfig`, because a probe must not write config). Read into an SSH property and not sent. `Telnet/Quit.php:53-58`, `PrimaryProtocolVerifier.php:83-95`, `SSH/Connect.php:118` |
 | `isMikrotik` | string | `yes` | Optional, default none | **ssh only** | Core and Pro | Strict comparison. Sends one Enter past the MikroTik banner at login, then blanks the device prompt for reads so output is captured with a match-anything pattern. `SSH/Login.php:97,95-128`, `SSH/SendCommand.php:43,45,67,68` |
-| `linebreak` | string | `n`, `r` | Mandatory | **none, see dead keys** | Core and Pro | Read on both protocols and never used. `SSH/Connect.php:109`, `Telnet/Connect.php:91` |
-| `syncToPromptOnLogin` | string | `on` | Optional, default `off` | **ssh only** | **Pro only** | Undocumented before this legend. Set it when command output appears under the wrong command: it drains any prompt the login sequence left unread, so the first command waits for its own prompt. `SSH/Connect.php:113`, `SSH/Login.php:63-93` |
+| `linebreak` | string | `n`, `r` | Mandatory | **no runtime effect** | Core and Pro | Read on both protocols, not acted on. `SSH/Connect.php:109`, `Telnet/Connect.php:91` |
+| `syncToPromptOnLogin` | string | `on` | Optional, default `off` | **ssh only** | **Pro only** | Undocumented before this legend. Set it when command output appears against the preceding command: it drains any prompt the login sequence left unread, so the first command waits for its own prompt. `SSH/Connect.php:113`, `SSH/Login.php:63-93` |
 | `promptSyncTimeout` | int | seconds | Optional, default `2` | **ssh only** | **Pro only** | Undocumented before this legend. How long to wait for another prompt during the sync above before deciding the device is quiet. Capped at 10 reads. `SSH/Connect.php:114`, `SSH/Login.php:79` |
-| `pagerPrompt` | string | any | Optional, default none | **none, see dead keys** | Core and Pro | Deprecated. Read and never used. Must not appear in new templates. `SSH/Connect.php:115`, `Telnet/Connect.php:95` |
-| `pagerPromptCmd` | string | any | Optional, default none | **none, see dead keys** | Core and Pro | Deprecated. Read and never used. Must not appear in new templates. `SSH/Connect.php:116`, `Telnet/Connect.php:96` |
+| `pagerPrompt` | string | any | Optional, default none | **no runtime effect** | Core and Pro | Deprecated. Must not appear in new templates. `SSH/Connect.php:115`, `Telnet/Connect.php:95` |
+| `pagerPromptCmd` | string | any | Optional, default none | **no runtime effect** | Core and Pro | Deprecated. Must not appear in new templates. `SSH/Connect.php:116`, `Telnet/Connect.php:96` |
 
 ---
 
 ## `options`
 
-Terminal emulation. Functional on SSH. Read on telnet and never acted on: the telnet source
+Terminal emulation. Functional on SSH. Read on telnet but not acted on there: the telnet source
 carries an explicit comment saying these are kept only for consistency.
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
@@ -239,7 +239,7 @@ Script templates only. Pro only. The whole section is optional.
 | Protocol | Sections read | Edition |
 | --- | --- | --- |
 | `ssh` | `main`, `connect`, `auth`, `vt100`, `config`, `options` | Core and Pro |
-| `telnet` | `main`, `connect`, `auth`, `vt100`, `config`, `options` (last two partly ignored) | Core and Pro |
+| `telnet` | `main`, `connect`, `auth`, `vt100`, `config`, `options` (the last two only in part) | Core and Pro |
 | `tl1` | `main` and `connect` only. No `auth`, `config`, `options` or `vt100` key is read | Pro only |
 | `script` | `connect` and `failure_criteria` only. No connection object is built | Pro only |
 | `ftp` | `connect.protocol` only. Handled in the download path, never dispatched | Pro only |
@@ -263,49 +263,52 @@ SSH matches prompts as regular expressions delimited by `~`, and pre-escapes any
 `pagingCmd`, `enableCmd`, `enablePassPrmpt` and the device prompt before use
 (`SSH/Login.php:281-287`).
 
-Telnet builds its pattern as `/<prompt>$/` with **no escaping and no delimiter protection**, and
-anchors the match to the end of the buffer (`Telnet/Read.php:49`). A device prompt containing `/`
-therefore works on SSH and breaks on telnet.
+Telnet builds its pattern as `/<prompt>$/` and anchors the match to the end of the buffer
+(`Telnet/Read.php:49`). It applies no escaping of its own, so on telnet keep the device prompt
+free of `/` characters. The same prompt is handled either way on SSH.
 
 ### Strict and loose comparisons
 
-Strict, so a YAML boolean will not match: `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`,
+Strict, matching the string exactly: `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`,
 `sshInteractive`, `syncToPromptOnLogin`, `enableUsername`, and `hasSplashScreen` on SSH.
 
 Loose: `enable` on both protocols, `hasSplashScreen` on telnet, `hasSplashScreenEnterKey`.
 
+Writing `on` and `off` satisfies both forms, which is why the convention holds across every switch
+key.
+
 ---
 
-## Dead keys
+## Keys with no runtime effect
 
-These keys exist but do nothing. They are documented here so nobody spends an afternoon tuning a
-value that is never read. **They are still present in shipped templates. Removing them is a
-separate change, not covered by this document.**
+These keys are read but do not change the session, so a value set here has no effect to observe.
+Knowing which they are saves time when tuning a template. Some remain in shipped templates for
+history; removing them is handled separately from this document.
 
-### Read by rConfig, never acted upon
+### Read by rConfig, no effect on the session
 
-| Key | Section | Why it does nothing |
+| Key | Section | Notes |
 | --- | --- | --- |
-| `linebreak` | `config` | Assigned to a property on both protocols and never referenced again in either edition. `SSH/Connect.php:109`, `Telnet/Connect.php:91` |
-| `hpAnyKeyPrmpt` | `auth` | Assigned on both protocols and never referenced. The only remaining consumer is commented out. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
+| `linebreak` | `config` | Assigned to a property on both protocols and not referenced again in either edition. `SSH/Connect.php:109`, `Telnet/Connect.php:91` |
+| `hpAnyKeyPrmpt` | `auth` | Assigned on both protocols and not referenced. The only remaining consumer is commented out. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
 | `pagerPrompt` | `config` | Deprecated. Its consumer in the telnet read loop is commented out. `SSH/Connect.php:115`, `Telnet/Read.php:25,80-86` |
-| `pagerPromptCmd` | `config` | Deprecated. No consumer anywhere in either codebase. `SSH/Connect.php:116`, `Telnet/Connect.php:96` |
-| `saveConfig` on SSH | `config` | Read into an SSH property and never sent. Works normally on telnet. `SSH/Connect.php:117` |
-| `exitCmd` on SSH | `config` | Read into an SSH property and never sent. Works normally on telnet. `SSH/Connect.php:118` |
+| `pagerPromptCmd` | `config` | Deprecated. No consumer in either codebase. `SSH/Connect.php:116`, `Telnet/Connect.php:96` |
+| `saveConfig` on SSH | `config` | Read into an SSH property and not sent. Works normally on telnet. `SSH/Connect.php:117` |
+| `exitCmd` on SSH | `config` | Read into an SSH property and not sent. Works normally on telnet. `SSH/Connect.php:118` |
 
-### Present in templates, read by no code
+### Present in templates, not read by rConfig
 
-| Key | Section | Status | Why it does nothing |
+| Key | Section | Status | Notes |
 | --- | --- | --- | --- |
-| `ctrlYLogin` | `connect` | **Removed** from `avaya/avaya-ers-ssh-noenable-vector.yml` on 2026-08-16 | The name does not occur anywhere in either codebase. That device's control-code login is driven by its `vt100` section, which now says so in a comment |
-| `linebreak` inside `auth` | `auth` | **Removed** from `hp/hp-1920-ssh-enable.yml` on 2026-08-16 | rConfig only ever reads `config.linebreak`. It was misplaced into the wrong section, and `config.linebreak` is itself unused. The confirmation keystroke that key appeared to control is carried inside `enableCmd` |
+| `ctrlYLogin` | `connect` | **Removed** from `avaya/avaya-ers-ssh-noenable-vector.yml` on 2026-08-16 | The name does not occur in either codebase. That device's control-code login is delivered by its `vt100` section, which now records this in a comment |
+| `linebreak` inside `auth` | `auth` | **Removed** from `hp/hp-1920-ssh-enable.yml` on 2026-08-16 | rConfig reads `config.linebreak` only, and that key has no runtime effect either. The confirmation keystroke is carried inside `enableCmd` |
 | `idleTimeout` | `connect` | Still present in `pro-features/sie/_base/script_template.yml` and `pro-features/sie/radware/radware-alteon-script-template.yml`, alongside a lowercase `idletimeout` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so the camelCase spelling never matches. Both templates now carry both spellings: the lowercase one works today, the camelCase one is kept for forward compatibility |
 
-The two removed keys are no longer allowlisted in `scripts/validate_templates.py`, so reintroducing
-either now fails validation as an unknown key. `idleTimeout` stays allowlisted until the product
+The two removed keys are no longer allowlisted in `scripts/validate_templates.py`, so validation
+reports either as an unknown key if it reappears. `idleTimeout` stays allowlisted until the product
 accepts both spellings.
 
-For contrast, `vt100` is **not** dead. Four shipped templates use it and both editions read it:
+`vt100`, by contrast, is fully active. Four shipped templates use it and both editions read it:
 `avaya/avaya-ers-ssh-noenable-vector.yml`, `avaya/avaya-ers-telnet-noenable.yml`,
 `fortinet/fortinet-fortios-ssh-noenable-banner.yml`,
 `siemens/siemens-ruggedcom-ros-ssh-noenable.yml`.
@@ -339,7 +342,7 @@ ask for each of these in turn.
 ## Validation
 
 `scripts/validate_templates.py` will check templates against this legend: mandatory keys present,
-values within the documented sets, no dead keys, no YAML booleans where a string is required.
+values within the documented sets, no keys outside the legend, and `on` or `off` where a switch value is expected.
 
 That script arrives in a later phase. This line is a forward reference. Until it exists, check
 new templates against the tables above by hand.
