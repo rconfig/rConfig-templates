@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "HP Procurve SSh noenable"
-  desc: "HP Procurve SSh noenable"
+  name: "HP Procurve SSH noenable v2"
+  desc: "HP Procurve SSH noenable v2 for v6 users"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)
@@ -25,7 +25,7 @@ auth:
 config:
   linebreak: "n"                          # Linebreak format (default: 'n')
   paging: on                              # CLI paging enabled
-  pagingCmd: "no page"                    # Disable paging command
+  pagingCmd: "nno page"                   # DELIBERATE: some HPE firmware swallows the first character after the any-key prompt, so the doubled letter is sacrificial. Do not "fix" this to "no page".
   resetPagingCmd: "page"                  # Reset paging command
   pagerPrompt: ""                         # DEPRECATED: This value is ignored
   pagerPromptCmd: ""                      # DEPRECATED: This value is ignored

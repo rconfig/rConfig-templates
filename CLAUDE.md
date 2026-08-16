@@ -38,6 +38,8 @@ Convention:
 - `protocol` is `ssh` or `telnet`. `script` and `tl1` exist for Pro templates.
 - `authmode` is `enable` or `noenable`, with `nousername` as an additional variant where relevant.
 - `variant` covers agent or mode specifics such as `vector`, `noninteractive`, `banner`, `vdom`.
+- Variants may chain when a template genuinely carries more than one. Example: `-noninteractive-vector`.
+- `authmode` is omitted for protocols that have no enable concept, such as `tl1` and `script`.
 - Hardware models appear in a filename ONLY when the model itself changes connection behavior. Example: `hp-1920` keeps its model number because the 1920 requires a special elevation command that other HP switches do not.
 - The vendor prefix is deliberate even though it repeats the directory name: filenames travel without their paths (downloads, imports, attachments) and must be self-identifying.
 - All lowercase, hyphens only, no underscores or spaces.

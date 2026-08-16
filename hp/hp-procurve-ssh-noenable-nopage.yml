@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Palo Alto - SSH - No Configure Mode"
-  desc: "Palo Alto Networks PAN-OS SSH based connection without configuration mode"
+  name: "HP Procurve SSh noenable"
+  desc: "HP Procurve SSh noenable"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)
@@ -14,20 +14,20 @@ connect:
   port: 22                                # Port number
 
 auth:
-  username: "login as:"                   # Username prompt
+  username: "Username:"                   # Username prompt
   password: "Password:"                   # Password prompt
   enable: off                             # Enable mode disabled
   enableCmd: "enable"                     # Enable command (not used)
   enablePassPrmpt: "Password:"            # Enable password prompt (not used)
-  hpAnyKeyStatus: off                     # 'Press any key' handling disabled
+  hpAnyKeyStatus: on                      # 'Press any key' handling enabled
   hpAnyKeyPrmpt: "Press any key to continue"  # Custom 'press any key' prompt
 
 config:
   linebreak: "n"                          # Linebreak format (default: 'n')
   paging: on                              # CLI paging enabled
-  pagingCmd: "set cli pager off"          # Disable paging command
-  resetPagingCmd: "set cli pager on"      # Reset paging command
+  pagingCmd: "no page"                    # Disable paging command
+  resetPagingCmd: "page"                  # Reset paging command
   pagerPrompt: ""                         # DEPRECATED: This value is ignored
   pagerPromptCmd: ""                      # DEPRECATED: This value is ignored
-  saveConfig: "commit"                    # Save configuration command
+  saveConfig: "wr mem"                    # Save configuration command
   exitCmd: "quit"                         # Exit command
