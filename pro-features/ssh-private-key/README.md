@@ -1,24 +1,40 @@
-This is an example for connecting to devices with rConfig V7 Professional with SSH private keys
+# SSH private key authentication
 
-## Key Configuration Options
+| File | What it is |
+| --- | --- |
+| `ssh-private-key-template.yml` | An ordinary SSH connection template with private key authentication switched on |
 
-### `sshPrivKey`
+## sshPrivKey is a flag, not the key
 
-- This parameter specifies the path to the SSH private key used for authentication when connecting to remote devices.
-- The SSH key must be configured correctly within the Device Credentials feature of `rConfig V7 Pro+` to ensure seamless and secure connectivity.
-- It is crucial that the private key is stored securely and adheres to best practices for key management, including the use of passphrases and proper file permissions.
+`auth.sshPrivKey` is a switch. It carries no key material and no path to a key file.
 
-### `Ansihost`
+When it is set to a truthy value, rConfig authenticates with a private key instead of a password.
+The actual key and its passphrase are read from the **Device Credentials record attached to the
+device** in rConfig, not from the template. A template never contains key bytes, and should never
+be edited to try to hold them.
 
-- This option defines the host or list of hosts that the configuration will target.
-- It supports a variety of SSH-compatible devices, enabling flexible and scalable management across different network environments.
-- The `Ansihost` parameter is essential for directing the automation tasks to the correct remote systems, ensuring accurate and efficient execution of commands and scripts.
- - The setTerminalDimensions might need adjustment depending on the size of files being backed up. 
----
+Set up the credential record first, attach it to the device, then assign this template.
 
-| Filename        | Usage and testing notes     |
-|-------------|----- |
-|  ssh_priv_key_template.yml    | Tested with native linux such as Rocky 9 and Ubuntu   |
- 
+## Support position
 
-This configuration file plays a crucial role in the secure and efficient operation of `rConfig`'s device management capabilities, leveraging SSH for robust and reliable connectivity. Proper setup and adherence to the guidelines above will ensure that `rConfig V7 Pro+` functions optimally, maintaining the security and integrity of your network management tasks.
+Private key authentication is **supported on rConfig Pro**. The code that reads `auth.sshPrivKey`
+is also present in Core, but the capability is not supported there. That is a support position
+rather than a code gate: it may appear to work on Core and is still not supported. See
+[docs/EDITIONS.md](../../docs/EDITIONS.md).
+
+## Otherwise a normal SSH template
+
+Apart from the one flag, this is a standard `protocol: ssh` template and every usual key applies:
+prompts, enable mode, paging commands, and the `options` block for ANSI terminal handling.
+
+Two notes on the values shipped here:
+
+- `options.AnsiHost` is set to `yes`, which selects the ANSI read path. It has nothing to do with
+  choosing which hosts to target; it controls how output is decoded.
+- `options.setTerminalDimensions` may need raising for devices with large configurations. It
+  affects ANSI post-processing only.
+
+Private key sessions take the ANSI read path, so those two options matter more here than on a
+plain password template.
+
+See [docs/TEMPLATES.md](../../docs/TEMPLATES.md) for the full key reference.
