@@ -20,8 +20,7 @@ auth:
   username: "Username:"                   # Username prompt
   password: "Password:"                   # Password prompt
   enable: on                              # Enable mode enabled
-  enableCmd: "_cmdline-mode on \n y"      # Enable command
-  linebreak: "y"                          # Experimental: sending command to continue
+  enableCmd: "_cmdline-mode on \n y"      # Enable command. The confirmation keystroke is carried inside enableCmd itself
   enablePassPrmpt: "Password:"            # Enable password prompt
   hpAnyKeyStatus: on                      # 'Press any key' handling enabled
   hpAnyKeyPrmpt: "Press any key to continue"  # Custom 'press any key' prompt

@@ -204,6 +204,22 @@ Trailing AI chat residue was removed from two documents. No document content was
 | Directories removed from tracking | 1 |
 | Directories added | 1 |
 
+## Dead key corrections
+
+Three keys that rConfig never reads were corrected on 2026-08-16. All four changes are
+wire-neutral: no connection behaviour changes, because none of these keys was ever read.
+
+| File | Change | Why it is safe |
+| --- | --- | --- |
+| `avaya/avaya-ers-ssh-noenable-vector.yml` | Removed `connect.ctrlYLogin` | The name appears nowhere in either codebase. The Ctrl-Y that logs past the ERS banner is sent by `vt100.splashScreenSendControlCode`, value `"\x19"`, which is unchanged. A comment in the `vt100` section now records this |
+| `hp/hp-1920-ssh-enable.yml` | Removed `auth.linebreak` | Only `config.linebreak` is ever read, and even that is unused. The confirmation keystroke this key looked like it controlled is carried inside `enableCmd`, value `"_cmdline-mode on \n y"`, which is unchanged. The comment on that line now says so |
+| `pro-features/sie/_base/script_template.yml` | Added `connect.idletimeout: 30` | The lowercase spelling is what the code reads. The existing camelCase `idleTimeout: 30` is kept for forward compatibility. Same value, so the effective timeout does not change |
+| `pro-features/sie/radware/radware-alteon-script-template.yml` | Added `connect.idletimeout: 30` | As above |
+
+`pro-features/xftp/xftp-inbound-only.yml` keeps `protocol: xftp` unchanged. A comment now records
+that `xftp` requires an rConfig Pro release newer than 8.3.2, and that releases up to 8.3.2 accept
+only `ftp` for inbound-only devices.
+
 ## A note on git history
 
 Git rename detection pairs the two ProCurve templates the wrong way round, because the

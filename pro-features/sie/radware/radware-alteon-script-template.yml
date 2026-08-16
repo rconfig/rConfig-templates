@@ -13,7 +13,8 @@ main:
 
 connect:
   timeout: 30                             # Connection timeout (in seconds)
-  idleTimeout: 30                         # Idle timeout (in seconds)
+  idletimeout: 30                         # Idle timeout (in seconds). Lowercase idletimeout is the spelling the current code reads
+  idleTimeout: 30                         # Kept for forward compatibility, camelCase is the documented spelling
   protocol: script                        # Protocol type (script for SIE)
 
 failure_criteria:

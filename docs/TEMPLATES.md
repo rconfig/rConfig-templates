@@ -294,13 +294,15 @@ separate change, not covered by this document.**
 
 ### Present in templates, read by no code
 
-| Key | Section | Files carrying it | Why it does nothing |
+| Key | Section | Status | Why it does nothing |
 | --- | --- | --- | --- |
-| `ctrlYLogin` | `connect` | `avaya/avaya-ers-ssh-noenable-vector.yml` | The name does not occur anywhere in either codebase. That device's control-code login is actually driven by its `vt100` section |
-| `idleTimeout` | `connect` | `pro-features/sie/_base/script_template.yml`, `pro-features/sie/radware/radware-alteon-script-template.yml` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so this never matches and the 30 second default always applies |
-| `linebreak` inside `auth` | `auth` | `hp/hp-1920-ssh-enable.yml` | rConfig only ever reads `config.linebreak`. Misplaced into the wrong section, and `config.linebreak` is itself unused |
+| `ctrlYLogin` | `connect` | **Removed** from `avaya/avaya-ers-ssh-noenable-vector.yml` on 2026-08-16 | The name does not occur anywhere in either codebase. That device's control-code login is driven by its `vt100` section, which now says so in a comment |
+| `linebreak` inside `auth` | `auth` | **Removed** from `hp/hp-1920-ssh-enable.yml` on 2026-08-16 | rConfig only ever reads `config.linebreak`. It was misplaced into the wrong section, and `config.linebreak` is itself unused. The confirmation keystroke that key appeared to control is carried inside `enableCmd` |
+| `idleTimeout` | `connect` | Still present in `pro-features/sie/_base/script_template.yml` and `pro-features/sie/radware/radware-alteon-script-template.yml`, alongside a lowercase `idletimeout` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so the camelCase spelling never matches. Both templates now carry both spellings: the lowercase one works today, the camelCase one is kept for forward compatibility |
 
-Three distinct keys across four files.
+The two removed keys are no longer allowlisted in `scripts/validate_templates.py`, so reintroducing
+either now fails validation as an unknown key. `idleTimeout` stays allowlisted until the product
+accepts both spellings.
 
 For contrast, `vt100` is **not** dead. Four shipped templates use it and both editions read it:
 `avaya/avaya-ers-ssh-noenable-vector.yml`, `avaya/avaya-ers-telnet-noenable.yml`,

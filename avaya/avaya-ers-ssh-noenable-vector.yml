@@ -15,7 +15,6 @@ connect:
   timeout: 60                                       # Connection timeout (in seconds)
   protocol: ssh                                     # Connection protocol: 'telnet' or 'ssh'
   port: 22                                          # Port number (range: 1-65535)
-  ctrlYLogin: on
 
 auth:
   username: "Enter Username:"                       # CLI prompt for username
@@ -35,6 +34,8 @@ config:
   exitCmd: "exit"                                   # Command to end session
 
 vt100:
+  # Ctrl-Y for the ERS login banner is delivered by splashScreenSendControlCode "\x19"
+  # below. No other key is involved.
   hasSplashScreen: "on"                             # VT100 splash screen detection enabled
   splashScreenReadToText: "008"                     # Wait for this string before proceeding
   splashScreenSendControlCode: "\x19"               # Control character to send after splash

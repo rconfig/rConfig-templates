@@ -128,19 +128,21 @@ FILENAME_EXCEPTIONS = {
 # These become ERRORs when the Phase 5 decisions land: delete the entry and the
 # generic unknown-key and protocol-value checks below will fail the file.
 # ---------------------------------------------------------------------------
+# connect.ctrlYLogin and auth.linebreak were removed from their templates in P5.7. Their
+# allowlist entries are gone with them, so the generic unknown-key check now ERRORs if either
+# is reintroduced.
 ALLOWLIST_KEYS = {
-    ("avaya/avaya-ers-ssh-noenable-vector.yml", "connect", "ctrlYLogin"):
-        "no code reads this key, pending Phase 5 decision",
     ("pro-features/sie/_base/script_template.yml", "connect", "idleTimeout"):
-        "code reads 'idletimeout' all lowercase, pending Phase 5 decision",
+        "camelCase kept for forward compatibility alongside the lowercase idletimeout the code "
+        "reads. Remove this entry when the product accepts both spellings",
     ("pro-features/sie/radware/radware-alteon-script-template.yml", "connect", "idleTimeout"):
-        "code reads 'idletimeout' all lowercase, pending Phase 5 decision",
-    ("hp/hp-1920-ssh-enable.yml", "auth", "linebreak"):
-        "misplaced, only config.linebreak is ever read, pending Phase 5 decision",
+        "camelCase kept for forward compatibility alongside the lowercase idletimeout the code "
+        "reads. Remove this entry when the product accepts both spellings",
 }
 ALLOWLIST_PROTOCOLS = {
     ("pro-features/xftp/xftp-inbound-only.yml", "xftp"):
-        "no dispatcher branch accepts this value, pending Phase 5 decision",
+        "requires an rConfig Pro release newer than 8.3.2. Remove this entry when the product "
+        "ships xftp as a dispatcher protocol",
 }
 
 

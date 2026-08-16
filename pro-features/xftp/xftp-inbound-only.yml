@@ -12,5 +12,7 @@ main:
 
 connect:
   timeout: 30 # Unused: no outbound connection is ever attempted for this protocol
+  # xftp requires an rConfig Pro release newer than 8.3.2. Releases up to 8.3.2 accept only
+  # ftp for inbound-only devices.
   protocol: xftp # Inbound-only device: skips SSH/Telnet/script/tl1 outbound connection entirely
   port: 21 # Unused: no outbound connection is ever attempted for this protocol
