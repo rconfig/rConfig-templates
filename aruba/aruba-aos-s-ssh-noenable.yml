@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Aruba2930F SSH NoEnable"                  # Unique name for Aruba 2930F devices
-  desc: "Aruba2930F SSH NoEnable"                  # Description shown in the rConfig UI
+  name: "Aruba AOS-S - SSH - No Enable"                  # Unique name for Aruba 2930F devices
+  desc: "Aruba AOS-S SSH based connection without enable mode. Tested on 2930F."                  # Description shown in the rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

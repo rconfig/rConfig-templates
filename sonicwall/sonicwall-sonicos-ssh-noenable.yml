@@ -5,7 +5,7 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Sonicwall-ssh-no-enable"
+  name: "SonicWall SonicOS - SSH - No Enable"
   desc: "Sonicwall SSH based connection without enable mode"
 
 connect:

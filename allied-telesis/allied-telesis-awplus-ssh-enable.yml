@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Allied Telesis - SSH - Enable"             # Unique name for Allied Telesis devices
-  desc: "Allied Telesis SSH based connection with enable mode"  # Description shown in the rConfig UI
+  name: "Allied Telesis AlliedWare Plus - SSH - Enable"             # Unique name for Allied Telesis devices
+  desc: "Allied Telesis AlliedWare Plus SSH based connection with enable mode"  # Description shown in the rConfig UI
 
 connect:
   timeout: 10                                       # Connection timeout (in seconds)

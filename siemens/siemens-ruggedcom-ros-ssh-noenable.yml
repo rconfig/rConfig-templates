@@ -1,6 +1,6 @@
 main:
-  name: "RUGGEDCOM (ROS) - SSH - No Enable"
-  desc: "RUGGEDCOM (ROS) SSH connection without enable mode"
+  name: "Siemens RUGGEDCOM ROS - SSH - No Enable"
+  desc: "Siemens RUGGEDCOM ROS SSH based connection without enable mode"
 connect:
   timeout: 10
   protocol: ssh

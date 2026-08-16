@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Vyos SSH No Enable"                          # Unique name/identifier for this template
-  desc: "Vyos SSH No Enable"              # Descriptive label shown in rConfig UI
+  name: "VyOS - SSH - No Enable"                          # Unique name/identifier for this template
+  desc: "VyOS SSH based connection without enable mode"              # Descriptive label shown in rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

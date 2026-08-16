@@ -7,8 +7,8 @@
 ## You must append '+ct' to the username for mikrotek devices i.e. username for the device will be 'admin+ct'
 
 main:
-  name: "MikroTek SSH nnoenable"
-  desc: "MikroTek SSH nnoenable"
+  name: "MikroTik RouterOS - SSH - No Enable"
+  desc: "MikroTik RouterOS SSH based connection without enable mode"
 
 connect:
   timeout: 10                             # Connection timeout (in seconds)

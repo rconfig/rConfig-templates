@@ -6,8 +6,8 @@
 # note: command "show startup-config" SHOULD BE "show config"
 
 main:
-  name: "HP Procurve telnet noenable"
-  desc: "HP Procurve telnet noenable"
+  name: "HP ProCurve - TELNET - No Enable"
+  desc: "HP ProCurve TELNET based connection without enable mode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

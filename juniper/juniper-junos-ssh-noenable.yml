@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "JUNOS_SWITCHES"
-  desc: "JUNOS SWITCH Template"
+  name: "Juniper JUNOS - SSH - No Enable"
+  desc: "Juniper JUNOS SSH based connection without enable mode"
 
 connect:
   timeout: 60                              # Connection timeout (in seconds)

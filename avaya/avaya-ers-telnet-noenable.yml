@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Avaya 4526GTX - TELNET - No Enable"        # Template name for Avaya 4526GTX device
-  desc: "Avaya 4526GTX - TELNET based connection without enable mode"
+  name: "Avaya ERS - TELNET - No Enable"        # Template name for Avaya 4526GTX device
+  desc: "Avaya ERS TELNET based connection without enable mode. Tested on 4526GTX."
 
 connect:
   timeout: 60                                       # Connection timeout (in seconds)

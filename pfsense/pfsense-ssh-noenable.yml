@@ -5,7 +5,7 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "pfSense - SSH"
+  name: "pfSense - SSH - No Enable"
   desc: "pfSense SSH based connection with option splash screen"
 
 connect:

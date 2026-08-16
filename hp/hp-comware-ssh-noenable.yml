@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "H3C - SSH - No Enable"
-  desc: "H3C - SSH - No Enable"
+  name: "HP Comware - SSH - No Enable"
+  desc: "HP Comware SSH based connection without enable mode. Also covers H3C Comware devices."
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

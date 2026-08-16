@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Dell 5524 Telnet NoEnable"
-  desc: "Dell 5524 Telnet NoEnable Description"
+  name: "Dell PowerConnect - TELNET - No Enable"
+  desc: "Dell PowerConnect TELNET based connection without enable mode. Tested on 5524."
 
 connect:
   timeout: 5                                          # Connection timeout (in seconds)

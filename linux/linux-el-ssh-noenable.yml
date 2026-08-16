@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Centos 7 SSH"
-  desc: "Centos 7 SSH"
+  name: "Linux EL - SSH - No Enable"
+  desc: "Enterprise Linux (RHEL, CentOS, Rocky, Alma) SSH based connection without enable mode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

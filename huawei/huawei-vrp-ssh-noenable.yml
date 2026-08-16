@@ -5,7 +5,7 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Huawei VRP SSH no enable"
+  name: "Huawei VRP - SSH - No Enable"
   desc: "Huawei VRP SSH based connection without enable mode"
 
 connect:

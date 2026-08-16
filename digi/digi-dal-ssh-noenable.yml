@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Digi IX20 - SSH - No Enable"
-  desc: "Digi IX20 SSH based connection without enable mode"
+  name: "Digi Accelerated Linux - SSH - No Enable"
+  desc: "Digi Accelerated Linux (DAL) SSH based connection without enable mode. Tested on IX20."
 
 connect:
   timeout: 10                             # Connection timeout (in seconds)

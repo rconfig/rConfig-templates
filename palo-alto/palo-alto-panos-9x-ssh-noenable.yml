@@ -5,7 +5,7 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Palo Alto v9.x - SSH - No Configure Mode"
+  name: "Palo Alto PAN-OS 9.x - SSH - No Enable"
   desc: "Palo Alto Networks PAN-OS 9.x SSH based connection without configuration mode"
 
 connect:

@@ -7,8 +7,8 @@
 ## You must append '+ct' to the username for mikrotek devices i.e. username for the device will be 'admin+ct'
 
 main:
-  name: "MikroTek SSH with banner prompt"
-  desc: "MikroTek SSH with banner prompt"
+  name: "MikroTik RouterOS - SSH - No Enable - Banner"
+  desc: "MikroTik RouterOS SSH based connection without enable mode, banner prompt handling"
 
 connect:
   timeout: 10                             # Connection timeout (in seconds)

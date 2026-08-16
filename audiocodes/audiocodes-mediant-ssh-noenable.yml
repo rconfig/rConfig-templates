@@ -6,8 +6,8 @@
     ## For new community submitted templates visit: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Audiocodes"
-  desc: "Audiocodes mediant - SSH"
+  name: "AudioCodes Mediant - SSH - No Enable"
+  desc: "AudioCodes Mediant SSH based connection without enable mode"
 connect:
   timeout: 45
   protocol: ssh

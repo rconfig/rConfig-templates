@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "ArubaS3500 SSH enable"                     # Unique name for Aruba S3500 SSH connection
-  desc: "ArubaS3500 SSH enable"                     # Description shown in the rConfig UI
+  name: "Aruba ArubaOS - SSH - Enable"                     # Unique name for Aruba S3500 SSH connection
+  desc: "Aruba ArubaOS SSH based connection with enable mode. Tested on S3500."                     # Description shown in the rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Dell S4048 ssh noenable"
-  desc: "Dell S4048 ssh noenable"
+  name: "Dell Networking - SSH - No Enable"
+  desc: "Dell Networking SSH based connection without enable mode. Tested on S4048."
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

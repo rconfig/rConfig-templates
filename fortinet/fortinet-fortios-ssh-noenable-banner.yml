@@ -3,8 +3,8 @@
 ## - This template will only work on V8.1 professional and above 
 
 main:
-  name: "Fortigate SSH with Banner Prompt"                   # Template name for FortiGate via SSH
-  desc: "Fortigate SSH with Banner Prompt"                   # Description displayed in rConfig UI
+  name: "Fortinet FortiOS - SSH - No Enable - Banner"                   # Template name for FortiGate via SSH
+  desc: "Fortinet FortiOS SSH based connection without enable mode, banner prompt handling"                   # Description displayed in rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

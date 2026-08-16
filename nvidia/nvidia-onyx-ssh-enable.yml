@@ -7,8 +7,8 @@
 ## You need to have set "no cli default paging enable" in the switch running config as the paging system isnt supported by rConfig
 
 main:
-  name: "Mellanox SSH enable"
-  desc: "Mellanox SSH enable"
+  name: "NVIDIA Onyx (Mellanox) - SSH - Enable"
+  desc: "NVIDIA Onyx (formerly Mellanox) SSH based connection with enable mode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

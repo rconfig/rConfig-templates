@@ -9,8 +9,8 @@
 
 
 main:
-  name: "Fortigate SSH no enable isNonInteractiveMode"
-  desc: "Fortigate SSH no enable isNonInteractiveMode"
+  name: "Fortinet FortiOS - SSH - No Enable - Non-Interactive"
+  desc: "Fortinet FortiOS SSH based connection without enable mode, isNonInteractiveMode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds). Long configs 30k+ lines need higher timeout value on Fortigates.

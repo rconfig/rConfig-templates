@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "HP-A5120-SSH-NOSystem-View"               # Unique template name for HP A5120 without system-view
-  desc: "HP-A5120-SSH-NOSystem-View"               # Description shown in the rConfig UI
+  name: "HP Comware A5120 - SSH - No Enable - No System View"               # Unique template name for HP A5120 without system-view
+  desc: "HP Comware A5120 SSH based connection without enable mode and without system-view"               # Description shown in the rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

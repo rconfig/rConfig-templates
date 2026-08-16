@@ -8,8 +8,8 @@
 ## If prompt contains $ make sure to escape it in the UI with a `\` backslash i.e. prompt\$
 
 main:
-  name: "Fortigate SSH no enable: Vdom"
-  desc: "Fortigate SSH no enable: Vdom"
+  name: "Fortinet FortiOS - SSH - No Enable - VDOM"
+  desc: "Fortinet FortiOS SSH based connection without enable mode, VDOM enabled"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds). Long configs 30k+ lines need higher timeout value on Fortigates.

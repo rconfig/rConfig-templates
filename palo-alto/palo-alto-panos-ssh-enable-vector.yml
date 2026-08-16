@@ -7,8 +7,8 @@
 ## NOTE: this template was specificaly tested with the rConfig Vecotr Agent
 
 main:
-  name: "Palo Alto - SSH - Config"
-  desc: "Palo Alto Networks PAN-OS SSH based retrieval"
+  name: "Palo Alto PAN-OS - SSH - Enable - Vector"
+  desc: "Palo Alto Networks PAN-OS SSH based connection with scripting mode, vector agent"
 
 connect:
   timeout: 10 # Connection timeout (in seconds)

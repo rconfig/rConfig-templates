@@ -6,7 +6,7 @@
 
 main:
   name: "Cisco IOS SMB - TELNET - No Enable"        # Template name for Cisco SMB over Telnet
-  desc: "Cisco IOS TELNET based connection without enable mode"
+  desc: "Cisco IOS SMB TELNET based connection without enable mode"
 
 connect:
   timeout: 30                                       # Connection timeout (in seconds)

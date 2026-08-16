@@ -6,8 +6,8 @@
 ## - Credit: christophe.jaming@vdndata.com
 
 main:
-  name: "Checkpoint Gaia"                           # Template name for Checkpoint Gaia devices
-  desc: "Checkpoint Gaia connection template"
+  name: "Checkpoint Gaia - SSH - No Enable"                           # Template name for Checkpoint Gaia devices
+  desc: "Checkpoint Gaia SSH based connection without enable mode"
 
 connect:
   timeout: 30                                       # Connection timeout (in seconds)

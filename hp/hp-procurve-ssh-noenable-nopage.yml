@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "HP Procurve SSh noenable"
-  desc: "HP Procurve SSh noenable"
+  name: "HP ProCurve - SSH - No Enable - Standard Paging Command"
+  desc: "HP ProCurve SSH based connection without enable mode, plain no page paging command"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

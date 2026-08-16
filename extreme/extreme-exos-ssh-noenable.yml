@@ -6,7 +6,7 @@
 
 main:
   name: "Extreme EXOS - SSH - No Enable"
-  desc: "Extreme EXOS SSH based connection with enable mode"
+  desc: "Extreme EXOS SSH based connection without enable mode"
 
 connect:
   timeout: 30                             # Connection timeout (in seconds)

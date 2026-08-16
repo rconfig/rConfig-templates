@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Dell 6248P Telnet Enable"
-  desc: "Dell 6248P Telnet Enable Description"
+  name: "Dell PowerConnect - TELNET - Enable"
+  desc: "Dell PowerConnect TELNET based connection with enable mode. Tested on 6248P."
 
 connect:
   timeout: 5                                          # Connection timeout (in seconds)

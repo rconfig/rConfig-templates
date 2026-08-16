@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Palo Alto - SSH - No Configure Mode"
-  desc: "Palo Alto Networks PAN-OS SSH based connection without configuration mode"
+  name: "Palo Alto PAN-OS - SSH - Enable"
+  desc: "Palo Alto Networks PAN-OS SSH based connection with scripting mode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)

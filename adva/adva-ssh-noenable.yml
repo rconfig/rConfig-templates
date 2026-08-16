@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Adva - SSH - no enable"                    # Unique name for this Adva device template
-  desc: "Adva - SSH - no enable"                    # Description shown in the rConfig UI
+  name: "Adva - SSH - No Enable"                    # Unique name for this Adva device template
+  desc: "Adva SSH based connection without enable mode"                    # Description shown in the rConfig UI
 
 connect:
   timeout: 5                                        # Connection timeout (in seconds)

@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Edge Core - SSH - No Enable"
-  desc: "Edge Core (https://www.edge-core.com/) SSH based connection without enable mode"
+  name: "Edgecore - SSH - No Enable"
+  desc: "Edgecore SSH based connection without enable mode"
 
 connect:
   timeout: 30                             # Connection timeout (in seconds)

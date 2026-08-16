@@ -8,8 +8,8 @@
 ## or incomplete outputs.
 
 main:
-  name: "NVIDIA InfiniBand - SSH - Enable"         # Template name for Cisco IOS with SSH and enable mode
-  desc: "NVIDIA Quantum InfiniBand Switches SSH based connection with enable mode"
+  name: "NVIDIA MLNX-OS - SSH - Enable"         # Template name for Cisco IOS with SSH and enable mode
+  desc: "NVIDIA Quantum InfiniBand switches running MLNX-OS, SSH based connection with enable mode"
 
 connect:
   timeout: 10                                       # Connection timeout (in seconds)

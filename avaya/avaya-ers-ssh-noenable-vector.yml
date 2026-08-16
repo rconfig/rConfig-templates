@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "Avaya - SSH - No Enable"                   # Template name for Avaya device
-  desc: "Avaya - SSH based connection without enable mode"
+  name: "Avaya ERS - SSH - No Enable - Vector"                   # Template name for Avaya device
+  desc: "Avaya ERS SSH based connection without enable mode, vector agent"
 
 connect:
   timeout: 60                                       # Connection timeout (in seconds)

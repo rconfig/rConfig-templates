@@ -5,8 +5,8 @@
 ## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
 
 main:
-  name: "HP FlexFabric SSH noenable v2"
-  desc: "HP FlexFabric SSH noenable v2 for v6 users"
+  name: "HP Comware FlexFabric - SSH - No Enable"
+  desc: "HP Comware FlexFabric SSH based connection without enable mode"
 
 connect:
   timeout: 5                              # Connection timeout (in seconds)
