@@ -1,1 +1,0 @@
-Expect scripts for various Zyxel devices for the Script Integration Engine feature on rConfig V7 Professional

@@ -1,0 +1,120 @@
+#!/usr/bin/expect -f
+#
+# Multi step configuration export: log in, trigger an export, poll until the device says it is
+# finished, then retrieve the file and print it.
+#
+# This is the shape to copy when a device cannot simply be asked for its configuration in one
+# command. The prompts and command names below are illustrative. Adapt them per platform.
+#
+# The retrieved configuration goes to stdout and becomes the stored backup. Progress and the
+# success marker go to stderr, so the stored artefact is exactly the configuration. Pattern
+# matching covers both streams, so the marker is still seen.
+#
+# Environment:
+#     FW_HOST      required, device hostname or IP
+#     FW_USER      required, username
+#     FW_PASSWORD  required, password
+#     FW_PROMPT    optional, the CLI prompt to expect, defaults to "#"
+#
+# Exit codes:
+#     0  success
+#     1  any failure, with an ERROR: line on stderr
+
+set host    [expr {[info exists env(FW_HOST)]     ? $env(FW_HOST)     : ""}]
+set user    [expr {[info exists env(FW_USER)]     ? $env(FW_USER)     : ""}]
+set pwd     [expr {[info exists env(FW_PASSWORD)] ? $env(FW_PASSWORD) : ""}]
+set prompt  [expr {[info exists env(FW_PROMPT)]   ? $env(FW_PROMPT)   : "#"}]
+
+proc fail {message} {
+    send_error "ERROR: $message\n"
+    exit 1
+}
+
+proc note {message} {
+    send_error "$message\n"
+}
+
+if {$host eq ""} { fail "FW_HOST is not set" }
+if {$user eq ""} { fail "FW_USER is not set" }
+if {$pwd  eq ""} { fail "FW_PASSWORD is not set" }
+
+# Bounded polling. Never loop forever waiting for a device to finish.
+set max_polls 20
+set poll_wait 15
+
+set timeout 30
+log_user 0
+
+note "connecting to $host as $user"
+spawn ssh -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10 $user@$host
+
+expect {
+    timeout      { fail "timed out waiting for the login prompt on $host" }
+    eof          { fail "ssh to $host closed before login" }
+    -re "(?i)password:" {
+        send -- "$pwd\r"
+    }
+}
+
+expect {
+    timeout      { fail "timed out waiting for the CLI prompt after login" }
+    eof          { fail "session closed after sending the password" }
+    -re "(?i)(denied|incorrect|failed)" { fail "authentication rejected by $host" }
+    $prompt      {}
+}
+
+# Step 1: trigger the export.
+note "requesting configuration export"
+send -- "request system export configuration\r"
+expect {
+    timeout { fail "timed out requesting the export" }
+    eof     { fail "session closed while requesting the export" }
+    $prompt {}
+}
+
+# Step 2: poll until the device reports completion. Give up after max_polls rather than hanging.
+note "polling for export completion"
+set finished 0
+for {set i 1} {$i <= $max_polls} {incr i} {
+    send -- "show system export status\r"
+    expect {
+        timeout { fail "timed out polling export status" }
+        eof     { fail "session closed while polling export status" }
+        -re "(?i)failed" {
+            fail "the device reported: export failed"
+        }
+        -re "(?i)(complete|finished|success)" {
+            set finished 1
+            expect { $prompt {} timeout {} }
+        }
+        $prompt {}
+    }
+
+    if {$finished} {
+        note "export reported complete after $i poll(s)"
+        break
+    }
+
+    sleep $poll_wait
+}
+
+if {!$finished} {
+    fail "export did not complete within [expr {$max_polls * $poll_wait}] seconds"
+}
+
+# Step 3: retrieve the file. Its contents are the backup, so this is the only stdout output.
+note "retrieving exported configuration"
+log_user 1
+send -- "show file exported-configuration\r"
+expect {
+    timeout { fail "timed out retrieving the exported configuration" }
+    eof     { fail "session closed while retrieving the exported configuration" }
+    $prompt {}
+}
+log_user 0
+
+send -- "exit\r"
+expect eof
+
+note "SIE-OK: export retrieved from $host"
+exit 0

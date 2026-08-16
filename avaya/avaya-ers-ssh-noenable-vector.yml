@@ -1,0 +1,41 @@
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: avaya-swtich-vector-ssh.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+
+main:
+  name: "Avaya ERS - SSH - No Enable - Vector"                   # Template name for Avaya device
+  desc: "Avaya ERS SSH based connection without enable mode, vector agent"
+
+connect:
+  timeout: 60                                       # Connection timeout (in seconds)
+  protocol: ssh                                     # Connection protocol: 'telnet' or 'ssh'
+  port: 22                                          # Port number (range: 1-65535)
+
+auth:
+  username: "Enter Username:"                       # CLI prompt for username
+  password: "Enter Password:"                       # CLI prompt for password
+  enable: off                                       # Enable mode required? Set to 'on' or 'off'
+  enableCmd: "enable"                               # Command to enter enable mode (not used here)
+  enablePassPrmpt: "Password:"                      # Prompt for enable password (if used)
+  hpAnyKeyStatus: off                               # For HP-style 'press any key' prompts: 'on' or 'off'
+  hpAnyKeyPrmpt: "Press any key to continue"        # Prompt string if hpAnyKeyStatus is on
+
+config:
+  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  paging: on                                        # Set to 'on' to disable CLI paging
+  pagingCmd: "terminal length 0"                    # Command to disable paging
+  resetPagingCmd: "terminal length 40"              # Optional: Command to re-enable paging
+  saveConfig: "copy config nvram"                   # Command to save configuration
+  exitCmd: "exit"                                   # Command to end session
+
+vt100:
+  # Ctrl-Y for the ERS login banner is delivered by splashScreenSendControlCode "\x19"
+  # below. No other key is involved.
+  hasSplashScreen: "on"                             # VT100 splash screen detection enabled
+  splashScreenReadToText: "008"                     # Wait for this string before proceeding
+  splashScreenSendControlCode: "\x19"               # Control character to send after splash

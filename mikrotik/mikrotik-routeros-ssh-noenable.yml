@@ -1,0 +1,36 @@
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: mikrotik-ssh-noenable_v2.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+## You must append '+cte' to the username for MikroTik devices i.e. username for the device will be 'admin+cte'
+
+main:
+  name: "MikroTik RouterOS - SSH - No Enable"
+  desc: "MikroTik RouterOS SSH based connection without enable mode"
+
+connect:
+  timeout: 10                             # Connection timeout (in seconds)
+  protocol: ssh                           # Protocol: ssh
+  port: 22                                # Port number
+
+auth:
+  username: "Username:"                   # Username prompt
+  password: "Password:"                   # Password prompt
+  enable: off                             # Enable mode disabled
+  enableCmd: "enable"                     # Enable command (not used)
+  enablePassPrmpt: "Password:"            # Enable password prompt (not used)
+  hpAnyKeyStatus: off                     # 'Press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue"  # Custom 'press any key' prompt
+
+config:
+  linebreak: "r"                          # Linebreak format (set to 'r')
+  paging: off                             # CLI paging disabled
+  pagingCmd: "terminal length 0"          # Disable paging command
+  resetPagingCmd: "terminal length 40"    # Reset paging command
+  saveConfig: "wr mem"                    # Save configuration command
+  exitCmd: "quit"                         # Exit command
+  isMikrotik: yes                         # MikroTik-specific behavior

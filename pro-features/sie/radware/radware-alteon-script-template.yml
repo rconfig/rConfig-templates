@@ -1,0 +1,29 @@
+# rConfig connection template
+## Edition: pro
+## Status: community-tested
+## Tested-on: rConfig V8 Pro
+## Replaces: alteon_expect_script_template.yml
+## Docs: https://docs.rconfig.com/integrations/script-integration-engine/sie/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+
+main:
+  name: "alteon_test_script_template"
+  desc: "This is an example alteon expect script"
+
+connect:
+  timeout: 30                             # Connection timeout (in seconds)
+  idletimeout: 30                         # Idle timeout (in seconds). Lowercase idletimeout is the spelling the current code reads
+  idleTimeout: 30                         # Kept for forward compatibility, camelCase is the documented spelling
+  protocol: script                        # Protocol type (script for SIE)
+
+failure_criteria:
+  exit_codes: [1, 2, 255] # List of exit codes that indicate failure
+  error_patterns: # String patterns in output that indicate failure from any scripts attached to the device
+    - 'Connection refused'
+    - 'Authentication failed'
+    - 'ERROR:'
+  success_patterns: # ANY of these = success from any scripts attached to the device - optional
+    - 'script end' # for cdump
+    - 'Current AppWall signaling' # for sys_cur and mmgmt_cur
+    - '>> Main#' # fallback for any script

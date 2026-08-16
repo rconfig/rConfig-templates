@@ -1,0 +1,75 @@
+name: "Template test report"
+description: "Report the result of running a template against real hardware"
+title: "Test report: <template path>"
+labels: ["test-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is how a template moves from `untested-starter` to `community-tested`.
+
+        A starter template is a best guess at the right shape. Until somebody runs it against
+        real hardware and says what happened, nobody knows whether it works. Filing one of these
+        is the single most valuable small contribution you can make to this repository: it costs
+        you a few minutes and it tells every future user whether they can trust the template.
+
+        Reports are welcome whether the template worked, worked with changes, or failed
+        outright. A clear failure report is worth as much as a success.
+
+  - type: input
+    id: template-path
+    attributes:
+      label: "Template path"
+      description: "The template you tested, as a path from the repository root."
+      placeholder: "e.g. arista/arista-eos-ssh-enable.yml"
+    validations:
+      required: true
+
+  - type: input
+    id: rconfig-version
+    attributes:
+      label: "rConfig version and edition"
+      description: "The rConfig you ran it on, including whether it was Core or Pro."
+      placeholder: "e.g. V8.3.2 Pro"
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: "Device model and OS version"
+      description: "The hardware and the software it was running."
+      placeholder: "e.g. Arista DCS-7050SX3-48YC8, EOS 4.31.2F"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: result
+    attributes:
+      label: "Result"
+      description: "What happened when you ran a config retrieval against the device."
+      options:
+        - "Works as-is"
+        - "Works with changes, described below"
+        - "Does not work, described below"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: "Notes and changes"
+      description: >
+        Optional when the result is "Works as-is". REQUIRED when the result says "described
+        below": say which values you changed and why, or what failed and at which point in the
+        session. Sanitized log excerpts are welcome and make the report far easier to act on.
+        Remove hostnames, IP addresses, usernames, passwords, enable passwords, SNMP community
+        strings, serial numbers and any licence keys before pasting.
+      render: text
+      placeholder: |
+        Changed config.pagingCmd from "terminal length 0" to "terminal length 0 default" because
+        the stock command is rejected on this EOS build.
+
+        Captured "show running-config" successfully, 412 lines.
+    validations:
+      required: false

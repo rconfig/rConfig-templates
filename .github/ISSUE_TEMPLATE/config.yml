@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "rConfig community"
+    url: "https://rconfig.com/community/"
+    about: "Ask a question, share a template, or get help from other rConfig users before opening an issue."

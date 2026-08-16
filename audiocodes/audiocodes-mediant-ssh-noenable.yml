@@ -1,0 +1,31 @@
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: audiocodes.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+
+main:
+  name: "AudioCodes Mediant - SSH - No Enable"
+  desc: "AudioCodes Mediant SSH based connection without enable mode"
+connect:
+  timeout: 45
+  protocol: ssh
+  port: 22
+auth:
+  username: "login:"
+  password: "password:"
+  enable: off
+  enableCmd: "enable"
+  enablePassPrmpt: "password:"
+  hpAnyKeyStatus: off
+  hpAnyKeyPrmpt: "Press any key to continue"  
+config:
+  linebreak: "n"
+  paging: on
+  pagingCmd: "configure system \r\n cli-settings \r\n window-height 0 \r\n exit \r\n exit \r\n"
+  resetPagingCmd: ""
+  saveConfig: ""
+  exitCmd: "exit"

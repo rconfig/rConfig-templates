@@ -1,0 +1,36 @@
+#!/usr/bin/expect -f
+
+# Alteon Virtual IPs
+
+set timeout 10
+set devip [lindex $argv 0]
+set user [lindex $argv 1]
+set pwd [lindex $argv 2]
+
+send_user "IP: $devip Connect as $user\n"
+spawn ssh -o "KexAlgorithms +diffie-hellman-group1-sha1" -o "StrictHostKeyChecking no" -o "UserKnownHostsFile junk"  $user@$devip
+ expect {
+ timeout { send_user "\nERR: Timeout Exceeded - Check Host\n"; exit 1 }
+ eof { send_user "\nERR: SSH Connection To $devip Failed\n"; exit 1 }
+ "*#" {}
+ "*assword:" {
+send -- "$pwd\r"
+ }
+}
+expect {
+ "*Confirm seeing above note" {
+send -- "y\r"
+ }
+"*#" {}
+}
+send -- "lines 0\r"
+expect "*#"
+send -- "cdump\r"
+expect -ex {[y/n]:}
+send -- "n\r"
+set timeout 80
+expect "script end"
+set timeout 10
+expect "*#"
+send -- "quit\r"
+send_user "\n"

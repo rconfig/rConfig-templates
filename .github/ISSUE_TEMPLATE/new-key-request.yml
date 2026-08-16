@@ -1,0 +1,139 @@
+name: "New template key request"
+description: "Request a new key in the rConfig connection template format"
+title: "New key request: <proposed key name>"
+labels: ["new-key-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A new template key is a change to rConfig itself, not to this repository. Adding a key
+        means adding code that reads it, at a specific point in the connection sequence.
+
+        Before filling this in, read
+        [docs/ORDER-OF-OPERATIONS.md](https://github.com/rconfig/rConfig-templates/blob/main/docs/ORDER-OF-OPERATIONS.md)
+        to find the stage your device behaviour happens at, then read the keys for that stage in
+        [docs/TEMPLATES.md](https://github.com/rconfig/rConfig-templates/blob/main/docs/TEMPLATES.md).
+        Many device quirks are already covered by a key that is not obviously named for the
+        symptom.
+
+        Requests that cannot name a stage, or that do not say which existing keys were tried,
+        cannot be actioned.
+
+  - type: input
+    id: device-and-os
+    attributes:
+      label: "Device and OS"
+      description: "Vendor, model, and the OS or CLI family with its version."
+      placeholder: "Cisco Catalyst 9300, IOS-XE 17.9.4"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: session-stage
+    attributes:
+      label: "Where in the session does this behaviour happen"
+      description: >
+        The stage from docs/ORDER-OF-OPERATIONS.md at which rConfig would need to act. If the
+        behaviour spans more than one stage, pick the earliest and explain the rest below.
+      options:
+        - "Connection and socket open"
+        - "Pre-login banners and splash screens"
+        - "Authentication"
+        - "Enable mode"
+        - "Session preparation and paging"
+        - "Command execution and reading"
+        - "Teardown"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-existing-keys-fail
+    attributes:
+      label: "Why the existing keys cannot express this"
+      description: >
+        Open docs/TEMPLATES.md, find the keys that act at the stage you selected above, and name
+        the closest ones. For each, say what you tried and how it fell short. Requests that do
+        not name at least one existing key are usually solved by a key the requester had not
+        found yet.
+      placeholder: |
+        Closest existing keys at this stage:
+
+        - syncToPromptOnLogin: tried "on", made no difference because the device sends the extra
+          prompt before authentication completes, not after.
+        - isMikrotik: not applicable, this is not a RouterOS device.
+
+        What is missing: ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: transcript
+    attributes:
+      label: "Sanitized session transcript"
+      description: >
+        A real session against the device showing the behaviour. Remove hostnames, IP addresses,
+        usernames, passwords, enable passwords, SNMP community strings, serial numbers and any
+        licence keys before pasting. This is the field that makes the request actionable: it
+        shows exactly what the device sends and when.
+      render: text
+      placeholder: |
+        $ ssh <redacted>
+        <redacted> login: <redacted>
+        Password:
+        ...
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Proposed key
+
+        Follow the naming style recorded in CLAUDE.md: lowercase camelCase key names, values as
+        quoted strings, and never a YAML boolean where a string is expected.
+
+  - type: input
+    id: proposed-section
+    attributes:
+      label: "Proposed key: section"
+      description: "Which top level section the key belongs in: main, connect, auth, vt100, config, options or failure_criteria."
+      placeholder: "config"
+    validations:
+      required: true
+
+  - type: input
+    id: proposed-name
+    attributes:
+      label: "Proposed key: name"
+      description: "The key name itself, in the same style as the existing keys."
+      placeholder: "waitForSecondPrompt"
+    validations:
+      required: true
+
+  - type: input
+    id: proposed-type
+    attributes:
+      label: "Proposed key: type"
+      description: "string, int, or array."
+      placeholder: "string"
+    validations:
+      required: true
+
+  - type: input
+    id: proposed-values
+    attributes:
+      label: "Proposed key: values and default"
+      description: >
+        The accepted values and what happens when the key is absent. Use on and off rather than
+        true and false, per the YAML typing rules in docs/TEMPLATES.md.
+      placeholder: "on or off, default off"
+    validations:
+      required: true
+
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: "Anything else"
+      description: "Optional. Other devices you expect this to help, links to vendor documentation, or related templates in this repository."
+    validations:
+      required: false
