@@ -1,1 +1,7 @@
 /nbproject/private/
+.vscode/
+.idea/
+.DS_Store
+.todo
+__pycache__/
+*.pyc

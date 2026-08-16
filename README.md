@@ -134,6 +134,3 @@ options:
 
 
 Thanks for helping grow the rConfig community! If you have questions or suggestions, feel free to [open an issue](https://github.com/rconfig/rConfig-templates/issues) or [join the discussion](https://rconfig.com/community/).
-
-
-Let me know if you'd like this in a `.md` file or if you're ready to update template validation scripts or directory structure too.
