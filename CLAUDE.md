@@ -16,7 +16,7 @@ Community connection templates for rConfig V8 Core and Pro.
 
 This is a living section. It is seeded now and extended as standards are adopted.
 
-- Markdown and YAML comments never use the em dash character.
+- Markdown and YAML comments use the ASCII hyphen only. No em dash, en dash, or other Unicode dashes.
 - All free-text YAML values are wrapped in double quotes.
 - Filenames and directories are lowercase and hyphenated. The full naming convention will be recorded here when adopted in Phase 2.
 - Vendor directories are named for the lowercase common short form of the vendor name. Examples: `palo-alto`, `edgecore`, `checkpoint`, `digi`, `rad`.
