@@ -5,7 +5,7 @@ Mikrotik devices require some special configurations to work with rConfig due to
 
 > mikrotik-routeros-ssh-noenable.yml - Fully tested and supported on rConfig v6
 
-1. The device username must have '+cte' appended to it i.e. ```admin+cte```. This is in all cases. See vendor information here [https://wiki.mikrotik.com/wiki/Manual:Console_login_process#Console_login_options](https://wiki.mikrotik.com/wiki/Manual:Console_login_process#Console_login_options)
+1. The device username must have '+cte' appended to it i.e. ```admin+cte```. This is in all cases. Each flag does one thing: `c` disables console colours, `t` disables terminal auto-detection, and `e` enables dumb terminal mode. Together they stop RouterOS dressing its output with escape codes, which is what keeps the captured configuration clean. See vendor information here [https://help.mikrotik.com/docs/spaces/ROS/pages/328134/Command+Line+Interface](https://help.mikrotik.com/docs/spaces/ROS/pages/328134/Command+Line+Interface)
 
 2. The template, per example in this repo, must have the command per below in the Config section. Please use the updated *mikrotik-routeros-ssh-noenable.yml* template first. This template has been validated in our lab. If this fails, fall back to the original template. 
 

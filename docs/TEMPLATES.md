@@ -10,6 +10,9 @@ A connection template does **not** hold the commands whose output you want to ca
 commands attach to devices in rConfig through Command Groups, not through the template. If you
 are looking for where `show running-config` lives, it is a Command Group, not this file.
 
+This document covers what each key means. For when each key fires during a session, see
+[ORDER-OF-OPERATIONS.md](ORDER-OF-OPERATIONS.md).
+
 ---
 
 ## The on/off trap, read this first
