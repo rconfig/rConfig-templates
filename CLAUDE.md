@@ -18,11 +18,29 @@ This is a living section. It is seeded now and extended as standards are adopted
 
 - Markdown and YAML comments use the ASCII hyphen only. No em dash, en dash, or other Unicode dashes.
 - All free-text YAML values are wrapped in double quotes.
-- Filenames and directories are lowercase and hyphenated. The full naming convention will be recorded here when adopted in Phase 2.
+- Filenames and directories are lowercase and hyphenated. See Template file naming below for the full convention.
 - Vendor directories are named for the lowercase common short form of the vendor name. Examples: `palo-alto`, `edgecore`, `checkpoint`, `digi`, `rad`.
 - Directories prefixed with an underscore are reserved for non-vendor content that must sort above the vendor listing. `_base` holds the starter template.
 - Commit messages use the plan item prefix `P<phase>.<item>`, for example `P1.1`.
 - Every adopted standard MUST be added to this file in the same change that adopts it.
+
+### Template file naming
+
+Convention:
+
+```text
+<vendor>-<osfamily>[-<versionqualifier>]-<protocol>-<authmode>[-<variant>].yml
+```
+
+- `vendor` matches the directory name.
+- `osfamily` is the OS or CLI family, never a hardware model. It may be omitted only when the vendor has a single uniform CLI.
+- `versionqualifier` is used only where the vendor has real version differences in connection behavior. Example: `panos-9x`.
+- `protocol` is `ssh` or `telnet`. `script` and `tl1` exist for Pro templates.
+- `authmode` is `enable` or `noenable`, with `nousername` as an additional variant where relevant.
+- `variant` covers agent or mode specifics such as `vector`, `noninteractive`, `banner`, `vdom`.
+- Hardware models appear in a filename ONLY when the model itself changes connection behavior. Example: `hp-1920` keeps its model number because the 1920 requires a special elevation command that other HP switches do not.
+- The vendor prefix is deliberate even though it repeats the directory name: filenames travel without their paths (downloads, imports, attachments) and must be self-identifying.
+- All lowercase, hyphens only, no underscores or spaces.
 
 ## Verification
 
