@@ -17,6 +17,9 @@
   <p align="center">
     Community connection templates for <a href="https://www.rconfig.com">rConfig</a> V8 Core and Pro.
   </p>
+  <p align="center">
+    <sub>Badge counts are scoped to vendor directories. The repository total is higher, including <code>_base</code> and <code>pro-features</code>.</sub>
+  </p>
 </div>
 <br>
 

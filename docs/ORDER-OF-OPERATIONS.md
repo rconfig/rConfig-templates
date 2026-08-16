@@ -288,7 +288,7 @@ Find the symptom, get the stage, check those keys first.
 | Sessions are left open on the device | 11, teardown, telnet only | `config.exitCmd`. On SSH neither `exitCmd` nor `saveConfig` is ever sent, so a device that needs an explicit logout cannot get one over SSH |
 | Configuration is not being saved | 10, teardown, telnet only | `config.saveConfig`. Same limitation as above: SSH reads the key and never sends it |
 | Paging is never restored | 16 on SSH, 9 on telnet | `config.resetPagingCmd`. On SSH it only fires when `config.paging` is `on`; on telnet it fires whenever the value is not empty |
-| Prompt matching works on SSH but not telnet | 8, per command read | Telnet builds its pattern without escaping, so a device prompt containing `/` breaks the match. SSH escapes `~` and uses different delimiters |
+| Prompt matching works on SSH but not telnet | 8, per command read | Fixed in V8.3.2: telnet now escapes its `/` delimiter, as SSH does for `~`, and Core also tries a literal tail match so plain-text prompts containing regex metacharacters work. On earlier releases a device prompt containing `/` breaks the telnet match |
 
 ---
 

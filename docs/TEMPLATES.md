@@ -264,8 +264,14 @@ SSH matches prompts as regular expressions delimited by `~`, and pre-escapes any
 (`SSH/Login.php:281-287`).
 
 Telnet builds its pattern as `/<prompt>$/` and anchors the match to the end of the buffer
-(`Telnet/Read.php:49`). It applies no escaping of its own, so on telnet keep the device prompt
-free of `/` characters. The same prompt is handled either way on SSH.
+(`Telnet/Read.php:49`). From V8.3.2 it escapes its `/` delimiter before matching, in the same way
+the SSH path escapes `~`, so a prompt containing `/` works on both protocols. Only the delimiter
+is escaped, which keeps prompts deliberately written as patterns working. Core additionally tries
+a literal tail match before the pattern, so a plain-text prompt containing regex metacharacters,
+such as `[admin@MikroTik] /interface>`, matches as typed.
+
+On releases before V8.3.2 the telnet prompt was interpolated unescaped, so keep the device prompt
+free of `/` characters if you are running an earlier version.
 
 ### Strict and loose comparisons
 

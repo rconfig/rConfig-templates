@@ -95,6 +95,9 @@ MANDATORY = {
     "telnet": CONNECTION_MANDATORY,
     "tl1": ["main.name", "main.desc", "connect.protocol", "connect.port", "connect.timeout"],
     "script": ["connect.protocol"],
+    # Inbound-only. xftp is the canonical spelling from V8.3.2, ftp stays accepted for
+    # templates already in the field.
+    "xftp": ["connect.protocol"],
     "ftp": ["connect.protocol"],
 }
 KNOWN_PROTOCOLS = set(MANDATORY)
@@ -139,11 +142,9 @@ ALLOWLIST_KEYS = {
         "camelCase kept for forward compatibility alongside the lowercase idletimeout the code "
         "reads. Remove this entry when the product accepts both spellings",
 }
-ALLOWLIST_PROTOCOLS = {
-    ("pro-features/xftp/xftp-inbound-only.yml", "xftp"):
-        "requires an rConfig Pro release newer than 8.3.2. Remove this entry when the product "
-        "ships xftp as a dispatcher protocol",
-}
+# xftp became a recognised protocol value in V8.3.2, so it no longer needs an allowlist
+# entry. Kept as an empty map because entries may be needed again for a future value.
+ALLOWLIST_PROTOCOLS = {}
 
 
 class Report:
