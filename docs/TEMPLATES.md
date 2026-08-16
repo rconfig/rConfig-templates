@@ -11,7 +11,8 @@ commands attach to devices in rConfig through Command Groups, not through the te
 are looking for where `show running-config` lives, it is a Command Group, not this file.
 
 This document covers what each key means. For when each key fires during a session, see
-[ORDER-OF-OPERATIONS.md](ORDER-OF-OPERATIONS.md).
+[ORDER-OF-OPERATIONS.md](ORDER-OF-OPERATIONS.md). For which capabilities need Pro, see
+[EDITIONS.md](EDITIONS.md).
 
 ---
 
@@ -357,7 +358,8 @@ This legend was compiled from a full read of the rConfig connection stack in bot
 | YAML parser | `symfony/yaml` v8.1.2 |
 | Evidence file | `legend-evidence.md` |
 
-Coverage: 46 keys across 7 top-level sections. Core reads 33 of them. The 13 that are Pro only
+Coverage: 46 keys across 7 top-level sections. Core reads 33 of them, set out row by row in
+[EDITIONS.md](EDITIONS.md). The 13 that are Pro only
 are the four TL1 keys, the three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`,
 `promptSyncTimeout`, and the three `failure_criteria` keys.
 

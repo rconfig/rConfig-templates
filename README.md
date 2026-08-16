@@ -38,6 +38,7 @@ where the commands live, they are Command Groups, attached to the device, not th
 | [docs/TEMPLATES.md](docs/TEMPLATES.md) | The legend. Every key, what it means, what values it takes, which protocols read it |
 | [docs/ORDER-OF-OPERATIONS.md](docs/ORDER-OF-OPERATIONS.md) | When each key fires during a session, per protocol, plus debugging by stage |
 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | Naming, headers, content rules and how to submit |
+| [docs/EDITIONS.md](docs/EDITIONS.md) | Which template capabilities work on Core and which need Pro |
 | [docs/MIGRATION.md](docs/MIGRATION.md) | Old path to new path for the 2026 restructure |
 | [docs/noninteractive-ssh.md](docs/noninteractive-ssh.md) | The SSH non-interactive shell mode |
 
