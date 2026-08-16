@@ -29,8 +29,6 @@ Find and update the following line. There are no hard recommendations, but if yo
 memory_limit = 256M
 ```
 
-Essentially, the best practice for v6 users is to use the attached SSH templates and enable your firewalls for SSH also. 
-
 Other PA implementations require a special login sequence so an edit to the connection template enableCmd parameter is required. instead of the follow sequence, 
 ```bash
   enable: off

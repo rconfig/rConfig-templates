@@ -9,8 +9,6 @@ There are known problems with scripts and automation software connecting to HP P
 
 > hp-procurve-telnet-noenable.yml - NOT supported on rConfig v6, should work on v3
 
-Essentially, the best practice for v6 users is to use the SSH template and enable your switches for SSH also. This protocol is fully tested and support on rConfig v6
-
 ## Which ProCurve template to use
 
 `hp-procurve-ssh-noenable.yml` is the standard choice. Start here.
