@@ -16,41 +16,40 @@ This document covers what each key means. For when each key fires during a sessi
 
 ---
 
-## The on/off trap, read this first
+## Switch values: use on and off
 
-rConfig parses templates with `symfony/yaml` v8.1.2, which follows YAML 1.2. That means:
+**Write `on` and `off` for every switch key. Use `yes` where a key documents that spelling.**
+Quoted or unquoted is equivalent, so pick one style and keep to it.
+
+rConfig parses templates with `symfony/yaml` v8.1.2, which follows YAML 1.2:
 
 ```yaml
 paging: on       # string "on"
 paging: "on"     # string "on"     - identical to the line above
 enable: yes      # string "yes"
-enable: true     # BOOLEAN true    - NOT the string "true"
 paging: off      # string "off"
 paging: no       # string "no"
+
+enable: true     # boolean true, not the string "true"
 ```
 
-`on`, `off`, `yes` and `no` stay **strings** whether you quote them or not. Only `true`, `false`,
-`null` and `~` become non-strings.
+`on`, `off`, `yes` and `no` are read as **strings** whether or not you quote them. `true`, `false`,
+`null` and `~` are read as their YAML types.
 
-Nearly every switch in the connection code compares against the **string** `"on"` or `"yes"`, and
-several of those comparisons are strict. So a YAML boolean does not match, and the behaviour you
-asked for silently does not happen. There is no warning and no log line.
+The connection code compares switch keys against the strings `"on"` and `"yes"`, and several of
+those comparisons are strict. Keeping to `on` and `off` means every switch key behaves the same
+way, and each one does what the template says.
 
-Worse, the failure is not even consistent between keys:
+For reference, a YAML boolean is evaluated differently depending on the key:
 
-| You write | What happens |
+| Written as | Result |
 | --- | --- |
-| `paging: true` | Paging is **not** disabled. The comparison is strict, `true` is not `"on"`. |
-| `enable: true` | Enable mode **is** entered. The comparison is loose, and a boolean comparison casts the other side to boolean. |
+| `paging: true` | Paging stays enabled. The comparison is strict, and `true` is not `"on"`. |
+| `enable: true` | Enable mode is entered. The comparison is loose, and PHP casts the other side to boolean. |
 
-Two keys, the same mistake, opposite outcomes.
-
-**The rule: always write `on` or `off` (or `yes` where a key expects it). Never write `true` or
-`false` in a connection template.** Quoted or unquoted makes no difference, so pick one and stay
-consistent.
-
-Keys affected: `enable`, `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`, `sshInteractive`,
-`syncToPromptOnLogin`, `hasSplashScreen`, `hasSplashScreenEnterKey`, `enableUsername`.
+Both lines are valid YAML, so this is settled by convention rather than by the parser. The switch
+keys are `enable`, `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`, `sshInteractive`,
+`syncToPromptOnLogin`, `hasSplashScreen`, `hasSplashScreenEnterKey` and `enableUsername`.
 
 ---
 
@@ -65,9 +64,10 @@ of the resulting array. How a key is read determines what happens when it is mis
 | Null-coalesced (`?? x`) | Falls back to the stated default | **Optional**, default shown |
 | Guarded by `isset()` | Falls back to `null` | **Optional**, default `null` |
 
-So "mandatory" does not mean rConfig refuses to run. It means the key is read without a guard: a
-template that omits it produces a PHP warning and then behaves unpredictably rather than failing
-cleanly. Always supply every mandatory key.
+"Mandatory" here describes how the key is read rather than a schema rule rConfig enforces. A
+mandatory key is read without a guard, so supplying it is what keeps the template's behaviour
+defined. Include every mandatory key for the protocol you are writing, and the tables below tell
+you which those are.
 
 ---
 
