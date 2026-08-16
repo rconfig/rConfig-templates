@@ -10,8 +10,8 @@
 
   <!-- Shields.io badges -->
   <p align="center">
-    <img src="https://img.shields.io/badge/vendors-40-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
-    <img src="https://img.shields.io/badge/templates-71-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
+    <img src="https://img.shields.io/badge/vendors-37-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+    <img src="https://img.shields.io/badge/templates-68-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
   </p>
 
   <p align="center">
@@ -66,7 +66,7 @@ Every template declares a status in its header.
 | `community-tested` | Someone ran it against real hardware and reported the result |
 | `untested-starter` | A best guess at the right shape, not yet run against real hardware |
 
-**12 templates are currently `untested-starter`.** If you have the hardware, running one and
+**9 templates are currently `untested-starter`.** If you have the hardware, running one and
 filing a
 [template test report](https://github.com/rconfig/rConfig-templates/issues/new?template=template-test-report.yml)
 is the single most valuable small contribution you can make here. Reports are welcome whether the
