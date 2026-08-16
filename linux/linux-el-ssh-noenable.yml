@@ -1,8 +1,11 @@
-# rConfig connection template – DO NOT EDIT DIRECTLY
-## Template Notes:
-## - All free text values must be wrapped in double quotes: " "
-## - Documentation: https://docs.rconfig.com/devices/templates/
-## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: centos-7-ssh.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
 
 main:
   name: "Linux EL - SSH - No Enable"

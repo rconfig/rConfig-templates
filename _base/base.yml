@@ -1,8 +1,10 @@
-# rConfig connection template – DO NOT EDIT DIRECTLY
-## Template Notes:
-## - All free text values must be wrapped in double quotes: " "
-## - Documentation: https://docs.rconfig.com/devices/templates/
-## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+# rConfig connection template
+## Edition: core
+## Status: rconfig-verified
+## Tested-on: rConfig V6, V7 and V8, Core and Pro
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
 
 main:
   name: "Name of Template"                          # Template name (make it unique and descriptive)
@@ -11,7 +13,7 @@ main:
 connect:
   timeout: 5                                        # Connection timeout (in seconds)
   protocol: telnet                                  # Connection protocol: 'telnet' or 'ssh'
-  port: 23                                          # Port number (range: 1–65535)
+  port: 23                                          # Port number (range: 1-65535)
 
 auth:
   username: "Username:"                             # CLI prompt for username

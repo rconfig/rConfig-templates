@@ -1,8 +1,11 @@
-# rConfig connection template – DO NOT EDIT DIRECTLY
-## Template Notes:
-## - All free text values must be wrapped in double quotes: " "
-## - Documentation: https://docs.rconfig.com/devices/templates/
-## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: avaya-4526gtx-telnet-noenable.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
 
 main:
   name: "Avaya ERS - TELNET - No Enable"        # Template name for Avaya 4526GTX device
@@ -11,7 +14,7 @@ main:
 connect:
   timeout: 60                                       # Connection timeout (in seconds)
   protocol: telnet                                  # Connection protocol: 'telnet' or 'ssh'
-  port: 23                                          # Port number (range: 1–65535)
+  port: 23                                          # Port number (range: 1-65535)
 
 auth:
   username: "Enter Username:"                       # CLI prompt for username

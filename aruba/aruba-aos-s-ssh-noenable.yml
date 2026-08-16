@@ -1,8 +1,11 @@
-# rConfig connection template – DO NOT EDIT DIRECTLY
-## Template Notes:
-## - All free text values must be wrapped in double quotes: " "
-## - Documentation: https://docs.rconfig.com/devices/templates/
-## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+# rConfig connection template
+## Edition: core
+## Status: community-tested
+## Tested-on: rConfig V6, V7 and V8
+## Replaces: Aruba2930F-SSH-NoEnable.yml
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
 
 main:
   name: "Aruba AOS-S - SSH - No Enable"                  # Unique name for Aruba 2930F devices
@@ -11,7 +14,7 @@ main:
 connect:
   timeout: 5                                        # Connection timeout (in seconds)
   protocol: ssh                                     # Connection protocol: 'ssh' or 'telnet'
-  port: 22                                          # Port number (range: 1–65535)
+  port: 22                                          # Port number (range: 1-65535)
 
 auth:
   username: "Username:"                             # CLI prompt for username
