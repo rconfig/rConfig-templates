@@ -27,7 +27,7 @@ because they are Ciena device templates, but TL1 itself is Pro only.
 | `protocol: telnet` | Yes | Yes | |
 | `protocol: script` (Script Integration Engine) | No | Yes | Templates and example scripts live in `pro-features/sie/` |
 | `protocol: tl1` | No | Yes | The two templates live in `ciena/` because they are Ciena device templates, but the protocol is Pro only |
-| Inbound-only devices (`xftp` / `ftp`) | No | Yes | The device pushes its configuration in rather than rConfig connecting out. `xftp` is the canonical value on releases after 8.3.2; `ftp` is the value on 8.3.2 and earlier. See `pro-features/xftp/` |
+| Inbound-only devices (`xftp` / `ftp`) | No | Yes | The device pushes its configuration in rather than rConfig connecting out. `xftp` is the canonical value on releases after 8.3.2; `ftp` is the value on 8.3.2 and earlier. See [pro-features/xftp/README.md](../pro-features/xftp/README.md) |
 | Protocol fallback (`fallbackProtocol`, `fallbackPort`, `probeTimeout`) | No | Yes | Resolves which protocol a device actually answers on, then caches it. No shipped template uses these keys yet |
 | Prompt sync on login (`syncToPromptOnLogin`, `promptSyncTimeout`) | No | Yes | The fix for output appearing under the wrong command |
 | `auth.sshPrivKey` | **Not supported** | Yes | Code to read this key is present in Core, but private key authentication is supported on Pro only. This is a support position, not a code gate: it may appear to work in Core and is still not supported there. The template lives in `pro-features/ssh-private-key/` |
