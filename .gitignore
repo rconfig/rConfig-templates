@@ -1,8 +1,5 @@
-/nbproject/private/
-.vscode/
 .idea/
 .DS_Store
 .todo
 __pycache__/
 *.pyc
-V2-ACTION-PLAN.md
