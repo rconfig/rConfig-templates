@@ -30,7 +30,5 @@ config:
   paging: on                              # CLI paging enabled
   pagingCmd: "no cli pager session"       # Disable paging
   resetPagingCmd: "cli pager session"     # Re-enable paging
-  pagerPrompt: ""                         # DEPRECATED: This value is ignored
-  pagerPromptCmd: ""                      # DEPRECATED: This value is ignored
   saveConfig: "commit"                    # Save configuration command
   exitCmd: "exit"                         # Exit command

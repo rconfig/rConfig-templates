@@ -30,7 +30,5 @@ config:
   paging: on                                        # Set to 'on' to disable CLI paging
   pagingCmd: "screen-length disable"                # Command to disable paging
   resetPagingCmd: "undo screen-length "             # Command to re-enable paging
-  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
-  pagerPromptCmd: " "                               # DEPRECATED: This value is no longer used
   saveConfig: "wr mem"                              # Command to save running config
   exitCmd: "quit"                                   # Command to end session

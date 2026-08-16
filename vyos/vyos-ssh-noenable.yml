@@ -29,7 +29,5 @@ config:
   paging: on                                       # Disable CLI paging? Set 'on' or 'off'
   pagingCmd: "set terminal length 0"                    # Command to disable paging
   resetPagingCmd: "set terminal length 40"              # Command to re-enable paging (optional)
-  pagerPrompt: ""                                   # DEPRECATED: This value is ignored
-  pagerPromptCmd: " "                               # DEPRECATED: This value is ignored
   saveConfig: "save"                              # Command to save running config
   exitCmd: "exit"                                   # Command to exit session

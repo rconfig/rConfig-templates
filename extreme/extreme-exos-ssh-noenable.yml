@@ -28,9 +28,8 @@ auth:
 config:
   linebreak: "n"                          # Linebreak format (default: 'n')
   paging: on                              # CLI paging enabled
+  # Device pager prompt, for reference: "Next page: Space, quit: Q"
   pagingCmd: "disable clipaging"          # Disable paging command
   resetPagingCmd: "disable clipaging"     # Reset paging command
-  pagerPrompt: "Next page: Space, quit: Q"  # DEPRECATED: This value is ignored
-  pagerPromptCmd: " "                     # DEPRECATED: This value is ignored
   saveConfig: " "                         # Save configuration command
   exitCmd: "quit"                         # Exit command

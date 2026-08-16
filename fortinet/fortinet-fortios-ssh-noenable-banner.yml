@@ -31,8 +31,6 @@ config:
   paging: on                                        # Set to 'on' to disable CLI paging
   pagingCmd: "config system console\n set output standard\n end"  # Disable paging command (multi-line)
   resetPagingCmd: ""                                # Optional: Command to re-enable paging
-  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
-  pagerPromptCmd: "     "                           # DEPRECATED: This value is no longer used
   saveConfig: "config system global\n  set cfg-save automatic\n end\n"  # Save configuration command
   exitCmd: "quit\n"                                  # Command to exit the session
 

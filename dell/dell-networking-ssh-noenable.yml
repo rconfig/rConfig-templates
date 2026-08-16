@@ -30,7 +30,5 @@ config:
   paging: on                              # CLI paging enabled
   pagingCmd: "terminal length 0"          # Command to disable paging
   resetPagingCmd: "terminal length 40"    # Command to re-enable paging
-  pagerPrompt: ""                         # DEPRECATED: This value is ignored
-  pagerPromptCmd: " "                     # DEPRECATED: This value is ignored
   saveConfig: "wr mem"                    # Save config command
   exitCmd: "quit"                         # Exit command

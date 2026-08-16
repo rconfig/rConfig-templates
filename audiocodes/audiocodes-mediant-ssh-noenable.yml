@@ -27,7 +27,5 @@ config:
     paging: on
     pagingCmd: "configure system \r\n cli-settings \r\n window-height 0 \r\n exit \r\n exit \r\n"
     resetPagingCmd: ""
-    pagerPrompt: ""
-    pagerPromptCmd: " "
     saveConfig: ""
     exitCmd: "exit"

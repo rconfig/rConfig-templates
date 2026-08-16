@@ -27,9 +27,8 @@ auth:
 config:
   linebreak: "n"                          # Linebreak format (default: 'n')
   paging: on                              # CLI paging enabled
+  # Device pager prompt, for reference: "--More--"
   pagingCmd: "terminal length 0"          # Disable paging command
   resetPagingCmd: "terminal length 40"    # Reset paging command
-  pagerPrompt: "--More--"                 # DEPRECATED: This value is ignored
-  pagerPromptCmd: " "                     # DEPRECATED: This value is ignored
   saveConfig: "wr mem"                    # Save configuration command
   exitCmd: "quit"                         # Exit command

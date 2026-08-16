@@ -30,7 +30,5 @@ config:
   paging: on                              # CLI paging enabled
   pagingCmd: "nno page"                   # DELIBERATE: some HPE firmware swallows the first character after the any-key prompt, so the doubled letter is sacrificial. Do not "fix" this to "no page".
   resetPagingCmd: "page"                  # Reset paging command
-  pagerPrompt: ""                         # DEPRECATED: This value is ignored
-  pagerPromptCmd: ""                      # DEPRECATED: This value is ignored
   saveConfig: "wr mem"                    # Save configuration command
   exitCmd: "quit"                         # Exit command

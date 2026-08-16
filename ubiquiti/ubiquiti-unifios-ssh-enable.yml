@@ -30,7 +30,5 @@ config:
   paging: on
   pagingCmd: "terminal length 0"
   resetPagingCmd: "terminal length 40"
-  pagerPrompt: ""
-  pagerPromptCmd: ""
   saveConfig: "wr mem"
   exitCmd: "quit"

@@ -30,8 +30,6 @@ config:
   paging: on                                        # Disable paging? 'on' disables it, 'off' keeps it
   pagingCmd: "paginate false"                       # Command to disable paging
   resetPagingCmd: "paginate true"                   # Command to re-enable paging
-  pagerPrompt: ""                                   # DEPRECATED: This value is no longer used
-  pagerPromptCmd: " "                               # DEPRECATED: This value is no longer used
   saveConfig: "wr mem"                              # Command to save running configuration
   exitCmd: "quit"                                   # Command to end the session
 

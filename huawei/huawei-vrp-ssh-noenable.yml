@@ -30,7 +30,5 @@ config:
   paging: on                              # CLI paging enabled
   pagingCmd: "screen-length 0 temporary"  # Disable paging command
   resetPagingCmd: "screen-length 40 temporary"  # Reset paging command
-  pagerPrompt: ""                         # DEPRECATED: This value is ignored
-  pagerPromptCmd: ""                      # DEPRECATED: This value is ignored
   saveConfig: "save"                      # Save configuration command
   exitCmd: "quit"                         # Exit command

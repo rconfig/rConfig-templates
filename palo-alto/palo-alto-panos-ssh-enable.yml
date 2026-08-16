@@ -30,8 +30,6 @@ config:
   paging: off
   pagingCmd: "set cli scripting-mode on\nset cli pager off" # Disable paging command
   resetPagingCmd: "set cli scripting-mode off\nset cli pager on" # Reset paging command
-  pagerPrompt: "" # DEPRECATED: This value is ignored
-  pagerPromptCmd: "" # DEPRECATED: This value is ignored
   saveConfig: "commit" # Save configuration command
   exitCmd: "quit" # Exit command
 

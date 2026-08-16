@@ -30,7 +30,5 @@ config:
   paging: on                              # CLI paging enabled
   pagingCmd: "set cli screen-length 0"    # Disable paging command
   resetPagingCmd: "set cli screen-width 1024"  # Reset paging command
-  pagerPrompt: ""                         # DEPRECATED: This value is ignored
-  pagerPromptCmd: ""                      # DEPRECATED: This value is ignored
   saveConfig: "commit"                    # Save configuration command
   exitCmd: "exit"                         # Exit command

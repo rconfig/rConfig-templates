@@ -28,8 +28,6 @@ config:
   paging: off
   pagingCmd: ""
   resetPagingCmd: ""
-  pagerPrompt: ""
-  pagerPromptCmd: ""
   saveConfig: ""
   exitCmd: ""
 vt100:

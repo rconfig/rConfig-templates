@@ -22,6 +22,7 @@ This is a living section. It is seeded now and extended as standards are adopted
 - Vendor directories are named for the lowercase common short form of the vendor name. Examples: `palo-alto`, `edgecore`, `checkpoint`, `digi`, `rad`.
 - Directories prefixed with an underscore are reserved for non-vendor content that must sort above the vendor listing. `_base` holds the starter template.
 - Commit messages use the plan item prefix `P<phase>.<item>`, for example `P1.1`.
+- `pagerPrompt` and `pagerPromptCmd` are deprecated and must not appear in templates. Both values are ignored.
 - Every adopted standard MUST be added to this file in the same change that adopts it.
 
 ### Template file naming
