@@ -328,8 +328,8 @@ change, not a template change, so it starts before any pull request here.
    numbers removed. The transcript is what makes the request actionable: it shows exactly what
    the device sends and when.
 
-A dedicated issue form is being prepared. Until it lands, open a normal issue on this repository
-including the three items above.
+Open a [new template key request](../.github/ISSUE_TEMPLATE/new-key-request.yml) and the form will
+ask for each of these in turn.
 
 ---
 
