@@ -1,0 +1,24 @@
+# rConfig connection template
+## Edition: pro
+## Status: untested-starter
+## Tested-on: not yet tested, please file a template test report
+## Docs: https://docs.rconfig.com/integrations/script-integration-engine/sie/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+
+main:
+  name: "SIE Workflow - Pre and Post Change Snapshot"
+  desc: "Captures a delimited operational state snapshot over SSH, for running either side of a change window"
+
+connect:
+  timeout: 60                             # Total seconds the script may run
+  idletimeout: 60                         # Idle seconds allowed. Lowercase is the spelling the code reads
+  protocol: script                        # Protocol type (script for SIE)
+
+# exit_codes is deliberately omitted. Omitted means any non-zero exit fails the run, which is
+# what we want. Listing an allowlist would record a crash with an unlisted code as a success.
+failure_criteria:
+  error_patterns:
+    - "ERROR:"
+  success_patterns:
+    - "SIE-OK: snapshot complete"

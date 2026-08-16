@@ -5,7 +5,7 @@ repository root run on both Core and Pro.
 
 | Directory | Feature | What it does |
 | --- | --- | --- |
-| [sie/](sie/) | Script Integration Engine | Runs an external script instead of opening a CLI session, for devices with no usable CLI or where retrieval needs logic a connection template cannot express |
+| [sie/](sie/) | Script Integration Engine | Runs an external script instead of opening a CLI session, for devices with no usable CLI or where retrieval needs logic a connection template cannot express. See [sie/workflows/](sie/workflows/) for worked examples |
 | [ssh-private-key/](ssh-private-key/) | SSH private key authentication | Authenticates with a key from the device credential record rather than a password |
 | [xftp/](xftp/) | Inbound-only devices | Marks a device that pushes its configuration into rConfig. rConfig never connects out to it |
 
