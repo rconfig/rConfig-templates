@@ -8,129 +8,99 @@
 
   <h3 align="center">rConfig - Templates</h3>
 
-  <!-- Shields.io badge -->
+  <!-- Shields.io badges -->
   <p align="center">
-    <img src="https://img.shields.io/badge/vendors-+25-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+    <img src="https://img.shields.io/badge/vendors-40-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+    <img src="https://img.shields.io/badge/templates-71-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
   </p>
 
   <p align="center">
-    This repository stores community-submitted connection templates for use with <a href="https://www.rconfig.com">rConfig</a>, including templates for SSH, Telnet, and Script-based device integrations.
+    Community connection templates for <a href="https://www.rconfig.com">rConfig</a> V8 Core and Pro.
   </p>
 </div>
 <br>
 
-<br>
+## Quick start
 
-### 🔗 Docs & Contribution
-- 📚 Documentation: [Script Integration Engine (SIE)](https://docs.rconfig.com/integrations/script-integration-engine/sie/)
-- 🤝 Submit or browse templates: [rConfig-templates GitHub](https://github.com/rconfig/rConfig-templates)
+1. **Find your vendor directory**, or copy `_base/base.yml` if your vendor is not here yet.
+2. **Import the template into rConfig**, then assign it to the device.
+3. **Attach your retrieval commands to the device in rConfig Command Groups.**
 
-<br>
+That third step matters, because the split is not obvious: **a template handles the connection,
+Command Groups handle the commands.** The template says how to log in, get past the banner, enter
+enable mode and turn paging off. It does not say `show running-config`. If you are looking for
+where the commands live, they are Command Groups, attached to the device, not the template.
 
-## File Structure & Naming Convention
+## Documentation
 
-Each template must reside in a directory named after the device vendor:
+| Document | What it covers |
+| --- | --- |
+| [docs/TEMPLATES.md](docs/TEMPLATES.md) | The legend. Every key, what it means, what values it takes, which protocols read it |
+| [docs/ORDER-OF-OPERATIONS.md](docs/ORDER-OF-OPERATIONS.md) | When each key fires during a session, per protocol, plus debugging by stage |
+| [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) | Naming, headers, content rules and how to submit |
+| [docs/MIGRATION.md](docs/MIGRATION.md) | Old path to new path for the 2026 restructure |
+| [docs/noninteractive-ssh.md](docs/noninteractive-ssh.md) | The SSH non-interactive shell mode |
 
-```
-/cisco/cisco-ios-ssh-enable.yml
-/hp/hp-procurve-telnet-noenable.yml
-```
+## Repository layout
 
-**File naming format**:
 ```text
-vendorName-modelName-connectionType-enableMode.yml
+_base/            Starter template to copy when adding a new vendor
+<vendor>/         One directory per vendor, holding its templates and a README
+docs/             The legend, order of operations, contributing guide, migration map
+scripts/          Header tooling and the template validator
+.github/          Issue forms and the validation workflow
 ```
-**Example**:
+
+Four directories predate the current conventions and are being handled separately:
+`SIE-Base/`, `SIE-Radware/`, `SSH-Private-Key/` and `XFTP/`.
+
+## Template status
+
+Every template declares a status in its header.
+
+| Status | Meaning |
+| --- | --- |
+| `rconfig-verified` | Tested by the rConfig team |
+| `community-tested` | Someone ran it against real hardware and reported the result |
+| `untested-starter` | A best guess at the right shape, not yet run against real hardware |
+
+**12 templates are currently `untested-starter`.** If you have the hardware, running one and
+filing a
+[template test report](https://github.com/rconfig/rConfig-templates/issues/new?template=template-test-report.yml)
+is the single most valuable small contribution you can make here. Reports are welcome whether the
+template worked, needed changes, or failed outright.
+
+## Naming
+
 ```text
-cisco-ios-ssh-enable.yml
-hp-1920-telnet-noenable.yml
+<vendor>-<osfamily>[-<versionqualifier>]-<protocol>-<authmode>[-<variant>].yml
 ```
 
----
+Two real examples from this repository:
 
-## YAML Structure & Descriptors
-
-Each template **must** start with the following docblock:
-```yaml
-# rConfig connection template – DO NOT EDIT DIRECTLY
-## Template Notes:
-## - All free text values must be wrapped in double quotes: " "
-## - Documentation: https://docs.rconfig.com/integrations/script-integration-engine/sie/
-## - Community templates and contributions: https://github.com/rconfig/rConfig-templates
+```text
+cisco/cisco-ios-ssh-enable.yml
+cisco/cisco-ios-telnet-noenable.yml
 ```
 
----
+The vendor prefix repeats the directory name deliberately, because filenames travel without their
+paths. See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for the full rules, including when a
+hardware model belongs in the filename and when it does not.
 
-### `main:`  
-Defines the template's label and a brief description.
-```yaml
-main:
-  name: "Cisco IOS - SSH - Enable"
-  desc: "Cisco IOS SSH based connection with enable mode"
-```
+## Template keys
 
----
+This README carries no key documentation. The full reference lives in
+[docs/TEMPLATES.md](docs/TEMPLATES.md): 46 keys across 7 sections, each with its type, accepted
+values, default, and which protocols read it.
 
-### `connect:`  
-Defines how rConfig connects to the device.
-```yaml
-connect:
-  timeout: 60          # Seconds until connection timeout
-  protocol: ssh        # Protocol (ssh | telnet | script)
-  port: 22             # Port number (1-65535)
-  isNonInteractiveMode: true  # (Optional) Set true for non-interactive SSH
-```
+If your device needs behaviour no existing key can express, open a
+[new key request](https://github.com/rconfig/rConfig-templates/issues/new?template=new-key-request.yml).
 
----
+## Community
 
-### `auth:`  
-Defines authentication and optional elevation behavior.
-```yaml
-auth:
-  username: "Username:"             # Username prompt
-  password: "Password:"             # Password prompt
-  enable: on                        # Enable mode: on | off
-  enableCmd: "enable"               # Command to enter enable mode
-  enablePassPrmpt: "Password:"      # Enable password prompt
-  hpAnyKeyStatus: off               # Required for some HP devices
-  hpAnyKeyPrmpt: "Press any key to continue"  # 'Press any key' prompt
-```
+- Open an [issue](https://github.com/rconfig/rConfig-templates/issues) for a bug, a question, or a template request
+- Join the [rConfig community](https://rconfig.com/community/)
+- Browse the [rConfig documentation](https://docs.rconfig.com/)
 
----
-
-### `config:`  
-Commands related to paging, prompt handling, and session control.
-```yaml
-config:
-  linebreak: "n"                      # Command linebreak type: 'n' or 'r'
-  paging: on                          # Disable device paging: on | off
-  pagingCmd: "terminal length 0"      # Command to disable paging
-  resetPagingCmd: "terminal length 40"  # Command to re-enable paging
-  pagerPrompt: ""                     # Pager prompt (leave blank if not needed)
-  pagerPromptCmd: ""                  # Keystroke to clear pager (leave blank if not needed)
-  saveConfig: "wr mem"                # Save config command
-  exitCmd: "quit"                     # Exit session command
-```
-
----
-
-### `options:` (Optional)  
-Advanced settings, used primarily for legacy or VT100-based terminal environments.
-```yaml
-options:
-  AnsiHost: "yes"                       # Enable ANSI support for VT100 sessions
-  setWindowSize: [240, 2048]           # Terminal width and height
-  setTerminalDimensions: [260, 1000]   # ANSI screen dimensions
-```
-
----
-
-## ✅ Submission Guidelines
-
-- ✅ Use consistent spacing and quotes for all free text fields.
-- ✅ Remove `pagerPrompt` and `pagerPromptCmd` if not required.
-- ❌ Do **not** include unused or commented-out keys.
-- ✅ Test templates before submitting.
-
-
-Thanks for helping grow the rConfig community! If you have questions or suggestions, feel free to [open an issue](https://github.com/rconfig/rConfig-templates/issues) or [join the discussion](https://rconfig.com/community/).
+Thanks for helping grow the rConfig community. Every template here came from someone who had the
+hardware in front of them and took the time to write it down.
