@@ -20,6 +20,29 @@
 </div>
 <br>
 
+## This is not a list of supported vendors
+
+The directories here are the templates people have contributed so far. They are a starting point,
+not the boundary of what rConfig works with.
+
+rConfig connects to networking hardware, IoT and OT devices, servers, appliances and anything else
+that will accept a session or hand over a file. If a device presents a CLI over SSH or telnet, a
+template can drive it. If it does not, rConfig Pro can run a script or accept an inbound file
+push instead.
+
+**If your vendor is not listed, that is not a limitation, it is a gap waiting to be filled.**
+
+- Copy [`_base/base.yml`](_base/base.yml) and adapt it. Most devices need only the prompts, the
+  paging command and the enable mode setting changed. [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md)
+  walks through it
+- Look for a device with a similar CLI. Anything Cisco-like is usually a short edit away
+- Ask for help: [open an issue](https://github.com/rconfig/rConfig-templates/issues) or
+  [contact us through the rConfig community](https://rconfig.com/community/). Tell us the vendor,
+  the model and how you reach it today, and we will help you get a template working
+
+Templates that come back from that process are the ones that grow this library, so please
+contribute yours once it works.
+
 ## Quick start
 
 1. **Find your vendor directory**, or copy `_base/base.yml` if your vendor is not here yet.
