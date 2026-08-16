@@ -22,6 +22,8 @@ auth:
   enable: off                             # Enable mode disabled
   enableCmd: "enable"                     # Enable command (not used)
   enablePassPrmpt: "Password:"            # Enable password prompt (not used)
+  hpAnyKeyStatus: off                     # HP-style 'press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue"  # Prompt string if hpAnyKeyStatus is on
 
 config:
   linebreak: "n"                          # Linebreak format (default: 'n')

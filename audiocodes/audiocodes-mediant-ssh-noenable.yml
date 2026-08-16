@@ -23,9 +23,9 @@ auth:
   hpAnyKeyStatus: off
   hpAnyKeyPrmpt: "Press any key to continue"  
 config:
-    linebreak: "n"
-    paging: on
-    pagingCmd: "configure system \r\n cli-settings \r\n window-height 0 \r\n exit \r\n exit \r\n"
-    resetPagingCmd: ""
-    saveConfig: ""
-    exitCmd: "exit"
+  linebreak: "n"
+  paging: on
+  pagingCmd: "configure system \r\n cli-settings \r\n window-height 0 \r\n exit \r\n exit \r\n"
+  resetPagingCmd: ""
+  saveConfig: ""
+  exitCmd: "exit"

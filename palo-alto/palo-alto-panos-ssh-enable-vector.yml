@@ -22,6 +22,8 @@ auth:
   enable: on
   enableCmd: "set cli pager off\n set cli config-output-format set\n"
   enablePassPrmpt: "Password:" # Enable password prompt (not used)
+  hpAnyKeyStatus: off # HP-style 'press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue" # Prompt string if hpAnyKeyStatus is on
 
 config:
   linebreak: ".*"

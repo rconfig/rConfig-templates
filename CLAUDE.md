@@ -76,6 +76,14 @@ All `.yml` and `.md` files use LF line endings, enforced by `.gitattributes`.
 
 ## Verification
 
-Run `scripts/validate_templates.py` before reporting any template change complete.
+The validator MUST pass before any template change is reported complete.
 
-Note: this script arrives in a later phase. This line is a forward reference.
+```bash
+python3 scripts/validate_templates.py
+python3 scripts/apply_headers.py --check
+```
+
+The validator exits 0 when clean and 1 on any ERROR. Warnings do not fail the run: each one is
+a known deviation with a decision still pending, listed in the temporary allowlist at the top of
+the script. Both commands also run in CI on every push and pull request, see
+`.github/workflows/validate.yml`.

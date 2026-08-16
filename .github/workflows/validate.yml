@@ -1,0 +1,27 @@
+name: "Validate templates"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    name: "Validate templates and headers"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out the repository"
+        uses: actions/checkout@v4
+
+      - name: "Set up Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "Install dependencies"
+        run: pip install pyyaml
+
+      - name: "Validate templates against the legend"
+        run: python3 scripts/validate_templates.py
+
+      - name: "Check standard headers are current"
+        run: python3 scripts/apply_headers.py --check
