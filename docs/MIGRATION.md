@@ -42,8 +42,8 @@ The convention itself is recorded in CLAUDE.md under "Template file naming".
 
 Unchanged: `huawei/`, `linux/`, `nvidia/`, `siemens/`, `vyos/`.
 
-Deferred to a later phase, still uppercase: `SIE-Base/`, `SIE-Radware/`, `SIE-Zyxel/`,
-`SSH-Private-Key/`, `XFTP/`.
+Deferred at the time and moved later: `SIE-Base/`, `SIE-Radware/`, `SIE-Zyxel/`,
+`SSH-Private-Key/`, `XFTP/`. See "Pro directories consolidated" below.
 
 New: `docs/`.
 
@@ -120,9 +120,42 @@ Every template below moved, was renamed, or both.
 | `pfSense/pfSense-ssh.yml` | `pfsense/pfsense-ssh-noenable.yml` |  |
 | `siemens/ruggedcom-ros-ssh-noenable.yml` | `siemens/siemens-ruggedcom-ros-ssh-noenable.yml` |  |
 
-Five templates kept their path unchanged: `SIE-Base/script_template.yml`,
-`SIE-Radware/alteon_expect_script_template.yml`, `SSH-Private-Key/ssh_priv_key_template.yml`,
-`XFTP/xftp-inbound-only.yml`, `vyos/vyos-ssh-noenable.yml`.
+One template kept its path unchanged: `vyos/vyos-ssh-noenable.yml`. Four others were left
+alone at the time and moved later, see "Pro directories consolidated" below.
+
+## Pro directories consolidated
+
+The four Pro directories were left uppercase and un-renamed during the first pass, then moved
+together under a single `pro-features/` tree. Files that broke the naming convention were renamed
+in the same move.
+
+### Directories
+
+| Old | New | Notes |
+| --- | --- | --- |
+| `SIE-Base/` | `pro-features/sie/_base/` | Script Integration Engine starter |
+| `SIE-Radware/` | `pro-features/sie/radware/` | |
+| `SIE-Zyxel/` | `pro-features/sie/zyxel/` | |
+| `SSH-Private-Key/` | `pro-features/ssh-private-key/` | |
+| `XFTP/` | `pro-features/xftp/` | |
+
+### Files
+
+| Old path | New path | Notes |
+| --- | --- | --- |
+| `SIE-Base/script_template.yml` | `pro-features/sie/_base/script_template.yml` | Filename kept. It is the SIE starter, the same exception class as `_base/base.yml` |
+| `SIE-Base/README.md` | `pro-features/sie/_base/README.md` | |
+| `SIE-Radware/alteon_expect_script_template.yml` | `pro-features/sie/radware/radware-alteon-script-template.yml` | Renamed to the convention |
+| `SIE-Radware/alteon_cdump_test_script.exp` | `pro-features/sie/radware/alteon-cdump-test-script.exp` | Renamed to the convention |
+| `SIE-Radware/README.md` | `pro-features/sie/radware/README.md` | |
+| `SIE-Zyxel/zyxel_gs1900_ssh.exp` | `pro-features/sie/zyxel/zyxel-gs1900-ssh.exp` | Renamed to the convention |
+| `SIE-Zyxel/README.md` | `pro-features/sie/zyxel/README.md` | |
+| `SSH-Private-Key/ssh_priv_key_template.yml` | `pro-features/ssh-private-key/ssh-private-key-template.yml` | Renamed to the convention |
+| `SSH-Private-Key/README.md` | `pro-features/ssh-private-key/README.md` | |
+| `XFTP/xftp-inbound-only.yml` | `pro-features/xftp/xftp-inbound-only.yml` | Content untouched. Its `protocol` value remains a separate open decision |
+
+Three of the moved READMEs were stored with CRLF line endings and were normalised to LF by
+`.gitattributes` during the move. No text changed.
 
 ## Removed
 

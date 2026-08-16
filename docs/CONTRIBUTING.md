@@ -158,8 +158,8 @@ avaya/avaya-ers-ssh-noenable-vector.yml
 avaya/avaya-ers-telnet-noenable.yml
 fortinet/fortinet-fortios-ssh-noenable-banner.yml
 siemens/siemens-ruggedcom-ros-ssh-noenable.yml
-SIE-Base/script_template.yml
-SIE-Radware/alteon_expect_script_template.yml
+pro-features/sie/_base/script_template.yml
+pro-features/sie/radware/radware-alteon-script-template.yml
 ```
 
 For everything else, reformat is safe. Run the validator afterwards either way.

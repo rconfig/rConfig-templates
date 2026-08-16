@@ -297,7 +297,7 @@ separate change, not covered by this document.**
 | Key | Section | Files carrying it | Why it does nothing |
 | --- | --- | --- | --- |
 | `ctrlYLogin` | `connect` | `avaya/avaya-ers-ssh-noenable-vector.yml` | The name does not occur anywhere in either codebase. That device's control-code login is actually driven by its `vt100` section |
-| `idleTimeout` | `connect` | `SIE-Base/script_template.yml`, `SIE-Radware/alteon_expect_script_template.yml` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so this never matches and the 30 second default always applies |
+| `idleTimeout` | `connect` | `pro-features/sie/_base/script_template.yml`, `pro-features/sie/radware/radware-alteon-script-template.yml` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so this never matches and the 30 second default always applies |
 | `linebreak` inside `auth` | `auth` | `hp/hp-1920-ssh-enable.yml` | rConfig only ever reads `config.linebreak`. Misplaced into the wrong section, and `config.linebreak` is itself unused |
 
 Three distinct keys across four files.

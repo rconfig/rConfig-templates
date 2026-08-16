@@ -34,10 +34,10 @@ POLICY_LEGACY = ("community-tested", "rConfig V6, V7 and V8")
 
 # Pro directory files. These need human review, see the P3.2 report.
 POLICY_PRO = {
-    "SIE-Base/script_template.yml": ("rconfig-verified", "rConfig V8 Pro"),
-    "SIE-Radware/alteon_expect_script_template.yml": ("community-tested", "rConfig V8 Pro"),
-    "SSH-Private-Key/ssh_priv_key_template.yml": ("community-tested", "rConfig V6, V7 and V8"),
-    "XFTP/xftp-inbound-only.yml": ("untested-starter", "rConfig V8"),
+    "pro-features/sie/_base/script_template.yml": ("rconfig-verified", "rConfig V8 Pro"),
+    "pro-features/sie/radware/radware-alteon-script-template.yml": ("community-tested", "rConfig V8 Pro"),
+    "pro-features/ssh-private-key/ssh-private-key-template.yml": ("community-tested", "rConfig V6, V7 and V8"),
+    "pro-features/xftp/xftp-inbound-only.yml": ("untested-starter", "rConfig V8"),
 }
 # TL1 is a Pro only protocol and postdates V6, so the legacy string does not apply.
 POLICY_TL1 = ("community-tested", "rConfig V8 Pro")

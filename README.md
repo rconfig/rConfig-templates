@@ -46,13 +46,14 @@ where the commands live, they are Command Groups, attached to the device, not th
 ```text
 _base/            Starter template to copy when adding a new vendor
 <vendor>/         One directory per vendor, holding its templates and a README
+pro-features/     Pro-only material: sie/, ssh-private-key/, xftp/
 docs/             The legend, order of operations, contributing guide, migration map
 scripts/          Header tooling and the template validator
 .github/          Issue forms and the validation workflow
 ```
 
-Four directories predate the current conventions and are being handled separately:
-`SIE-Base/`, `SIE-Radware/`, `SSH-Private-Key/` and `XFTP/`.
+Pro-only material lives under `pro-features/`: the Script Integration Engine templates and
+example scripts, the SSH private key template, and the xFTP inbound-only template.
 
 ## Template status
 

@@ -113,10 +113,10 @@ COMMUNITY = "https://github.com/rconfig/rConfig-templates"
 # Filenames that predate the convention and are handled in a later phase.
 FILENAME_EXCEPTIONS = {
     "_base/base.yml",
-    "SIE-Base/script_template.yml",
-    "SIE-Radware/alteon_expect_script_template.yml",
-    "SSH-Private-Key/ssh_priv_key_template.yml",
-    "XFTP/xftp-inbound-only.yml",
+    "pro-features/sie/_base/script_template.yml",
+    "pro-features/sie/radware/radware-alteon-script-template.yml",
+    "pro-features/ssh-private-key/ssh-private-key-template.yml",
+    "pro-features/xftp/xftp-inbound-only.yml",
 }
 
 # ---------------------------------------------------------------------------
@@ -131,15 +131,15 @@ FILENAME_EXCEPTIONS = {
 ALLOWLIST_KEYS = {
     ("avaya/avaya-ers-ssh-noenable-vector.yml", "connect", "ctrlYLogin"):
         "no code reads this key, pending Phase 5 decision",
-    ("SIE-Base/script_template.yml", "connect", "idleTimeout"):
+    ("pro-features/sie/_base/script_template.yml", "connect", "idleTimeout"):
         "code reads 'idletimeout' all lowercase, pending Phase 5 decision",
-    ("SIE-Radware/alteon_expect_script_template.yml", "connect", "idleTimeout"):
+    ("pro-features/sie/radware/radware-alteon-script-template.yml", "connect", "idleTimeout"):
         "code reads 'idletimeout' all lowercase, pending Phase 5 decision",
     ("hp/hp-1920-ssh-enable.yml", "auth", "linebreak"):
         "misplaced, only config.linebreak is ever read, pending Phase 5 decision",
 }
 ALLOWLIST_PROTOCOLS = {
-    ("XFTP/xftp-inbound-only.yml", "xftp"):
+    ("pro-features/xftp/xftp-inbound-only.yml", "xftp"):
         "no dispatcher branch accepts this value, pending Phase 5 decision",
 }
 
