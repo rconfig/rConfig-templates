@@ -18,7 +18,7 @@ Sets the number of columns and rows for the terminal window size. setTerminalDim
     setTerminalDimensions: [260, 1000]
 ```
 
-> panos-ssh-9x.yml - Fully tested and supported on rConfig v6
+> palo-alto-panos-9x-ssh-noenable.yml - Fully tested and supported on rConfig v6
 
 For Palo Altos with very large configurations, you may need to increase the setTerminalDimensions 2nd value from 1000, to a value that represents the number of lines. We have seen increases up to 50000. If this value does need to be increased, you may need to increase the PHP server memory limit also to cope with the large downloads. 
 

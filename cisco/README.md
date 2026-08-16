@@ -6,7 +6,7 @@ A single qupte, greater than and single quote. This will ensure you get a full b
 # Cisco WLC Controllers
 There are known problems with scripts and automation software connecting to Cisco WLC Controllers due to their implementation of SSH/ Telnet protocols in their software.
 
-> You may only use the ciscowlc-ssh-noenable.yml template in this repository.
+> You may only use the cisco-wlc-ssh-noenable.yml template in this repository.
 
 > You may only use SSH, please configure your devices accordingly.
 

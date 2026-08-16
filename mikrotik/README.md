@@ -3,11 +3,11 @@
 
 Mikrotik devices require some special configurations to work with rConfig due to the peculiar nature of their CLI implementation.
 
-> mikrotek-ssh-noenable_v2.yml - Fully tested and supported on rConfig v6
+> mikrotik-routeros-ssh-noenable.yml - Fully tested and supported on rConfig v6
 
 1. The device username must have '+cte' appended to it i.e. ```admin+cte```. This is in all cases. See vendor information here [https://wiki.mikrotik.com/wiki/Manual:Console_login_process#Console_login_options](https://wiki.mikrotik.com/wiki/Manual:Console_login_process#Console_login_options)
 
-2. The template, per example in this repo, must have the command per below in the Config section. Please use the updated *mikrotik-ssh-noenable_v2.yml* template first. This template has been validated in our lab. If this fails, fall back to the original template. 
+2. The template, per example in this repo, must have the command per below in the Config section. Please use the updated *mikrotik-routeros-ssh-noenable.yml* template first. This template has been validated in our lab. If this fails, fall back to the original template. 
 
 3. When adding the device in rConfig, Core or Professional, please input a prompt in the 'Main Prompt' field, but this actually not used. Again, due to the peculiar nature of their CLI implementation, rConfig actually strips out the prompt. rConfig waits for the template timeout to send the next command to the device. 
 
@@ -21,7 +21,7 @@ The specific command for Mikrotik devices, in the v2 template is below.
 ```
 
 
-Information below related to *mikrotik-ssh-noenable.yml* - which is not the preferred template for Mikrotik RouterOS based devices.
+If you see garbled output or display issues with RouterOS devices, the following options block can be added to the template:
 
 Some commands issued to a terminal may yield ANSI escape codes. eg. ^[[H. These provide the terminal with information on the formating of the characters and their positioning.
 Set connection to use ANSI decoded for older VT100 term emulator based consoles such as HP switches.
