@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 A major version here means paths changed. Every rename and deletion is mapped in
 [docs/MIGRATION.md](docs/MIGRATION.md).
 
+## [Unreleased]
+
+### Added
+- `extreme/extreme-nos-ssh-noenable.yml`, for the Brocade derived NOS and SLX-OS CLIs, which
+  disable paging with `terminal length 0` rather than the EXOS `disable clipaging`.
+- `extreme/README.md`, explaining which of the two Extreme templates to use and how to tell the
+  families apart.
+
 ## [2.0.0] - 2026-08-16
 
 The 2026 restructure. **Every template path changed.** Pin a tag rather than tracking a branch,

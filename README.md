@@ -11,7 +11,7 @@
   <!-- Shields.io badges -->
   <p align="center">
     <img src="https://img.shields.io/badge/vendors-37-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
-    <img src="https://img.shields.io/badge/templates-68-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
+    <img src="https://img.shields.io/badge/templates-69-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
   </p>
 
   <p align="center">
