@@ -60,6 +60,7 @@ ALLOWED = {
         "protocol", "port", "timeout", "isNonInteractiveMode", "idletimeout",
         "sshAuth", "tl1Transport", "tl1Gateway", "tl1NeighbourCmd",
         "fallbackProtocol", "fallbackPort", "probeTimeout",
+        "kexOverride", "kexAlgorithms",
     },
     "auth": {
         "username", "password", "enable", "enableCmd", "enablePassPrmpt",
@@ -103,7 +104,7 @@ MANDATORY = {
 KNOWN_PROTOCOLS = set(MANDATORY)
 
 # Keys whose value must be the string "on" or "off", never a YAML boolean.
-ONOFF_KEYS = [("auth", "enable"), ("config", "paging"), ("auth", "hpAnyKeyStatus")]
+ONOFF_KEYS = [("auth", "enable"), ("config", "paging"), ("auth", "hpAnyKeyStatus"), ("connect", "kexOverride")]
 
 # Header
 HEADER_TITLE = "# rConfig connection template"

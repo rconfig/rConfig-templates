@@ -27,7 +27,7 @@ Entry point `SSHConnectionManager::SSHConnectionAndOutput()`, `SSH/SSHConnection
 | --- | --- | --- | --- |
 | 1 | Build the parameters object from the template and device record | all sections | `SSH/Connect.php:81-152` |
 | 2 | Port sanity check | `connect.port` | `SSH/Connect.php:156,170-177` |
-| 3 | Open the SSH socket | `connect.port`, `connect.timeout` | `SSH/Connect.php:157` |
+| 3 | Open the SSH socket, then restrict the KEX algorithm list if the template opts in | `connect.port`, `connect.timeout`, `connect.kexOverride`, `connect.kexAlgorithms` | `SSH/Connect.php:164-165,181-188` |
 | 4 | Apply the terminal window size | `options.setWindowSize` | `SSH/Connect.php:158-160` |
 | 5 | Stash the ANSI terminal dimensions for later | `options.setTerminalDimensions` | `SSH/Connect.php:161-163` |
 | 6 | Escape `~` in every value that will be used as a regex | `config.pagingCmd`, `auth.enableCmd`, `auth.enablePassPrmpt`, device prompt | `SSH/Login.php:281-287` |
