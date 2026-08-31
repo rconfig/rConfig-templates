@@ -15,6 +15,9 @@ A major version here means paths changed. Every rename and deletion is mapped in
   disable paging with `terminal length 0` rather than the EXOS `disable clipaging`.
 - `extreme/README.md`, explaining which of the two Extreme templates to use and how to tell the
   families apart.
+- `juniper/juniper-junos-ssh-noenable-kex.yml`, adding the new `kexOverride` /
+  `kexAlgorithms` connect keys to force a legacy KEX algorithm list for JunOS devices
+  that don't negotiate cleanly against phpseclib's modern defaults.
 
 ## [2.0.0] - 2026-08-16
 
