@@ -19,3 +19,4 @@ connect:
   sshAuth: none                                     # Ignored when tl1Transport: telnet (no transport auth)
   tl1Gateway: "on"                                  # GNE only: discover RNEs behind this node via RTRV-NBR ('on'/'off')
   tl1NeighbourCmd: "RTRV-NBR:ALL"                   # Neighbour-discovery command (TID/AID composable)
+  tl1MaxConnections: 20                             # GNE only: max concurrent TL1 sessions rConfig opens to this node
