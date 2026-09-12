@@ -1,0 +1,61 @@
+name: "Sync master to main"
+
+# Runs after a pull request is merged, not while it is open: a pull_request
+# trigger fires before the merge, when main has not moved yet.
+#
+# master exists only because this repository was renamed from master to main.
+# Older documentation and raw file URLs still point at .../master/..., and an
+# out-of-date master is worse than a deleted one: those links keep working while
+# quietly serving stale templates. This keeps the two identical so that cannot
+# happen.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+# One run at a time. Two pushes landing together could otherwise race and leave
+# master pointing at the older of the two.
+concurrency:
+  group: sync-master
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    name: "Fast-forward master to main"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out the repository"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "Fast-forward master to main"
+        run: |
+          set -euo pipefail
+
+          # A plain push, deliberately: git refuses a non-fast-forward by default,
+          # so this can only ever move master forward along main's history. If
+          # someone has committed directly to master the push is rejected and this
+          # job fails loudly, rather than force-pushing their work away.
+          if ! git push origin origin/main:refs/heads/master; then
+            echo "::error::Could not fast-forward master to main. It has diverged, most likely from a commit made directly to master. Reconcile by hand; do not force-push without checking what is on it."
+            exit 1
+          fi
+
+      - name: "Confirm the two branches match"
+        run: |
+          set -euo pipefail
+          git fetch origin main master
+          main_sha="$(git rev-parse origin/main)"
+          master_sha="$(git rev-parse origin/master)"
+          echo "main:   $main_sha"
+          echo "master: $master_sha"
+          if [ "$main_sha" != "$master_sha" ]; then
+            echo "::error::master does not match main after the sync."
+            exit 1
+          fi
+          echo "master is in sync with main."

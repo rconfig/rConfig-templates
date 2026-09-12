@@ -91,8 +91,13 @@ from it or merged into it directly. It exists because this repository was rename
 to `main`, and older documentation, bookmarks and raw file URLs still point at
 `.../rConfig-templates/master/...`. Deleting it breaks those links.
 
-**Keep it in sync when `main` moves**, otherwise those old links silently start serving stale
-templates, which is worse than them breaking outright:
+It is kept in sync automatically. [`.github/workflows/sync-master.yml`](.github/workflows/sync-master.yml)
+fast-forwards `master` whenever `main` moves, because an out-of-date `master` is worse than a
+missing one: those old links keep working while quietly serving stale templates.
+
+The sync is fast-forward only. If it ever fails, someone has committed directly to `master` and
+the two have diverged. Check what is on it before reconciling, and do not force-push. To sync by
+hand, or to seed the branch if it is ever deleted again:
 
 ```bash
 git push origin origin/main:refs/heads/master
