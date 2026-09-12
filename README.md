@@ -82,6 +82,22 @@ scripts/          Header tooling and the template validator
 Pro-only material lives under `pro-features/`: the Script Integration Engine templates and
 example scripts, the SSH private key template, and the xFTP inbound-only template.
 
+## Branches
+
+`main` is the default branch. Work lands on `dev` and is merged to `main` from there.
+
+`master` is kept as a mirror of `main`. It carries no unique work and nothing should be branched
+from it or merged into it directly. It exists because this repository was renamed from `master`
+to `main`, and older documentation, bookmarks and raw file URLs still point at
+`.../rConfig-templates/master/...`. Deleting it breaks those links.
+
+**Keep it in sync when `main` moves**, otherwise those old links silently start serving stale
+templates, which is worse than them breaking outright:
+
+```bash
+git push origin origin/main:refs/heads/master
+```
+
 ## Template status
 
 Every template declares a status in its header.
