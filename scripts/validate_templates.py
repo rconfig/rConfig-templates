@@ -51,14 +51,14 @@ LEGEND = "docs/TEMPLATES.md"
 NEW_KEY_PROCESS = "see 'Requesting a new key' in " + LEGEND
 
 # ---------------------------------------------------------------------------
-# The legend: 46 keys across 7 sections, from docs/TEMPLATES.md
+# The legend: 47 keys across 7 sections, from docs/TEMPLATES.md
 # ---------------------------------------------------------------------------
 
 ALLOWED = {
     "main": {"name", "desc"},
     "connect": {
         "protocol", "port", "timeout", "isNonInteractiveMode", "idletimeout",
-        "sshAuth", "tl1Transport", "tl1Gateway", "tl1NeighbourCmd",
+        "sshAuth", "tl1Transport", "tl1Gateway", "tl1NeighbourCmd", "tl1MaxConnections",
         "fallbackProtocol", "fallbackPort", "probeTimeout",
         "kexOverride", "kexAlgorithms",
     },

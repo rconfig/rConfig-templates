@@ -118,7 +118,7 @@ hardware model belongs in the filename and when it does not.
 ## Template keys
 
 This README carries no key documentation. The full reference lives in
-[docs/TEMPLATES.md](docs/TEMPLATES.md): 46 keys across 7 sections, each with its type, accepted
+[docs/TEMPLATES.md](docs/TEMPLATES.md): 47 keys across 7 sections, each with its type, accepted
 values, default, and which protocols read it.
 
 If your device needs behaviour no existing key can express, open a
