@@ -34,11 +34,11 @@ because they are Ciena device templates, but TL1 itself is Pro only.
 
 ## The 13 Pro-only keys
 
-Of the 46 keys in [TEMPLATES.md](TEMPLATES.md), 13 are read only by Pro.
+Of the 47 keys in [TEMPLATES.md](TEMPLATES.md), 14 are read only by Pro.
 
 | Section | Keys |
 | --- | --- |
-| `connect`, TL1 | `sshAuth`, `tl1Transport`, `tl1Gateway`, `tl1NeighbourCmd` |
+| `connect`, TL1 | `sshAuth`, `tl1Transport`, `tl1Gateway`, `tl1NeighbourCmd`, `tl1MaxConnections` |
 | `connect`, fallback | `fallbackProtocol`, `fallbackPort`, `probeTimeout` |
 | `connect`, script | `idletimeout` |
 | `config`, prompt sync | `syncToPromptOnLogin`, `promptSyncTimeout` |

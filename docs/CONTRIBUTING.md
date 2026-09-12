@@ -132,7 +132,7 @@ rather than the file.
 **No deprecated keys.** `pagerPrompt` and `pagerPromptCmd` are ignored by rConfig and must not
 appear. The validator treats them as errors.
 
-**Only keys in the legend.** [TEMPLATES.md](TEMPLATES.md) lists all 46 keys across 7 sections.
+**Only keys in the legend.** [TEMPLATES.md](TEMPLATES.md) lists all 47 keys across 7 sections.
 Anything else is an error, because a key rConfig does not read does nothing except mislead the
 next reader. If your device needs behaviour no existing key expresses, use the
 [new key request form](../.github/ISSUE_TEMPLATE/new-key-request.yml). That is a change to
