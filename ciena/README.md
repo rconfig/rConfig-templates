@@ -21,9 +21,9 @@ configuration, but it is the reason the behaviour exists.
 
 A 6500 answers `RTRV-NE-LIST` with one quoted record per remote NE:
 
-```text
+``text
 "SHELF-1::SID=\"RNE-LIMERICK\",NENAME=\"RNE-LIMERICK\",GNE=NO,GNEIPADDR=,INETADDR=10.0.254.3,COST=30,NETYPE=00011600"
-```
+``
 
 `RTRV-NODES` reports the same set under different field names (`TID=`, `REMOTESHELF`, `IPADDR`,
 `MEMBER`, `SITEID`) and rConfig parses either, so a template may use whichever a given release
@@ -34,6 +34,23 @@ the gateway's. `GNE=YES` marks a neighbour that is itself a gateway.
 
 A 6500 echoes the addressed TID in the response header, so rConfig can confirm a routed reply came
 from the RNE rather than from the gateway answering as itself. Not every vendor does this.
+
+## `tl1NeighbourCmd`
+
+Optional. Leave it unset and `tl1Vendor: ciena` supplies `RTRV-NE-LIST`. Set it to send a
+different verb, for example to pass an AID a particular node needs, and rConfig sends exactly
+what you wrote.
+
+**One value is not honoured.** A command beginning with `RTRV-NBR` is replaced with `RTRV-NE-LIST`
+and a warning is written to the activity log. rConfig shipped `RTRV-NBR:ALL` as the default
+before 8.4.0, and that verb and its payload format came from rConfig's own simulator rather than
+from hardware, so honouring it means discovering nothing at all. The substitution exists so an
+estate upgrading from an older release keeps collecting while its templates are updated.
+
+This is the one place rConfig overrides a value you set deliberately. If you have a node that
+genuinely answers `RTRV-NBR`, say so on the issue tracker and the special case will be removed.
+
+---
 
 ## Terminology
 

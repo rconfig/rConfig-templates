@@ -106,9 +106,12 @@ and anything non-numeric falls back to the default, so a typo cannot stop a gate
 Optional, and best left out. Each vendor's own command is the default. Set it only to override the
 verb, for example to pass an AID a particular node needs.
 
-Templates predating multi-vendor support named `RTRV-NBR`, which no shipped node answers. rConfig
-substitutes the vendor's real command and logs a warning rather than discovering nothing. Update
-the template when you see that warning.
+Set it and rConfig sends exactly what you wrote, with one exception. A value beginning with
+`RTRV-NBR` is replaced with the vendor's own command and a warning is logged. That verb was the
+shipped default before 8.4.0 and came from rConfig's own simulator rather than from hardware, so
+honouring it means discovering nothing. It is the only place a deliberately set key is overridden,
+and it exists so an estate upgrading from an older release keeps collecting while its templates are
+updated. Update the template when you see the warning.
 
 See [TEMPLATES.md](TEMPLATES.md) for what each key means and [CONTRIBUTING.md](CONTRIBUTING.md)
 before submitting a change.

@@ -30,20 +30,37 @@ the reply to the *next* command, and every command after that is answered out of
 
 A DTN-X relaying a command for another node still answers under its own system name:
 
-```text
+``text
    LXTNKYXAO4Z 26-09-12 19:53:38
 M  3 COMPLD
-```
+``
 
 even when the command addressed `STLTND1Y`. So a routed reply cannot be confirmed by comparing the
 header to the TID, the way it can on a 6500. rConfig knows this and does not apply that check to
 this platform. Do not "fix" it.
 
+## `tl1NeighbourCmd`
+
+Optional. Leave it unset and `tl1Vendor: infinera` supplies `RTRV-TIDMAP`. Set it to send a
+different verb, for example to pass an AID a particular node needs, and rConfig sends exactly
+what you wrote.
+
+**One value is not honoured.** A command beginning with `RTRV-NBR` is replaced with `RTRV-TIDMAP`
+and a warning is written to the activity log. rConfig shipped `RTRV-NBR:ALL` as the default
+before 8.4.0, and that verb and its payload format came from rConfig's own simulator rather than
+from hardware, so honouring it means discovering nothing at all. The substitution exists so an
+estate upgrading from an older release keeps collecting while its templates are updated.
+
+This is the one place rConfig overrides a value you set deliberately. If you have a node that
+genuinely answers `RTRV-NBR`, say so on the issue tracker and the special case will be removed.
+
+---
+
 ## Records
 
-```text
+``text
 "::TID=CSVLTNFCO1Y,NODEID=MA4623110007,ROUTERID=11.253.152.33"
-```
+``
 
 Keyword fields with an empty AID. `ROUTERID` is a routing identifier despite being shaped like an
 address, so rConfig does not store it as the node's management IP: discovered nodes show their

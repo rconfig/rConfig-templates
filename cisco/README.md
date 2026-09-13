@@ -33,10 +33,10 @@ UI uses Ciena's term.
 
 **`RTRV-MAP-NETWORK` records are positional**, not keyword-based:
 
-```text
+``text
 "172.20.222.225,TID-000,15454"
  <IPADDR>       ,<NODENAME>,<PRODUCT>
-```
+``
 
 `NODENAME` is the TID. `PRODUCT` is the only place any TL1 vendor reports a real platform per
 element, so discovered ENEs carry their own model rather than the gateway's. The vendor
@@ -45,6 +45,21 @@ version; rConfig does not store that as a model.
 
 **A gateway lists itself** in its own network map. rConfig drops that record, so the gateway is not
 reconciled as an element behind itself.
+
+### `tl1NeighbourCmd`
+
+Optional. Leave it unset and `tl1Vendor: cisco-ons` supplies `RTRV-MAP-NETWORK`. Set it to send a
+different verb, for example to pass an AID a particular node needs, and rConfig sends exactly
+what you wrote.
+
+**One value is not honoured.** A command beginning with `RTRV-NBR` is replaced with `RTRV-MAP-NETWORK`
+and a warning is written to the activity log. rConfig shipped `RTRV-NBR:ALL` as the default
+before 8.4.0, and that verb and its payload format came from rConfig's own simulator rather than
+from hardware, so honouring it means discovering nothing at all. The substitution exists so an
+estate upgrading from an older release keeps collecting while its templates are updated.
+
+This is the one place rConfig overrides a value you set deliberately. If you have a node that
+genuinely answers `RTRV-NBR`, say so on the issue tracker and the special case will be removed.
 
 ## FTD firewalls (1120 and similar)
 
