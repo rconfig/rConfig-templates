@@ -7,61 +7,38 @@ Covers Ciena 6500 optical nodes, managed over TL1 rather than a conventional CLI
 | `ciena-6500-tl1-ssh.yml` | 6500 nodes reached over SSH, TL1 carried on the SSH channel |
 | `ciena-6500-tl1-telnet.yml` | 6500 nodes reached over raw TCP on a TL1 port, typically 3082/3083 |
 
-Typical retrieval commands to attach in an rConfig Command Group:
+**Read [docs/TL1.md](../docs/TL1.md) first.** It covers what TL1 is, in-band `ACT-USER` login,
+gateways and dual-homed elements, and `tl1MaxConnections`, none of which is Ciena-specific. What
+follows is only what is particular to a 6500.
+
+## The password quoting quirk
+
+A 6500 rejects a complex password sent bare, which is what prompted rConfig to quote TL1 passwords
+in the first place. rConfig now quotes on every vendor, so this is history rather than
+configuration, but it is the reason the behaviour exists.
+
+## Neighbour discovery
+
+A 6500 answers `RTRV-NE-LIST` with one quoted record per remote NE:
 
 ```text
-RTRV-EQPT::ALL:100;
-RTRV-ALM-ALL::ALL:101;
-RTRV-SW-VER:::102;
+"SHELF-1::SID=\"RNE-LIMERICK\",NENAME=\"RNE-LIMERICK\",GNE=NO,GNEIPADDR=,INETADDR=10.0.254.3,COST=30,NETYPE=00011600"
 ```
 
-## TL1 is not a CLI
+`RTRV-NODES` reports the same set under different field names (`TID=`, `REMOTESHELF`, `IPADDR`,
+`MEMBER`, `SITEID`) and rConfig parses either, so a template may use whichever a given release
+answers.
 
-There is no enable mode, no pager to turn off, and no configuration save step, so these templates
-leave all three empty. Login is in-band: the node opens on a bare `<` prompt and waits for an
-`ACT-USER` command, which rConfig sends itself. Every command is terminated by `;` and correlated
-by a CTAG that the node echoes back.
+`INETADDR` is the RNE's own management address, so discovered RNEs show their own IP rather than
+the gateway's. `GNE=YES` marks a neighbour that is itself a gateway.
 
-Passwords are always sent quoted. A 6500 rejects a complex password sent bare, and quoting also
-keeps a password containing `:` — the TL1 field separator — from mis-framing the command.
+A 6500 echoes the addressed TID in the response header, so rConfig can confirm a routed reply came
+from the RNE rather than from the gateway answering as itself. Not every vendor does this.
 
-## Gateway and remote NEs
+## Terminology
 
-Optical networks are reached through a **Gateway NE (GNE)**, the node you actually connect to,
-which fronts **Remote NEs (RNEs)** that have no management access of their own. Set
-`tl1Gateway: "on"` on the GNE's template and rConfig runs `tl1NeighbourCmd` after collecting it,
-discovers the RNEs behind it, and creates a device record for each one. RNEs are then collected
-by addressing their TID in-band over a session to the GNE.
-
-An RNE can be **dual-homed** — reachable through two or more GNEs. rConfig identifies an RNE by
-its TID, so an RNE reported by a second gateway gains a second path rather than a duplicate device
-record. One gateway is the primary; if a session through it cannot be established, the collection
-falls over to another.
-
-## Connection limits
-
-Every RNE collection opens its **own** session to the gateway. A GNE fronting a hundred RNEs would
-otherwise see a hundred sessions attempted as fast as the queue can run them, and a node that
-refuses connections past its own cap fails whichever collections lose that race.
-
-`tl1MaxConnections` caps how many sessions rConfig opens to one gateway at a time. It defaults to
-`20` and belongs on the **GNE's** template — RNEs inherit their gateway's limit rather than
-carrying one of their own.
-
-```yaml
-connect:
-  tl1Gateway: "on"
-  tl1MaxConnections: 20
-```
-
-A collection that finds no free slot is not a failure: nothing was dialled, so the device is not
-marked unreachable and no failure notification is sent. It waits and retries, giving up after an
-hour. A dual-homed RNE whose primary gateway is at capacity will use its other gateway instead of
-waiting.
-
-Set it to what the node itself will accept. Too high and the node refuses connections; too low and
-a large gateway takes longer to work through its RNEs. Values outside 1 to 500 are clamped, and
-anything non-numeric falls back to the default, so a typo cannot stop a gateway collecting.
+Ciena calls the elements behind a gateway **RNEs** (Remote NEs). Cisco calls them ENEs and
+Infinera calls them remote nodes. They are the same idea, and rConfig's UI uses Ciena's term.
 
 See [docs/TEMPLATES.md](../docs/TEMPLATES.md) for what each key means and
 [docs/CONTRIBUTING.md](../docs/CONTRIBUTING.md) before submitting a change.

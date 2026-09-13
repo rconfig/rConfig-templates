@@ -51,14 +51,15 @@ LEGEND = "docs/TEMPLATES.md"
 NEW_KEY_PROCESS = "see 'Requesting a new key' in " + LEGEND
 
 # ---------------------------------------------------------------------------
-# The legend: 47 keys across 7 sections, from docs/TEMPLATES.md
+# The legend: 48 keys across 7 sections, from docs/TEMPLATES.md
 # ---------------------------------------------------------------------------
 
 ALLOWED = {
     "main": {"name", "desc"},
     "connect": {
         "protocol", "port", "timeout", "isNonInteractiveMode", "idletimeout",
-        "sshAuth", "tl1Transport", "tl1Gateway", "tl1NeighbourCmd", "tl1MaxConnections",
+        "sshAuth", "tl1Transport", "tl1Vendor", "tl1Gateway", "tl1NeighbourCmd",
+        "tl1MaxConnections",
         "fallbackProtocol", "fallbackPort", "probeTimeout",
         "kexOverride", "kexAlgorithms",
     },
@@ -113,6 +114,10 @@ STATUSES = {"rconfig-verified", "community-tested", "untested-starter"}
 DOCS_SCRIPT = "https://docs.rconfig.com/integrations/script-integration-engine/sie/"
 DOCS_DEFAULT = "https://docs.rconfig.com/device-management/connection-templates/"
 COMMUNITY = "https://github.com/rconfig/rConfig-templates"
+
+# Directories whose contents are not vendor templates, so the "filename starts with the
+# directory name" rule does not apply to them.
+FILENAME_PREFIX_EXEMPT = {"_base", "docs", "scripts"}
 
 # Filenames that predate the convention and are handled in a later phase.
 FILENAME_EXCEPTIONS = {
@@ -279,6 +284,15 @@ def check_filename(rel, rep):
     base = os.path.basename(rel)
     if not re.match(r"^[a-z0-9]+(-[a-z0-9]+)*\.yml$", base):
         rep.error(rel, f"filename '{base}' is not lowercase-hyphenated, see CLAUDE.md")
+
+    # A vendor template must be named for the directory it sits in. Cheap insurance now
+    # that one protocol spans several vendor directories: a Ciena template dropped into
+    # cisco/ still parses, still validates, and is findable by nobody. Every file in the
+    # library already satisfies this, so it costs nothing to hold the line.
+    parts = rel.split("/")
+    if len(parts) == 2 and parts[0] not in FILENAME_PREFIX_EXEMPT:
+        if not base.startswith(parts[0] + "-"):
+            rep.error(rel, f"filename '{base}' does not start with its directory '{parts[0]}-'")
 
 
 def main():

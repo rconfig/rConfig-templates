@@ -150,8 +150,9 @@ Script templates never build a connection object, so neither key is read for `pr
 | `idletimeout` | int | seconds | Optional, default `30` | script | **Pro only** | All lowercase. `Script/ScriptConnectionManager.php:34` |
 | `sshAuth` | string | `none`, or anything else for password | Optional, default `password` | tl1 | **Pro only** | `none` skips transport authentication before the TL1 `ACT-USER` login. `TL1/Connect.php:70`, `Transport/SshTransport.php:33` |
 | `tl1Transport` | string | `telnet`, or anything else for ssh | Optional, default `ssh` | tl1 | **Pro only** | Anything that is not literally `telnet` falls back to SSH. `TL1/Connect.php:71`, `Transport/Tl1TransportFactory.php:15-20` |
+| `tl1Vendor` | string | `ciena`, `infinera`, `cisco-ons` | Optional, default `ciena` | tl1 | **Pro only** | Selects the TL1 dialect: the neighbour-discovery verb, the record format it returns, the node's prompt, and whether a routed reply's header SID can be compared to the addressed TID. An unrecognised value fails the collection with a readable message rather than falling back to Ciena, because a typo collecting as the wrong vendor would parse nothing, report no elements, and flag every element behind that gateway as missing on the next run. See [TL1.md](TL1.md). `TL1/Connect.php`, `TL1/Vendor/Tl1VendorRegistry.php` |
 | `tl1Gateway` | boolean or string | `true`, `on`, `1`, `yes` | Optional, default `false` | tl1 | **Pro only** | The one key that accepts both a YAML boolean and the string forms, case-insensitively. Enables neighbour discovery. `TL1/Connect.php:93-95` |
-| `tl1NeighbourCmd` | string | a TL1 command | Optional, default `RTRV-NBR:ALL` | tl1 | **Pro only** | Only used when `tl1Gateway` is on. `TL1/Connect.php:97` |
+| `tl1NeighbourCmd` | string | a TL1 command | Optional, defaults to the vendor's own | tl1 | **Pro only** | Only used when `tl1Gateway` is on, and best left unset: each `tl1Vendor` supplies its own command (`RTRV-NE-LIST`, `RTRV-TIDMAP`, `RTRV-MAP-NETWORK`). Set it only to override the verb. A template naming the retired `RTRV-NBR` gets the vendor's command substituted, with a warning logged. `TL1/Connect.php` |
 | `tl1MaxConnections` | int | clamped to 1 to 500 | Optional, default `20` | tl1 | **Pro only** | Caps how many TL1 sessions rConfig opens to this gateway at once. Every RNE behind a GNE opens its own session, so without a cap a nightly run can open as many at one node as there are queue workers, and a node that refuses connections past its own limit fails the ones that lose the race. Collections that find no free slot wait and retry rather than failing, giving up after an hour. Values outside 1 to 500 are clamped, and anything non-numeric falls back to the default, so a typo cannot stop a gateway collecting. Set it on the GNE's template; RNEs inherit the gateway's limit. `TL1/Connect.php:108`, `TL1/Tl1GatewayConnections.php`, `TL1/Tl1ConnectionManager.php:38` |
 | `fallbackProtocol` | string | `ssh`, `telnet` | Optional, default none | dispatcher | **Pro only** | Undocumented before this legend. Set it to the other protocol and rConfig resolves which one the device actually answers on, caches the result, then dispatches normally. Only activates when it differs from `protocol` and both are ssh or telnet. `ProtocolFallbackConnectionManager.php:28,50-55,64` |
 | `fallbackPort` | int | 1 to 65535 | Optional, defaults to 22 for ssh or 23 for telnet | dispatcher | **Pro only** | Undocumented before this legend. Port used for the fallback attempt. A device port override still wins. `ProtocolFallbackConnectionManager.php:30,70-91` |
@@ -370,10 +371,10 @@ This legend was compiled from a full read of the rConfig connection stack in bot
 | YAML parser | `symfony/yaml` v8.1.2 |
 | Evidence file | `legend-evidence.md` |
 
-Coverage: 47 keys across 7 top-level sections. Core reads 33 of them, set out row by row in
-[EDITIONS.md](EDITIONS.md). The 13 that are Pro only
-are the four TL1 keys, the three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`,
-`promptSyncTimeout`, and the three `failure_criteria` keys.
+Coverage: 48 keys across 7 top-level sections. Core reads 33 of them, set out row by row in
+[EDITIONS.md](EDITIONS.md). The 15 that are Pro only are the four TL1 keys plus `tl1Vendor`, the
+three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`, `promptSyncTimeout`, and the
+three `failure_criteria` keys.
 
 Line references point at the two codebases above. They are accurate as of those commits and will
 drift as the code changes. Re-verify against the evidence file before relying on a specific line.
