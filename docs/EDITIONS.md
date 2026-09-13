@@ -16,8 +16,10 @@ The simple version, which covers most people:
 - **Everything under `pro-features/` requires Pro.** That is the Script Integration Engine
   templates and scripts, the SSH private key template, and the xFTP inbound-only template.
 
-One exception to the directory rule is called out below: the two TL1 templates live in `ciena/`
-because they are Ciena device templates, but TL1 itself is Pro only.
+The directory rule has no exceptions. TL1 templates are Pro only, and they live with their
+vendor like everything else: `ciena/`, `infinera/`, `cisco/`. That makes `cisco/` a mixed-edition
+directory, which is fine and deliberate. **Edition follows the capability a template uses, never
+the directory it sits in.**
 
 ## Capability matrix
 
@@ -26,19 +28,19 @@ because they are Ciena device templates, but TL1 itself is Pro only.
 | `protocol: ssh` | Yes | Yes | The bulk of the library |
 | `protocol: telnet` | Yes | Yes | |
 | `protocol: script` (Script Integration Engine) | No | Yes | Templates and example scripts live in `pro-features/sie/` |
-| `protocol: tl1` | No | Yes | The two templates live in `ciena/` because they are Ciena device templates, but the protocol is Pro only |
+| `protocol: tl1` | No | Yes | Templates live with their vendor (`ciena/`, `infinera/`, `cisco/`), so `cisco/` holds both Core and Pro templates. See [TL1.md](TL1.md) |
 | Inbound-only devices (`xftp` / `ftp`) | No | Yes | The device pushes its configuration in rather than rConfig connecting out. `xftp` is the canonical value from V8.3.2 onwards; `ftp` is the value on earlier releases and stays accepted. See [pro-features/xftp/README.md](../pro-features/xftp/README.md) |
 | Protocol fallback (`fallbackProtocol`, `fallbackPort`, `probeTimeout`) | No | Yes | Resolves which protocol a device actually answers on, then caches it. No shipped template uses these keys yet |
 | Prompt sync on login (`syncToPromptOnLogin`, `promptSyncTimeout`) | No | Yes | The fix for output appearing under the wrong command |
 | `auth.sshPrivKey` | **Not supported** | Yes | Code to read this key is present in Core, but private key authentication is supported on Pro only. This is a support position, not a code gate: it may appear to work in Core and is still not supported there. The template lives in `pro-features/ssh-private-key/` |
 
-## The 13 Pro-only keys
+## The 15 Pro-only keys
 
-Of the 47 keys in [TEMPLATES.md](TEMPLATES.md), 14 are read only by Pro.
+Of the 48 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
 
 | Section | Keys |
 | --- | --- |
-| `connect`, TL1 | `sshAuth`, `tl1Transport`, `tl1Gateway`, `tl1NeighbourCmd`, `tl1MaxConnections` |
+| `connect`, TL1 | `sshAuth`, `tl1Transport`, `tl1Vendor`, `tl1Gateway`, `tl1NeighbourCmd`, `tl1MaxConnections` |
 | `connect`, fallback | `fallbackProtocol`, `fallbackPort`, `probeTimeout` |
 | `connect`, script | `idletimeout` |
 | `config`, prompt sync | `syncToPromptOnLogin`, `promptSyncTimeout` |

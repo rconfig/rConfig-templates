@@ -9,9 +9,10 @@ repository root run on both Core and Pro.
 | [ssh-private-key/](ssh-private-key/) | SSH private key authentication | Authenticates with a key from the device credential record rather than a password |
 | [xftp/](xftp/) | Inbound-only devices | Marks a device that pushes its configuration into rConfig. rConfig never connects out to it. See [xftp/README.md](xftp/README.md) for the transports, file matching rules and device-side push commands |
 
-One Pro capability does not live here. **TL1 templates are Pro only but sit in
-[ciena/](../ciena/)**, because they are Ciena device templates and belong with their vendor. The
-protocol is Pro; the directory placement follows the hardware.
+One Pro capability does not live here. **TL1 templates are Pro only but sit with their vendor**,
+in [ciena/](../ciena/), [infinera/](../infinera/) and [cisco/](../cisco/), because they are device
+templates and belong with the hardware. Edition follows the capability a template uses, not the
+directory it sits in. See [docs/TL1.md](../docs/TL1.md).
 
 For the full Core and Pro breakdown, including which individual template keys each edition reads,
 see [docs/EDITIONS.md](../docs/EDITIONS.md).
