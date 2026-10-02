@@ -5,6 +5,7 @@ Covers Alcatel-Lucent Enterprise switches running AOS.
 | Template | Use for |
 | --- | --- |
 | `alcatel-lucent-aos-ssh-noenable.yml` | AOS devices reached over SSH |
+| `alcatel-lucent-aos-ssh-noenable-promptsync.yml` | OmniSwitch on AOS over SSH, Pro only. Uses `login :` / `password :` prompts, prompt sync on login and `EXIT` to leave the session. rconfig-verified on rConfig V8 Pro |
 
 Typical retrieval command to attach in an rConfig Command Group:
 
@@ -14,7 +15,7 @@ show configuration snapshot
 
 AOS has no CLI pager by default, so the template leaves paging off and the paging commands empty.
 
-These templates are untested starters. If you run one against real hardware, please file a
+`alcatel-lucent-aos-ssh-noenable.yml` is an untested starter. If you run one against real hardware, please file a
 [template test report](https://github.com/rconfig/rConfig-templates/issues/new?template=template-test-report.yml) so it can be promoted to community-tested.
 
 See [docs/TEMPLATES.md](../docs/TEMPLATES.md) for what each key means and

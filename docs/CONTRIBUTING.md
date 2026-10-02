@@ -69,7 +69,7 @@ Seven lines, or eight when `Replaces` is present.
 
 | Field | Rule |
 | --- | --- |
-| `Edition` | Content-aware, not a choice. `pro` when the protocol is `script`, `tl1` or `xftp`, or when the template uses `sshPrivKey`. Everything else is `core` |
+| `Edition` | Content-aware, not a choice. `pro` when the protocol is `script`, `tl1` or `xftp`, or when the template uses `sshPrivKey`, `syncToPromptOnLogin` or `promptSyncTimeout`. Everything else is `core` |
 | `Status` | See the lifecycle below |
 | `Tested-on` | The rConfig versions and editions you actually saw it work on. Not aspirational |
 | `Replaces` | Only on templates renamed during the 2026 restructure, sourced from `MIGRATION.md`. A new template has no `Replaces` line |

@@ -11,6 +11,9 @@ A major version here means paths changed. Every rename and deletion is mapped in
 ## [Unreleased]
 
 ### Added
+- `alcatel-lucent/alcatel-lucent-aos-ssh-noenable-promptsync.yml`, a Pro only OmniSwitch AOS
+  template using prompt sync on login, shipped `rconfig-verified` on rConfig V8 Pro. The first
+  shipped template to use `syncToPromptOnLogin`.
 - `extreme/extreme-nos-ssh-noenable.yml`, for the Brocade derived NOS and SLX-OS CLIs, which
   disable paging with `terminal length 0` rather than the EXOS `disable clipaging`.
 - `extreme/README.md`, explaining which of the two Extreme templates to use and how to tell the
@@ -36,6 +39,8 @@ A major version here means paths changed. Every rename and deletion is mapped in
   section, and the existing FTD and WLC guidance with its typos fixed.
 
 ### Changed
+- `scripts/apply_headers.py` marks a template `Edition: pro` when it sets `syncToPromptOnLogin`
+  or `promptSyncTimeout`, both Pro only keys. Restated in `CLAUDE.md` and `docs/CONTRIBUTING.md`.
 - **The "TL1 templates live in `ciena/`" exception is gone.** TL1 templates live with their
   vendor, like every other template here, which makes `cisco/` a mixed-edition directory.
   Edition follows the capability a template uses, never the directory. Restated in
