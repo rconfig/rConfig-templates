@@ -10,8 +10,8 @@
 
   <!-- Shields.io badges -->
   <p align="center">
-    <img src="https://img.shields.io/badge/vendors-37-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
-    <img src="https://img.shields.io/badge/templates-69-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
+    <img src="https://img.shields.io/badge/vendors-38-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+    <img src="https://img.shields.io/badge/templates-74-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
   </p>
 
   <p align="center">
@@ -82,6 +82,22 @@ scripts/          Header tooling and the template validator
 Pro-only material lives under `pro-features/`: the Script Integration Engine templates and
 example scripts, the SSH private key template, and the xFTP inbound-only template.
 
+## Branches
+
+`main` is the default branch. Work lands on `dev` and is merged to `main` from there.
+
+`master` is kept as a mirror of `main`. It carries no unique work and nothing should be branched
+from it or merged into it directly. It exists because this repository was renamed from `master`
+to `main`, and older documentation, bookmarks and raw file URLs still point at
+`.../rConfig-templates/master/...`. Deleting it breaks those links.
+
+**Keep it in sync when `main` moves**, otherwise those old links silently start serving stale
+templates, which is worse than them breaking outright:
+
+```bash
+git push origin origin/main:refs/heads/master
+```
+
 ## Template status
 
 Every template declares a status in its header.
@@ -118,11 +134,17 @@ hardware model belongs in the filename and when it does not.
 ## Template keys
 
 This README carries no key documentation. The full reference lives in
-[docs/TEMPLATES.md](docs/TEMPLATES.md): 47 keys across 7 sections, each with its type, accepted
+[docs/TEMPLATES.md](docs/TEMPLATES.md): 48 keys across 7 sections, each with its type, accepted
 values, default, and which protocols read it.
 
 If your device needs behaviour no existing key can express, open a
 [new key request](https://github.com/rconfig/rConfig-templates/issues/new?template=new-key-request.yml).
+
+## Optical transport (TL1)
+
+Ciena 6500, Infinera DTN-X and Cisco ONS 15454 are managed over TL1 rather than a CLI, which
+behaves differently enough to have its own guide: [docs/TL1.md](docs/TL1.md). Their templates sit
+with their vendor like everything else. TL1 is Pro only on every platform.
 
 ## Community
 

@@ -138,6 +138,8 @@ def edition_for(body):
         return "pro", proto
     if re.search(r"^\s*sshPrivKey\s*:", text, re.MULTILINE):
         return "pro", proto
+    if re.search(r"^\s*(syncToPromptOnLogin|promptSyncTimeout)\s*:", text, re.MULTILINE):
+        return "pro", proto
     return "core", proto
 
 
