@@ -38,6 +38,12 @@ A major version here means paths changed. Every rename and deletion is mapped in
 - `cisco/README.md` rewritten from 15 lines of caveats into a full template table, the ONS 15454
   section, and the existing FTD and WLC guidance with its typos fixed.
 
+- `dell/dell-ftos-ssh-enable.yml`, for Dell Force10 FTOS (Dell Networking OS9). It sets the new
+  `commandLinebreak` config key to `n`, because FTOS ignores commands terminated with a bare
+  carriage return. Requires an rConfig build that reads the key (RCO-1546).
+- `config.commandLinebreak`, an optional key that sets the line ending for SSH commands: `r`
+  (default), `n` or `rn`. The validator accepts it and rejects any other value.
+
 ### Changed
 - `scripts/apply_headers.py` marks a template `Edition: pro` when it sets `syncToPromptOnLogin`
   or `promptSyncTimeout`, both Pro only keys. Restated in `CLAUDE.md` and `docs/CONTRIBUTING.md`.

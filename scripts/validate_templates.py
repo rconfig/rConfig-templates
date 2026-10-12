@@ -75,7 +75,7 @@ ALLOWED = {
     "config": {
         "paging", "pagingCmd", "resetPagingCmd", "saveConfig", "exitCmd",
         "isMikrotik", "linebreak", "syncToPromptOnLogin", "promptSyncTimeout",
-        "pagerPrompt", "pagerPromptCmd",
+        "pagerPrompt", "pagerPromptCmd", "commandLinebreak",
     },
     "options": {"AnsiHost", "setWindowSize", "setTerminalDimensions"},
     "failure_criteria": {"exit_codes", "error_patterns", "success_patterns"},
@@ -106,6 +106,9 @@ KNOWN_PROTOCOLS = set(MANDATORY)
 
 # Keys whose value must be the string "on" or "off", never a YAML boolean.
 ONOFF_KEYS = [("auth", "enable"), ("config", "paging"), ("auth", "hpAnyKeyStatus"), ("connect", "kexOverride")]
+
+# Optional keys restricted to a fixed set of string values, as (section, key): allowed values.
+ENUM_KEYS = {("config", "commandLinebreak"): ("r", "n", "rn")}
 
 # Header
 HEADER_TITLE = "# rConfig connection template"
@@ -276,6 +279,13 @@ def check_values(rel, doc, rep):
             )
         elif v not in ("on", "off"):
             rep.error(rel, f"'{section}.{key}' is {v!r}, expected the string on or off")
+
+    for (section, key), allowed in ENUM_KEYS.items():
+        if key not in (doc.get(section) or {}):
+            continue
+        v = doc[section][key]
+        if v not in allowed:
+            rep.error(rel, f"'{section}.{key}' is {v!r}, expected one of {', '.join(allowed)}")
 
 
 def check_filename(rel, rep):

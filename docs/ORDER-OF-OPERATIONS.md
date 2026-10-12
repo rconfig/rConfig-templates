@@ -39,7 +39,7 @@ Entry point `SSHConnectionManager::SSHConnectionAndOutput()`, `SSH/SSHConnection
 | 12a | If enable is on: enter enable mode, then send the paging command if paging is on | `auth.enableCmd`, `auth.enableUsername`, `auth.enableUsernamePrmpt`, `auth.enablePassPrmpt`, then `config.pagingCmd` | `SSH/Login.php:46-47,249-270` |
 | 12b | Otherwise: send the paging command only | `config.paging`, `config.pagingCmd` | `SSH/Login.php:49,239-247` |
 | 13 | Drain any prompt the login left unread | `config.syncToPromptOnLogin`, `config.promptSyncTimeout` | `SSH/Login.php:52,63-93` |
-| 14 | For each command, choose a read strategy | `auth.sshPrivKey`, `connect.isNonInteractiveMode`, `options.AnsiHost`, `config.isMikrotik` | `SSH/SendCommand.php:24-50` |
+| 14 | For each command, choose a read strategy, then send it terminated with the configured line ending | `auth.sshPrivKey`, `connect.isNonInteractiveMode`, `options.AnsiHost`, `config.isMikrotik`, `config.commandLinebreak` | `SSH/SendCommand.php:24-50`, `SSH/Send.php:16` |
 | 15 | Read the output and clean it | `auth.hpAnyKeyStatus` or `auth.sshPrivKey` select the VT100 scrubbing path | `SSH/SendCommand.php:127-153` |
 | 16 | Restore paging at teardown | `config.paging`, `config.resetPagingCmd` | `SSHConnectionManager.php:106-112` |
 | 17 | Disconnect | none | `SSHConnectionManager.php:111` |
