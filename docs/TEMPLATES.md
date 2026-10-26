@@ -126,6 +126,14 @@ devices whose output carries VT100 escape codes. Read on telnet too, though acte
 Script templates only, Pro only. Decides whether a script run counts as a failure, by exit code,
 by error patterns in the output, or by the absence of success patterns. Optional as a whole.
 
+### `snippet_errors`
+
+Snippet sends over SSH, Pro V8.4.1 and later. Lists the device replies that mean a line of a
+snippet was rejected, or deserves a warning. When the section has a pattern, rConfig sends the
+snippet one line at a time and checks the reply to each. Without it, snippets are sent as before
+and reported as not checked. Optional as a whole. Not to be confused with `failure_criteria`,
+which judges script runs and has different matching rules.
+
 ---
 
 ## `main`
@@ -239,11 +247,43 @@ Script templates only. Pro only. The whole section is optional.
 
 ---
 
+## `snippet_errors`
+
+Snippet sends over SSH only. Pro only, from V8.4.1. The whole section is optional. Core, earlier
+Pro versions and telnet ignore it without an error, so a template that carries it works everywhere
+and is only checked where it can be.
+
+| Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `error_patterns` | array of string | patterns, see below | Optional, omitted | **ssh only**, snippet sends | **Pro only**, V8.4.1+ | A reply line that matches fails the line, and the send is reported Failed. With the snippet's stop-on-error setting on (the default), the remaining lines are not sent. `Snippets/Execution/ExecutionErrorMatcher.php:68`, `SSH/SendSnippet.php:84,155-270` |
+| `warning_patterns` | array of string | patterns, see below | Optional, omitted | **ssh only**, snippet sends | **Pro only**, V8.4.1+ | A reply line that matches marks the send Success with warnings. Checked only when no error pattern matched the same reply. `Snippets/Execution/ExecutionErrorMatcher.php:68` |
+
+How a pattern matches:
+
+- **Plain text** matches anywhere in a reply line, ignoring case. `*` and `?` are literal, not
+  wildcards, because device output contains both.
+- **`re:` prefix** makes it a PCRE regex, the same convention as compliance code blocks. Without
+  delimiters it ignores case: `re:^error:`. With `/` delimiters its own flags apply: `re:/^ERROR/`.
+- Each line of the reply is checked on its own, so `^` and `$` anchor to a line. The echoed command
+  and the trailing prompt are removed first, so the snippet's own text never matches.
+- A pattern that is not a valid regex stops the send before the first line, and the send is
+  reported Failed. An empty pattern, or anything that is not a string, is dropped without an
+  error. The validator rejects both.
+
+Sending line by line waits for the device prompt after each line. The prompt is the device's main
+prompt with its trailing `#`, `>`, `$` or `%` removed, followed by anything on the same line and
+one of those characters, so config-mode prompts such as `router1(config-if)#` match with no extra
+setting. A snippet's `#[config_prompt]` instruction adds a prompt rather than replacing this one.
+A line with no prompt before `connect.timeout` is recorded as a warning and the send continues.
+`Snippets/Execution/SnippetPromptPattern.php`
+
+---
+
 ## What each protocol actually reads
 
 | Protocol | Sections read | Edition |
 | --- | --- | --- |
-| `ssh` | `main`, `connect`, `auth`, `vt100`, `config`, `options` | Core and Pro |
+| `ssh` | `main`, `connect`, `auth`, `vt100`, `config`, `options`, plus `snippet_errors` on snippet sends (Pro V8.4.1+) | Core and Pro |
 | `telnet` | `main`, `connect`, `auth`, `vt100`, `config`, `options` (the last two only in part) | Core and Pro |
 | `tl1` | `main` and `connect` only. No `auth`, `config`, `options` or `vt100` key is read | Pro only |
 | `script` | `connect` and `failure_criteria` only. No connection object is built | Pro only |
@@ -372,11 +412,12 @@ This legend was compiled from a full read of the rConfig connection stack in bot
 | YAML parser | `symfony/yaml` v8.1.2 |
 | Evidence file | `legend-evidence.md` |
 | Updated | 2026-10-26: the `commandLinebreak`, `kexOverride` and `kexAlgorithms` rows, checked against rConfig Pro V8.4.1 and Core 8.2.19 |
+| Updated | 2026-10-26: the `snippet_errors` section, checked against rConfig Pro V8.4.1 (RCO-1534) |
 
-Coverage: 51 keys across 7 top-level sections. Core reads 36 of them, set out row by row in
-[EDITIONS.md](EDITIONS.md). The 15 that are Pro only are the four TL1 keys plus `tl1Vendor`, the
-three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`, `promptSyncTimeout`, and the
-three `failure_criteria` keys.
+Coverage: 53 keys across 8 top-level sections. Core reads 36 of them, set out row by row in
+[EDITIONS.md](EDITIONS.md). The 17 that are Pro only are the four TL1 keys plus `tl1Vendor`, the
+three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`, `promptSyncTimeout`, the
+three `failure_criteria` keys, and the two `snippet_errors` keys.
 
 Line references point at the two codebases above. They are accurate as of those commits and will
 drift as the code changes. Re-verify against the evidence file before relying on a specific line.

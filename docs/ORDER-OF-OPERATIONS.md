@@ -56,6 +56,19 @@ Entry point `SSHConnectionManager::SSHConnectionAndOutput()`, `SSH/SSHConnection
 **SSH never sends `config.saveConfig` or `config.exitCmd`.** Both are read into properties at
 step 1 and discarded.
 
+### Snippet sends
+
+A snippet send runs steps 1 to 13 unchanged, then replaces 14 to 16. Pro V8.4.1 and later:
+
+| Step | What happens | Keys driving it | Evidence |
+| --- | --- | --- | --- |
+| 14s | Build the error matcher. An invalid `re:` pattern stops here, before any line is sent | `snippet_errors.error_patterns`, `snippet_errors.warning_patterns` | `SSH/SendSnippet.php:84` |
+| 15s | No patterns: send the snippet in blocks as earlier versions do, and report it not checked | none | `SSH/SendSnippet.php:79-149` |
+| 15s | Patterns present: send one line, read to the prompt, check the reply, repeat. Stop at the first error unless the snippet turns that off | `connect.timeout`, `config.commandLinebreak`, `config.isMikrotik`, `auth.hpAnyKeyStatus`, both `snippet_errors` keys | `SSH/SendSnippet.php:155-270` |
+| 16s | Restore paging, unless the send stopped early: the session may still be in config mode, where the reset would be rejected | `config.paging`, `config.resetPagingCmd` | `SSHConnectionManager.php:190-206` |
+
+Telnet snippet sends do not read `snippet_errors`.
+
 ---
 
 ## Telnet

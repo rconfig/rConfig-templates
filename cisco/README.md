@@ -18,6 +18,16 @@ rule every other directory follows, which is that a template lives with its hard
 | `cisco-ons15454-tl1-ssh.yml` | ONS 15454 optical nodes, TL1 on the SSH channel | **Pro** |
 | `cisco-ons15454-tl1-telnet.yml` | ONS 15454 optical nodes, TL1 over raw TCP | **Pro** |
 
+## Snippet error detection (IOS over SSH)
+
+The two IOS SSH templates carry a `snippet_errors` block. On rConfig Pro V8.4.1 and later, a
+snippet line that IOS answers with `% Invalid input detected`, `% Incomplete command`,
+`% Ambiguous command` or `% Unknown command` fails the send, and a reply starting `% Warning`
+marks it as a warning. Core and earlier versions ignore the block. The telnet templates leave it
+out because telnet snippet sends are not checked. The ASA, SMB and WLC templates leave it out
+until their error output has been checked against real devices. See
+[docs/TEMPLATES.md](../docs/TEMPLATES.md#snippet_errors-1).
+
 ## ONS 15454 (TL1)
 
 > **Status: `untested-starter`.** These two templates and the parser behind them were built from

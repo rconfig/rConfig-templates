@@ -34,11 +34,12 @@ the directory it sits in.**
 | Prompt sync on login (`syncToPromptOnLogin`, `promptSyncTimeout`) | No | Yes | The fix for output appearing under the wrong command |
 | SSH key-exchange override (`kexOverride`, `kexAlgorithms`) | From 8.2.19 | From V8.3.3 | For devices whose SSH server hangs during key exchange. Earlier versions ignore the keys without an error. See [TEMPLATES.md](TEMPLATES.md) |
 | SSH command line ending (`commandLinebreak`) | From 8.2.19 | From V8.4.0 | Needed by devices such as Dell Force10 FTOS. Earlier versions ignore the key without an error, so a template that sets it fails there. See [TEMPLATES.md](TEMPLATES.md) |
+| Snippet error detection (`snippet_errors`) | No | From V8.4.1, SSH only | Reports a snippet send as Failed when the device rejects a line. Core, earlier Pro versions and telnet ignore the section without an error, so a template that carries it still works there, unchecked. See [TEMPLATES.md](TEMPLATES.md#snippet_errors-1) |
 | `auth.sshPrivKey` | **Not supported** | Yes | Code to read this key is present in Core, but private key authentication is supported on Pro only. This is a support position, not a code gate: it may appear to work in Core and is still not supported there. The template lives in `pro-features/ssh-private-key/` |
 
-## The 15 Pro-only keys
+## The 17 Pro-only keys
 
-Of the 51 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
+Of the 53 keys in [TEMPLATES.md](TEMPLATES.md), 17 are read only by Pro.
 
 | Section | Keys |
 | --- | --- |
@@ -47,6 +48,7 @@ Of the 51 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
 | `connect`, script | `idletimeout` |
 | `config`, prompt sync | `syncToPromptOnLogin`, `promptSyncTimeout` |
 | `failure_criteria` | `exit_codes`, `error_patterns`, `success_patterns` |
+| `snippet_errors` | `error_patterns`, `warning_patterns` (from V8.4.1) |
 
 **The other 36 keys are Core-capable.** Every key in `main`, `auth`, `vt100` and `options`, and
 every key in `config` apart from the two prompt-sync keys, is read by both editions.

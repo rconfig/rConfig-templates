@@ -11,6 +11,16 @@ A major version here means paths changed. Every rename and deletion is mapped in
 ## [Unreleased]
 
 ### Added
+- **`snippet_errors`**, the 8th section, with keys 52 and 53: `error_patterns` and
+  `warning_patterns`. Read by rConfig Pro V8.4.1 and later on SSH snippet sends, which then go one
+  line at a time and fail when the device rejects a line. Plain text or `re:` regex, checked per
+  reply line. Core, earlier Pro and telnet ignore the section without an error. Documented in
+  `docs/TEMPLATES.md`, `docs/EDITIONS.md` and `docs/ORDER-OF-OPERATIONS.md` (RCO-1534).
+- `cisco/cisco-ios-ssh-enable.yml` and `cisco/cisco-ios-ssh-noenable.yml` carry a
+  `snippet_errors` block for the four IOS rejection messages and `% Warning`. Explained in
+  `cisco/README.md`.
+- The validator accepts the `snippet_errors` section and fails a pattern list that is not a list
+  of non-empty strings, which rConfig would otherwise drop without an error.
 - `alcatel-lucent/alcatel-lucent-aos-ssh-noenable-promptsync.yml`, a Pro only OmniSwitch AOS
   template using prompt sync on login, shipped `rconfig-verified` on rConfig V8 Pro. The first
   shipped template to use `syncToPromptOnLogin`.

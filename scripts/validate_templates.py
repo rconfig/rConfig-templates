@@ -51,7 +51,7 @@ LEGEND = "docs/TEMPLATES.md"
 NEW_KEY_PROCESS = "see 'Requesting a new key' in " + LEGEND
 
 # ---------------------------------------------------------------------------
-# The legend: 48 keys across 7 sections, from docs/TEMPLATES.md
+# The legend: 53 keys across 8 sections, from docs/TEMPLATES.md
 # ---------------------------------------------------------------------------
 
 ALLOWED = {
@@ -79,6 +79,7 @@ ALLOWED = {
     },
     "options": {"AnsiHost", "setWindowSize", "setTerminalDimensions"},
     "failure_criteria": {"exit_codes", "error_patterns", "success_patterns"},
+    "snippet_errors": {"error_patterns", "warning_patterns"},
 }
 
 DEPRECATED = {"config": {"pagerPrompt", "pagerPromptCmd"}}
@@ -122,6 +123,10 @@ ONOFF_KEYS = [("auth", "enable"), ("config", "paging"), ("auth", "hpAnyKeyStatus
 
 # Optional keys restricted to a fixed set of string values, as (section, key): allowed values.
 ENUM_KEYS = {("config", "commandLinebreak"): ("r", "n", "rn")}
+
+# Optional keys whose value must be a list of non-empty strings. rConfig drops anything else
+# without an error, so a pattern written as a bare string or a number is silently never checked.
+STRING_LIST_KEYS = [("snippet_errors", "error_patterns"), ("snippet_errors", "warning_patterns")]
 
 # Header
 HEADER_TITLE = "# rConfig connection template"
@@ -302,6 +307,13 @@ def check_values(rel, doc, rep):
         v = doc[section][key]
         if v not in allowed:
             rep.error(rel, f"'{section}.{key}' is {v!r}, expected one of {', '.join(allowed)}")
+
+    for section, key in STRING_LIST_KEYS:
+        if key not in (doc.get(section) or {}):
+            continue
+        v = doc[section][key]
+        if not isinstance(v, list) or not all(isinstance(item, str) and item.strip() for item in v):
+            rep.error(rel, f"'{section}.{key}' must be a list of non-empty quoted strings")
 
 
 def check_filename(rel, rep):

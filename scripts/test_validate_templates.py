@@ -104,5 +104,47 @@ class LegacyLinebreakTest(unittest.TestCase):
         self.assertEqual(doc["config"].get("linebreak"), "n")
 
 
+class SnippetErrorsTest(unittest.TestCase):
+    """snippet_errors is read by rConfig Pro V8.4.1+ on SSH snippet sends. A pattern list that is
+    not a list of non-empty strings is dropped by rConfig without an error, so the validator
+    rejects it. See RCO-1534."""
+
+    def with_snippet_errors(self, section):
+        doc = connection_doc("ssh")
+        doc["snippet_errors"] = section
+        return doc
+
+    def test_valid_section_is_clean(self):
+        rep = check(self.with_snippet_errors({
+            "error_patterns": ["% Invalid input detected", "re:^error:"],
+            "warning_patterns": ["re:^% Warning"],
+        }))
+
+        self.assertEqual(rep.errors, [])
+        self.assertEqual(rep.warnings, [])
+
+    def test_pattern_lists_must_be_lists_of_non_empty_strings(self):
+        for value in ("% Invalid input detected", ["ok", 5], ["ok", "  "], {"a": "b"}):
+            with self.subTest(value=value):
+                rep = check(self.with_snippet_errors({"error_patterns": value}))
+
+                self.assertEqual(len(rep.errors), 1, rep.errors)
+                self.assertIn("'snippet_errors.error_patterns' must be a list", rep.errors[0])
+
+    def test_unknown_key_in_the_section_is_rejected(self):
+        rep = check(self.with_snippet_errors({"fail_patterns": ["x"]}))
+
+        self.assertEqual(len(rep.errors), 1, rep.errors)
+        self.assertIn("unknown key 'snippet_errors.fail_patterns'", rep.errors[0])
+
+    def test_cisco_ios_ssh_templates_carry_the_block(self):
+        for name in ("cisco-ios-ssh-enable.yml", "cisco-ios-ssh-noenable.yml"):
+            with self.subTest(template=name):
+                with open(os.path.join(vt.REPO, "cisco", name)) as f:
+                    doc = yaml.load(f, Loader=vt.RConfigLoader)
+
+                self.assertIn("% Invalid input detected", doc["snippet_errors"]["error_patterns"])
+
+
 if __name__ == "__main__":
     unittest.main()

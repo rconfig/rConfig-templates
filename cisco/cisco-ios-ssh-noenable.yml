@@ -32,3 +32,12 @@ config:
   resetPagingCmd: "terminal length 40"              # Command to re-enable paging
   saveConfig: "wr mem"                              # Command to save configuration
   exitCmd: "quit"                                   # Command to exit session
+
+snippet_errors:                                     # Pro V8.4.1+: fail a snippet send when the device rejects a line. Ignored elsewhere
+  error_patterns:                                   # Any match fails the send. Plain text matches anywhere in a reply line, ignoring case
+    - "% Invalid input detected"
+    - "% Incomplete command"
+    - "% Ambiguous command"
+    - "% Unknown command"
+  warning_patterns:                                 # Any match marks the send as a warning. re: makes the pattern a regex
+    - "re:^% Warning"
