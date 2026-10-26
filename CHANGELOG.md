@@ -10,6 +10,8 @@ A major version here means paths changed. Every rename and deletion is mapped in
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-26
+
 ### Added
 - **`snippet_errors`**, the 8th section, with keys 52 and 53: `error_patterns` and
   `warning_patterns`. Read by rConfig Pro V8.4.1 and later on SSH snippet sends, which then go one
