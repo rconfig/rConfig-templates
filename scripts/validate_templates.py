@@ -92,6 +92,19 @@ CONNECTION_MANDATORY = [
     "config.paging", "config.pagingCmd", "config.resetPagingCmd",
     "config.saveConfig", "config.exitCmd", "config.linebreak",
 ]
+
+# Why a mandatory key that looks removable must stay. config.linebreak has no runtime effect
+# on any version, but rConfig Pro before V8.3.2 and Core before 8.2.16 read it without a
+# fallback, so a template that drops it fails every job on those installs. Every install,
+# old ones included, imports templates from this repo. See RCO-1588.
+MANDATORY_REASONS = {
+    "config.linebreak": (
+        "keep linebreak: \"n\" for compatibility with rConfig Pro before V8.3.2 and Core "
+        "before 8.2.16, which fail without it. It does not set the line ending, "
+        "use config.commandLinebreak for that"
+    ),
+}
+
 MANDATORY = {
     "ssh": CONNECTION_MANDATORY,
     "telnet": CONNECTION_MANDATORY,
@@ -263,7 +276,10 @@ def check_mandatory(rel, doc, protocol, rep):
     for dotted in MANDATORY.get(protocol, []):
         section, key = dotted.split(".", 1)
         if key not in (doc.get(section) or {}):
-            rep.error(rel, f"missing mandatory key '{dotted}' for protocol '{protocol}'")
+            msg = f"missing mandatory key '{dotted}' for protocol '{protocol}'"
+            if dotted in MANDATORY_REASONS:
+                msg += f", {MANDATORY_REASONS[dotted]}"
+            rep.error(rel, msg)
 
 
 def check_values(rel, doc, rep):

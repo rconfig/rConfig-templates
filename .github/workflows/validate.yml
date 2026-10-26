@@ -25,3 +25,6 @@ jobs:
 
       - name: "Check standard headers are current"
         run: python3 scripts/apply_headers.py --check
+
+      - name: "Run validator regression tests"
+        run: python3 -m unittest discover -s scripts -p "test_*.py" -v

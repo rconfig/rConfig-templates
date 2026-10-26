@@ -64,6 +64,23 @@ A major version here means paths changed. Every rename and deletion is mapped in
   `docs/CONTRIBUTING.md` and `README.md`, which disagreed with each other at 47/13/14.
 - README badges corrected to 38 vendors and 74 templates. The template count was already one
   short before this change.
+- `config.linebreak` stays mandatory, and the docs now say why. It has no runtime effect, but
+  rConfig Pro before V8.3.2 and Core before 8.2.16 fail every job on a template without it. The
+  `_base/base.yml` comment no longer claims it sets the line ending, and the validator explains
+  the reason when the key is missing. `config.commandLinebreak` is the key that sets the line
+  ending. No template behaviour changes (RCO-1588).
+- `scripts/test_validate_templates.py` adds the repo's first validator tests, run in CI.
+- `config.commandLinebreak`, `connect.kexOverride` and `connect.kexAlgorithms` now work on Core
+  from 8.2.19, so their "Core and Pro" edition is accurate. The legend and `docs/EDITIONS.md` give
+  the minimum version for each (`commandLinebreak` Pro V8.4.0, kex Pro V8.3.3), and the FTOS and
+  JunOS kex templates state it in their header comment. Older versions ignore these keys without
+  an error.
+- The `commandLinebreak` row now says what the key does not cover: login always sends `\n`,
+  telnet always sends `\r\n`, and the Vector agent always sends `\n`. It also tells authors to
+  write the value in lowercase. `docs/ORDER-OF-OPERATIONS.md` gains a symptom row for commands
+  that time out after a successful login.
+- Key counts corrected to 51 (36 Core-capable, 15 Pro only) across `docs/TEMPLATES.md`,
+  `docs/EDITIONS.md`, `docs/CONTRIBUTING.md` and `README.md`.
 
 ## [2.0.0] - 2026-08-16
 

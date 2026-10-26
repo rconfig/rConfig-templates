@@ -5,8 +5,9 @@
 ## Docs: https://docs.rconfig.com/device-management/connection-templates/
 ## Community: https://github.com/rconfig/rConfig-templates
 ## Note: all free-text values must be wrapped in double quotes " "
-# Requires an rConfig build that reads config.commandLinebreak (RCO-1546). FTOS ignores
-# commands terminated with a bare carriage return, so commands are sent with a newline.
+# Requires rConfig Pro V8.4.0 or Core 8.2.19 or later. FTOS ignores commands terminated with a
+# bare carriage return, so commandLinebreak sends them with a newline. Older versions ignore
+# commandLinebreak without an error: login works, then every show command times out.
 
 main:
   name: "Dell Force10 FTOS - SSH - Enable"
@@ -27,7 +28,7 @@ auth:
   hpAnyKeyPrmpt: "Press any key to continue"          # Prompt if applicable
 
 config:
-  linebreak: "n"                                      # Mandatory, no runtime effect - see commandLinebreak
+  linebreak: "n"                                      # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   commandLinebreak: "n"                               # Send commands ending in a newline - FTOS ignores a bare carriage return
   paging: on                                          # Disable CLI paging with pagingCmd
   pagingCmd: "terminal length 0"                      # Command to disable paging
