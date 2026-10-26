@@ -32,11 +32,13 @@ the directory it sits in.**
 | Inbound-only devices (`xftp` / `ftp`) | No | Yes | The device pushes its configuration in rather than rConfig connecting out. `xftp` is the canonical value from V8.3.2 onwards; `ftp` is the value on earlier releases and stays accepted. See [pro-features/xftp/README.md](../pro-features/xftp/README.md) |
 | Protocol fallback (`fallbackProtocol`, `fallbackPort`, `probeTimeout`) | No | Yes | Resolves which protocol a device actually answers on, then caches it. No shipped template uses these keys yet |
 | Prompt sync on login (`syncToPromptOnLogin`, `promptSyncTimeout`) | No | Yes | The fix for output appearing under the wrong command |
+| SSH key-exchange override (`kexOverride`, `kexAlgorithms`) | From 8.2.19 | From V8.3.3 | For devices whose SSH server hangs during key exchange. Earlier versions ignore the keys without an error. See [TEMPLATES.md](TEMPLATES.md) |
+| SSH command line ending (`commandLinebreak`) | From 8.2.19 | From V8.4.0 | Needed by devices such as Dell Force10 FTOS. Earlier versions ignore the key without an error, so a template that sets it fails there. See [TEMPLATES.md](TEMPLATES.md) |
 | `auth.sshPrivKey` | **Not supported** | Yes | Code to read this key is present in Core, but private key authentication is supported on Pro only. This is a support position, not a code gate: it may appear to work in Core and is still not supported there. The template lives in `pro-features/ssh-private-key/` |
 
 ## The 15 Pro-only keys
 
-Of the 48 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
+Of the 51 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
 
 | Section | Keys |
 | --- | --- |
@@ -46,10 +48,14 @@ Of the 48 keys in [TEMPLATES.md](TEMPLATES.md), 15 are read only by Pro.
 | `config`, prompt sync | `syncToPromptOnLogin`, `promptSyncTimeout` |
 | `failure_criteria` | `exit_codes`, `error_patterns`, `success_patterns` |
 
-**The other 33 keys are Core-capable.** Every key in `main`, `auth`, `vt100` and `options`, and
+**The other 36 keys are Core-capable.** Every key in `main`, `auth`, `vt100` and `options`, and
 every key in `config` apart from the two prompt-sync keys, is read by both editions.
 
-Note that `auth.sshPrivKey` is counted among the 33 because Core contains the code that reads it.
+Three of them need a recent Core: `config.commandLinebreak`, `connect.kexOverride` and
+`connect.kexAlgorithms` are read from Core 8.2.19. Earlier Core versions ignore them without an
+error.
+
+Note that `auth.sshPrivKey` is counted among the 36 because Core contains the code that reads it.
 Per the row above, it is nonetheless not supported on Core.
 
 ## What Core gives you in practice

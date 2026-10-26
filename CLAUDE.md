@@ -23,6 +23,7 @@ This is a living section. It is seeded now and extended as standards are adopted
 - Directories prefixed with an underscore are reserved for non-vendor content that must sort above the vendor listing. `_base` holds the starter template.
 - Commit messages use the plan item prefix `P<phase>.<item>`, for example `P1.1`.
 - `pagerPrompt` and `pagerPromptCmd` are deprecated and must not appear in templates. Both values are ignored.
+- Every ssh and telnet template keeps `config.linebreak: "n"`. It has no effect, but rConfig Pro before V8.3.2 and Core before 8.2.16 fail without it. Do not remove it, and do not use it to change the line ending: that is `config.commandLinebreak`.
 - Every adopted standard MUST be added to this file in the same change that adopts it.
 
 ### Template file naming
