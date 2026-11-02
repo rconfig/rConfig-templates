@@ -10,6 +10,19 @@ A major version here means paths changed. Every rename and deletion is mapped in
 
 ## [Unreleased]
 
+### Added
+- `sonicwall/sonicwall-sonicos-ssh-noenable-nousername.yml`, for SonicOS devices that ask for the
+  password inside the session with no username prompt. Sets `sshInteractive: on` and
+  `username: ""`. Shipped `untested-starter`. Needs rConfig Pro V8.4.2 or later to skip the
+  username step; older versions log one failed login per connection (RCO-2010, RCO-2009).
+- `sonicwall/README.md`, explaining which SonicWall template to use and how to spot an in-band
+  password login.
+
+### Changed
+- `docs/TEMPLATES.md` and `docs/ORDER-OF-OPERATIONS.md` document that an empty `auth.username`
+  skips the SSH interactive username step from Pro V8.4.2, and add a troubleshooting row for
+  commands that all return `Access denied`.
+
 ## [2.1.0] - 2026-10-26
 
 ### Added

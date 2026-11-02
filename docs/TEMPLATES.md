@@ -176,7 +176,7 @@ Every value here is a **prompt pattern** or a switch. No credential ever lives i
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `username` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | On telnet, an empty value skips the username step entirely. `SSH/Connect.php:94`, `Telnet/Connect.php:81`, `Telnet/Login.php:30-33` |
+| `username` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | On telnet, an empty value skips the username step entirely. On ssh it is only read when `sshInteractive` is on, and from Pro V8.4.2 an empty value skips the username step there too, for devices that ask only for a password inside the session. Older Pro and Core still send the username, which the device takes as a wrong password. `SSH/Connect.php:94`, `SSH/Login.php:136-141`, `Telnet/Connect.php:81`, `Telnet/Login.php:30-33` |
 | `password` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | `SSH/Connect.php:95`, `Telnet/Connect.php:82` |
 | `enable` | string | `on`, `off` | Mandatory | ssh, telnet | Core and Pro | **Loose comparison.** `enable: true` also activates enable mode, unlike `paging`. Use `on` or `off`. `SSH/Login.php:46`, `Telnet/Login.php:37`; Core `SSH/Login.php:41`, `Telnet/Login.php:38` |
 | `enableCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | Sent after reading the enable prompt. On SSH, any `~` in the value is escaped before use. `SSH/Login.php:253,281-287`, `Telnet/Login.php:68` |
@@ -185,7 +185,7 @@ Every value here is a **prompt pattern** or a switch. No credential ever lives i
 | `enableUsernamePrmpt` | string | prompt pattern | Optional, default none | **ssh only** | Core and Pro | Only used when `enableUsername` is on. `SSH/Connect.php:99`, `SSH/Login.php:256` |
 | `hpAnyKeyStatus` | string | `on` | Mandatory | ssh, telnet | Core and Pro | Strict comparison. On SSH it sends two newlines after login, and also selects a VT100 character-scrubbing read path. `SSH/Login.php:274`, `SSH/SendCommand.php:127`; Core `SSH/Login.php:193`, `SSH/SendCommand.php:88` |
 | `hpAnyKeyPrmpt` | string | prompt string | Mandatory | **no runtime effect** | Core and Pro | Read on both protocols, not acted on. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
-| `sshInteractive` | string | `on` or `yes` | Optional, default none | **ssh only** | Core and Pro | The only key that accepts both spellings. Forces a manual read-and-write login instead of the library login. `SSH/Login.php:187`; Core `:109` |
+| `sshInteractive` | string | `on` or `yes` | Optional, default none | **ssh only** | Core and Pro | The only key that accepts both spellings. Forces a manual read-and-write login after the library login: read `username`, send the username, read `password`, send the password. From Pro V8.4.2 an empty `username` skips the first two steps. `SSH/Login.php:134-147,205`; Core `:109`, `:52-57` |
 | `sshPrivKey` | boolean or string | any truthy value | Optional, default none | **ssh only** | Core and Pro | A flag, not key material. When truthy, rConfig loads the actual private key and passphrase from the credential set attached to the device. Telnet reads this key and ignores it. `SSH/Login.php:142-146,162-173`, `Telnet/Connect.php:89` |
 
 ---

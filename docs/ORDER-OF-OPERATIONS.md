@@ -33,7 +33,7 @@ Entry point `SSHConnectionManager::SSHConnectionAndOutput()`, `SSH/SSHConnection
 | 6 | Escape `~` in every value that will be used as a regex | `config.pagingCmd`, `auth.enableCmd`, `auth.enablePassPrmpt`, device prompt | `SSH/Login.php:281-287` |
 | 7 | Authenticate | `auth.sshPrivKey` decides key versus password | `SSH/Login.php:140-183` |
 | 8 | HP "press any key" nudge, password path only | `auth.hpAnyKeyStatus` | `SSH/Login.php:154,272-279` |
-| 9 | Manual interactive login, if requested | `auth.sshInteractive` | `SSH/Login.php:37-39,130-138` |
+| 9 | Manual interactive login, if requested. From Pro V8.4.2 an empty `auth.username` skips the username step | `auth.sshInteractive`, `auth.username`, `auth.password` | `SSH/Login.php:38-39,134-147` |
 | 10 | Dismiss the splash screen | `vt100.hasSplashScreen`, `vt100.hasSplashScreenEnterKey`, `vt100.splashScreenReadToText`, `vt100.splashScreenSendControlCode` | `SSH/Login.php:41,190-203` |
 | 11 | MikroTik banner sync, one Enter past "press Enter to continue" | `config.isMikrotik` | `SSH/Login.php:44,95-128` |
 | 12a | If enable is on: enter enable mode, then send the paging command if paging is on | `auth.enableCmd`, `auth.enableUsername`, `auth.enableUsernamePrmpt`, `auth.enablePassPrmpt`, then `config.pagingCmd` | `SSH/Login.php:46-47,249-270` |
@@ -292,6 +292,7 @@ Find the symptom, get the stage, check those keys first.
 | Connects, then hangs on a MikroTik | 11, banner sync | `config.isMikrotik`. Also confirm the username suffix on the device record |
 | Login fails or reports the wrong prompt | 7, authenticate | `auth.username`, `auth.password` as prompt patterns, plus the device main prompt on the device record. For key based auth, `auth.sshPrivKey` and the credential set attached to the device |
 | Login succeeds on SSH but times out waiting for a prompt | 9, interactive login | `auth.sshInteractive`. Some devices need the manual read and write login rather than the library one |
+| Login succeeds on SSH, then every command returns `Access denied` | 9, interactive login | The device asks for the password inside the session. Set `auth.sshInteractive` to `on`, and if it shows no username prompt, set `auth.username` to `""` (Pro V8.4.2 or later). See [sonicwall/README.md](../sonicwall/README.md) |
 | Enable mode fails or hangs | 12a | `auth.enable`, `auth.enableCmd`, `auth.enablePassPrmpt`, and the device enable prompt on the device record. If the device asks for a username at enable time, `auth.enableUsername` and `auth.enableUsernamePrmpt`, which are SSH only |
 | Enable appears to be ignored | 12a | `auth.enable` must be the string `on`. Check you have not written a YAML boolean |
 | Output is truncated, or full of `--More--` and paging prompts | 12a or 12b, paging | `config.paging` and `config.pagingCmd`. On SSH, `paging` must be the string `on` or the command is never sent. On telnet the command is always sent, so a truncation problem there is the command itself being wrong |

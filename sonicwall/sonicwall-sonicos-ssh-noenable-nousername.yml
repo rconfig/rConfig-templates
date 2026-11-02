@@ -1,0 +1,37 @@
+# rConfig connection template
+## Edition: core
+## Status: untested-starter
+## Tested-on: not yet tested, please file a template test report
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+# For SonicOS devices that ask for the password inside the session ("Using username 'x'." then
+# "Password:"). Requires rConfig Pro V8.4.2 or later. Older versions and Core send the username
+# to the password prompt first, which logs one failed login per connection. See README.md.
+
+main:
+  name: "SonicWall SonicOS - SSH - No Enable - No Username"
+  desc: "SonicWall SSH based connection where the password is requested inside the session and no username prompt is shown"
+
+connect:
+  timeout: 5                              # Connection timeout (in seconds)
+  protocol: ssh                           # Protocol: ssh
+  port: 22                                # Port number
+
+auth:
+  sshInteractive: on                      # Log in at the prompts inside the session
+  username: ""                            # No username prompt, the device names the user itself
+  password: "Password:"                   # Password prompt
+  enable: off                             # Enable mode disabled
+  enableCmd: "yes"                        # Confirmation command (not used)
+  enablePassPrmpt: "configure"            # Post-confirmation prompt (not used)
+  hpAnyKeyStatus: off                     # 'Press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue"  # Custom 'press any key' prompt
+
+config:
+  linebreak: "n"                          # Linebreak format
+  paging: on                              # CLI paging enabled
+  pagingCmd: "no cli pager session"       # Disable paging
+  resetPagingCmd: "cli pager session"     # Re-enable paging
+  saveConfig: "commit"                    # Save configuration command
+  exitCmd: "exit"                         # Exit command
