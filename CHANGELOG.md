@@ -11,6 +11,14 @@ A major version here means paths changed. Every rename and deletion is mapped in
 ## [Unreleased]
 
 ### Added
+- `ip-infusion/ip-infusion-ocnos-ssh-enable.yml` and `ip-infusion/ip-infusion-ocnos-ssh-noenable.yml`,
+  for IP Infusion OcNOS over SSH. Enable needs no password on OcNOS, so `enablePassPrmpt` matches
+  the privileged prompt. The no enable template is for devices without an installed license. Both
+  never save on backup and carry `snippet_errors` for OcNOS errors, including uncommitted
+  transactions. Shipped `rconfig-verified` against OcNOS-SP 7.0.0 to 7.1.0 and OcNOS-DC 6.6.1 to
+  7.0.1.
+- `ip-infusion/README.md`, explaining which OcNOS template to use, the device prompts, and the
+  `commit` requirement for snippets.
 - `sonicwall/sonicwall-sonicos-ssh-noenable-nousername.yml`, for SonicOS devices that ask for the
   password inside the session with no username prompt. Sets `sshInteractive: on` and
   `username: ""`. Shipped `untested-starter`. Needs rConfig Pro V8.4.2 or later to skip the

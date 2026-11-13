@@ -10,8 +10,8 @@
 
   <!-- Shields.io badges -->
   <p align="center">
-    <img src="https://img.shields.io/badge/vendors-38-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
-    <img src="https://img.shields.io/badge/templates-75-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
+    <img src="https://img.shields.io/badge/vendors-39-blueviolet?style=for-the-badge&logo=yaml&logoColor=white" alt="Vendors Badge"/>
+    <img src="https://img.shields.io/badge/templates-77-blue?style=for-the-badge&logo=yaml&logoColor=white" alt="Templates Badge"/>
   </p>
 
   <p align="center">

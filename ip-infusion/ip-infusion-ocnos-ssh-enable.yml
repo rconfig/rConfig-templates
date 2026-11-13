@@ -1,0 +1,44 @@
+# rConfig connection template
+## Edition: core
+## Status: rconfig-verified
+## Tested-on: rConfig Pro V8.4.2, OcNOS-SP 7.0.0 to 7.1.0 and OcNOS-DC 6.6.1 to 7.0.1
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+# Login lands in user mode (host>) after the OcNOS EULA banner. 'enable' asks for no password, so
+# enablePassPrmpt matches the privileged prompt. Leave the credential's enable password blank.
+# Set the device prompts per device, for example main "^R1-CE1#" and enable "^R1-CE1>". See README.md.
+
+main:
+  name: "IP Infusion OcNOS - SSH - Enable"
+  desc: "IP Infusion OcNOS SSH based connection with enable mode and no password at enable"
+
+connect:
+  timeout: 60                                     # Connection timeout (in seconds)
+  protocol: ssh                                   # Protocol: ssh
+  port: 22                                        # Port number
+
+auth:
+  username: "Username:"                           # Username prompt
+  password: "Password:"                           # Password prompt
+  enable: on                                      # Enable mode enabled
+  enableCmd: "enable"                             # Command to enter enable mode
+  enablePassPrmpt: "^[A-Za-z0-9._-]+#"            # No enable password on OcNOS, so match the privileged prompt
+  hpAnyKeyStatus: off                             # 'Press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue"      # Custom 'press any key' prompt
+
+config:
+  linebreak: "n"                                  # Linebreak format
+  paging: on                                      # CLI paging enabled
+  pagingCmd: "terminal length 0"                  # Disable paging for this session
+  resetPagingCmd: ""                              # Not needed, the paging setting is per session
+  saveConfig: ""                                  # Never save on backup. OcNOS changes need 'commit' instead
+  exitCmd: "exit"                                 # Exit command
+
+snippet_errors:                                   # Pro V8.4.1+: fail a snippet send when the device rejects a line. Ignored elsewhere
+  error_patterns:                                 # Any match fails the send. Plain text matches anywhere in a reply line, ignoring case
+    - "% Invalid input"
+    - "% Error"
+    - "% Incomplete command"
+    - "% Ambiguous command"
+    - "% Un-committed transactions present"

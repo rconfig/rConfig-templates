@@ -1,0 +1,44 @@
+# rConfig connection template
+## Edition: core
+## Status: rconfig-verified
+## Tested-on: rConfig Pro V8.4.2, OcNOS-DC 6.6.1 and 7.0.1
+## Docs: https://docs.rconfig.com/device-management/connection-templates/
+## Community: https://github.com/rconfig/rConfig-templates
+## Note: all free-text values must be wrapped in double quotes " "
+# For OcNOS devices without an installed license, which refuse 'enable'. The session stays in user
+# mode and every command runs at the ">" prompt. Identical to ip-infusion-ocnos-ssh-enable.yml apart
+# from enable. Set the device prompts per device, for example main "^AS7326-56X-1>". See README.md.
+
+main:
+  name: "IP Infusion OcNOS - SSH - No Enable"
+  desc: "IP Infusion OcNOS SSH based connection without enable mode, for unlicensed devices"
+
+connect:
+  timeout: 60                                     # Connection timeout (in seconds)
+  protocol: ssh                                   # Protocol: ssh
+  port: 22                                        # Port number
+
+auth:
+  username: "Username:"                           # Username prompt
+  password: "Password:"                           # Password prompt
+  enable: off                                     # Enable mode disabled
+  enableCmd: "enable"                             # Command to enter enable mode (not used)
+  enablePassPrmpt: "^[A-Za-z0-9._-]+#"            # Privileged prompt (not used)
+  hpAnyKeyStatus: off                             # 'Press any key' handling disabled
+  hpAnyKeyPrmpt: "Press any key to continue"      # Custom 'press any key' prompt
+
+config:
+  linebreak: "n"                                  # Linebreak format
+  paging: on                                      # CLI paging enabled
+  pagingCmd: "terminal length 0"                  # Disable paging for this session
+  resetPagingCmd: ""                              # Not needed, the paging setting is per session
+  saveConfig: ""                                  # Never save on backup. OcNOS changes need 'commit' instead
+  exitCmd: "exit"                                 # Exit command
+
+snippet_errors:                                   # Pro V8.4.1+: fail a snippet send when the device rejects a line. Ignored elsewhere
+  error_patterns:                                 # Any match fails the send. Plain text matches anywhere in a reply line, ignoring case
+    - "% Invalid input"
+    - "% Error"
+    - "% Incomplete command"
+    - "% Ambiguous command"
+    - "% Un-committed transactions present"
