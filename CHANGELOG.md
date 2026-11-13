@@ -10,6 +10,8 @@ A major version here means paths changed. Every rename and deletion is mapped in
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-13
+
 ### Added
 - `ip-infusion/ip-infusion-ocnos-ssh-enable.yml` and `ip-infusion/ip-infusion-ocnos-ssh-noenable.yml`,
   for IP Infusion OcNOS over SSH. Enable needs no password on OcNOS, so `enablePassPrmpt` matches
