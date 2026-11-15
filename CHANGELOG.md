@@ -10,6 +10,41 @@ A major version here means paths changed. Every rename and deletion is mapped in
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-11-15
+
+No paths changed. Nothing to re-point.
+
+### Changed
+- `docs/TEMPLATES.md` re-checked against rConfig Pro V8.4.2 and Core 8.2.20. Switch values: the
+  strict and loose comparison list is replaced by a per-key table for each edition, since Pro
+  V8.3.2 (RCO-1293) reads several keys tolerantly and Core 8.2.16 normalises every switch key.
+  `connect.protocol` is lowercased before dispatch from Pro V8.3.2 and Core 8.2.16.
+  `connect.idleTimeout` is now a documented key: Pro V8.3.2 and later read it when `idletimeout`
+  is absent. The legend now covers 54 keys, 18 of them Pro only.
+- `docs/ORDER-OF-OPERATIONS.md` debugging rows for protocol case, `enable` and `paging` updated to
+  match.
+- `docs/CONTRIBUTING.md`: the reformat caution applies to Pro before V8.4.1 and Core before 8.2.16
+  only. Later releases keep sections the reformatter does not annotate.
+- `docs/noninteractive-ssh.md` rewritten as a reference: what the mode changes, how each edition
+  reads the value (Pro treats the string `off` as on, so leave the key out to turn it off), and the
+  current template names.
+- `fortinet/README.md`, `palo-alto/README.md` and `hp/README.md` rewritten to match the templates
+  they describe.
+- `config.linebreak` comments in every template now say the key has no effect and point at
+  `commandLinebreak`.
+- `scripts/validate_templates.py`: `connect.idleTimeout` is a recognised key, so the two
+  allowlist warnings for it are gone.
+
+### Fixed
+- `config.linebreak` set to `"n"`, the repository standard, in the Juniper, MikroTik, Palo Alto
+  Vector and Siemens templates (`"r"`, `".*"` and `""` before). The key has no runtime effect on
+  any release, so behaviour does not change.
+- Palo Alto `options` comments no longer say "(v6 only)". The keys are read on SSH on every
+  release.
+- `pro-features/xftp/README.md` and `docs/MIGRATION.md` said `xftp` needs a Pro release newer than
+  8.3.2. It is accepted from V8.3.2 (RCO-1301), as the template comment and `docs/EDITIONS.md`
+  already said.
+
 ## [2.2.0] - 2026-11-13
 
 ### Added
