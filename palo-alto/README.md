@@ -1,49 +1,45 @@
+# Palo Alto Networks
 
-# Palo Alto Networks Support
+Covers PAN-OS firewalls over SSH. All three templates run on Core and Pro and expect a `login as:`
+username prompt.
 
-Some Palo Alto devices require some special configurations to work with rConfig.
+| Template | Use for |
+| --- | --- |
+| `palo-alto-panos-ssh-enable.yml` | PAN-OS over SSH. Uses the enable step to turn scripting mode on. Start here |
+| `palo-alto-panos-9x-ssh-noenable.yml` | PAN-OS 9.x, with no enable step. Turns the pager off with `set cli pager off` |
+| `palo-alto-panos-ssh-enable-vector.yml` | PAN-OS reached from a Vector agent |
 
-NOTE: If there are any issues downloading from Palo Altos using this template (such as partial configs) try removing the entire 'Options:' section from the template. 
+PAN-OS has no enable mode in the Cisco sense. Two of the templates use rConfig's enable step simply
+to send PAN-OS CLI settings straight after login, since `enableCmd` is sent as written:
 
-Some commands issued to a terminal may yield ANSI escape codes. eg. ^[[K. These provide the terminal with information on the formating of the characters and their positioning.
-Set connection to use ANSI decoded for older VT100 term emulator based consoles such as HP switches.
-```sh
-    # Set SSH connection to set AnsiHost connection for VT100 type connections
-    AnsiHost: "yes"
+- `palo-alto-panos-ssh-enable.yml` sends `set cli scripting-mode on`.
+- `palo-alto-panos-ssh-enable-vector.yml` sends `set cli pager off` and
+  `set cli config-output-format set`, then uses its paging command to enter `configure`.
+
+## Terminal settings and large configurations
+
+The standard and 9.x templates carry an `options` block:
+
+```yaml
+options:
+  AnsiHost: "yes"
+  setWindowSize: [240, 2048]
+  setTerminalDimensions: [260, 1000]
 ```
 
-Sets the number of columns and rows for the terminal window size. setTerminalDimensions(int $columns = 260, int $rows = 1000)
-```sh
-    # Sets the number of columns and rows for the terminal window size
-    setTerminalDimensions: [260, 1000]
-```
+`AnsiHost: "yes"` selects the ANSI read path, which strips terminal escape codes such as `^[[K`
+from the output. `setTerminalDimensions` sizes the screen that path uses, as columns and rows. For
+firewalls with very large configurations, raise the second value towards the number of lines in
+the configuration; values up to 50000 have been needed. A larger capture can also need a higher
+PHP `memory_limit` on the rConfig server (the default is 256M).
 
-> palo-alto-panos-9x-ssh-noenable.yml - Fully tested and supported on rConfig v6
+If a template returns partial configs, try removing the whole `options` block from your copy as a
+first test.
 
-For Palo Altos with very large configurations, you may need to increase the setTerminalDimensions 2nd value from 1000, to a value that represents the number of lines. We have seen increases up to 50000. If this value does need to be increased, you may need to increase the PHP server memory limit also to cope with the large downloads. 
+## Saving
 
-The default memory limit is 256M, which is usually more than sufficient for most needs. If you need to raise this limit, you must edit the /etc/php.ini file. 
-Find and update the following line. There are no hard recommendations, but if you have a server with 4GB of RAM, this can safely be increase to 2 (2048MB) or 3 GB (3072MB). If in doubt, contact rConfig support if you have a valid support agreement.
+`saveConfig` is set to `commit` in the standard and 9.x templates, but SSH sessions never send
+`saveConfig`, so a backup does not commit anything. See [docs/TEMPLATES.md](../docs/TEMPLATES.md).
 
-```bash
-memory_limit = 256M
-```
-
-Other PA implementations require a special login sequence so an edit to the connection template enableCmd parameter is required. instead of the follow sequence, 
-```bash
-  enable: off
-  # set enable mode command. Must be in quotes
-  enableCmd: "enable"
-```
-
-You may need to adjust this to
-```bash
-  # Set enable mode on or off
-  enable: on
-  # set enable mode command. Must be in quotes
-  enableCmd: "set cli config-output-format set\nset cli pager off"
-...
-    paging: off
-```
-
-These approaches are fully tested and supported on rConfig v6.
+See [docs/TEMPLATES.md](../docs/TEMPLATES.md) for what each key means and
+[docs/CONTRIBUTING.md](../docs/CONTRIBUTING.md) before submitting a change.

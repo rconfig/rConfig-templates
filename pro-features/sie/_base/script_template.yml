@@ -12,8 +12,8 @@ main:
 
 connect:
   timeout: 30                             # Connection timeout (in seconds)
-  idletimeout: 30                         # Idle timeout (in seconds). Lowercase idletimeout is the spelling the current code reads
-  idleTimeout: 30                         # Kept for forward compatibility, camelCase is the documented spelling
+  idletimeout: 30                         # Idle timeout (in seconds). Read by every Pro release; wins if both spellings are set
+  idleTimeout: 30                         # Same value, camelCase spelling. Read from Pro V8.3.2 when idletimeout is absent
   protocol: script                        # Protocol type (script for SIE)
   
 failure_criteria:

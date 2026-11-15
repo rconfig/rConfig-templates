@@ -57,7 +57,7 @@ NEW_KEY_PROCESS = "see 'Requesting a new key' in " + LEGEND
 ALLOWED = {
     "main": {"name", "desc"},
     "connect": {
-        "protocol", "port", "timeout", "isNonInteractiveMode", "idletimeout",
+        "protocol", "port", "timeout", "isNonInteractiveMode", "idletimeout", "idleTimeout",
         "sshAuth", "tl1Transport", "tl1Vendor", "tl1Gateway", "tl1NeighbourCmd",
         "tl1MaxConnections",
         "fallbackProtocol", "fallbackPort", "probeTimeout",
@@ -160,15 +160,9 @@ FILENAME_EXCEPTIONS = {
 # ---------------------------------------------------------------------------
 # connect.ctrlYLogin and auth.linebreak were removed from their templates in P5.7. Their
 # allowlist entries are gone with them, so the generic unknown-key check now ERRORs if either
-# is reintroduced.
-ALLOWLIST_KEYS = {
-    ("pro-features/sie/_base/script_template.yml", "connect", "idleTimeout"):
-        "camelCase kept for forward compatibility alongside the lowercase idletimeout the code "
-        "reads. Remove this entry when the product accepts both spellings",
-    ("pro-features/sie/radware/radware-alteon-script-template.yml", "connect", "idleTimeout"):
-        "camelCase kept for forward compatibility alongside the lowercase idletimeout the code "
-        "reads. Remove this entry when the product accepts both spellings",
-}
+# is reintroduced. connect.idleTimeout left the allowlist when Pro V8.3.2 began reading both
+# spellings; it is now an ordinary key in ALLOWED.
+ALLOWLIST_KEYS = {}
 # xftp became a recognised protocol value in V8.3.2, so it no longer needs an allowlist
 # entry. Kept as an empty map because entries may be needed again for a future value.
 ALLOWLIST_PROTOCOLS = {}

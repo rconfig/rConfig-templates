@@ -27,7 +27,7 @@ auth:
 config:
   syncToPromptOnLogin: "on"                         # Pro only, drains the prompt left unread at login
   promptSyncTimeout: 2                              # Pro only, seconds to wait for another prompt during the sync
-  linebreak: "n"                                    # Linebreak type: 'n' (default) or 'r'
+  linebreak: "n"                                    # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   paging: off                                       # AOS has no CLI pager by default, nothing to disable
   pagingCmd: ""                                     # Not used, paging is off
   resetPagingCmd: ""                                # Not used, paging is off

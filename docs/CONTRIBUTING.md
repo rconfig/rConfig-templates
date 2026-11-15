@@ -116,9 +116,9 @@ descriptions all count.
 
 **Use `on` and `off`, never `true` and `false`.** This is the single most common way to break a
 template silently. rConfig parses YAML 1.2, where `on` and `off` stay strings but `true` and
-`false` become booleans, and the connection code compares against the strings. `paging: true`
-does not disable paging and logs nothing. Worse, the failure is not consistent between keys:
-`enable: true` does work. Read
+`false` become booleans. Core 8.2.16 and later normalise the common spellings, but Pro still
+compares several keys against one exact string: on Pro, `paging: true` on an enable template does
+not disable paging and logs nothing, while `enable: true` does work. Read
 [Switch values in TEMPLATES.md](TEMPLATES.md#switch-values-use-on-and-off) before you write
 either value. The validator fails the build on a boolean in `enable`, `paging` or
 `hpAnyKeyStatus`.
@@ -132,7 +132,7 @@ rather than the file.
 **No deprecated keys.** `pagerPrompt` and `pagerPromptCmd` are ignored by rConfig and must not
 appear. The validator treats them as errors.
 
-**Only keys in the legend.** [TEMPLATES.md](TEMPLATES.md) lists all 53 keys across 8 sections.
+**Only keys in the legend.** [TEMPLATES.md](TEMPLATES.md) lists all 54 keys across 8 sections.
 Anything else is an error, because a key rConfig does not read does nothing except mislead the
 next reader. If your device needs behaviour no existing key expresses, use the
 [new key request form](../.github/ISSUE_TEMPLATE/new-key-request.yml). That is a change to
@@ -147,11 +147,12 @@ prompt. Without that comment someone would have "fixed" it years ago.
 
 ## 5. A caution about reformatting
 
-As of Pro 8.3.2 and Core 8.2.15, the product's built-in template reformat function does not
-preserve the `vt100` and `failure_criteria` sections. Do not run reformat on templates that use
-them.
+On rConfig Pro before V8.4.1 and Core before 8.2.16, the product's built-in template reformat
+function does not preserve the `vt100` and `failure_criteria` sections. Do not run reformat on
+templates that use them on those releases. From Pro V8.4.1 and Core 8.2.16, sections the
+reformatter does not annotate are kept as written.
 
-The templates affected today are:
+The templates that use them today are:
 
 ```text
 avaya/avaya-ers-ssh-noenable-vector.yml
@@ -162,7 +163,7 @@ pro-features/sie/_base/script_template.yml
 pro-features/sie/radware/radware-alteon-script-template.yml
 ```
 
-For everything else, reformat is safe. Run the validator afterwards either way.
+For everything else, reformat is safe on any release. Run the validator afterwards either way.
 
 ---
 

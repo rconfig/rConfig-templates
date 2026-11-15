@@ -25,7 +25,7 @@ auth:
   hpAnyKeyPrmpt: "Press <SPACE> to continue or <Q> to quit:"  # Custom 'press any key' prompt
 
 config:
-  linebreak: "n"                          # Linebreak format (default: 'n')
+  linebreak: "n"                          # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   paging: on                              # CLI paging enabled
   # Device pager prompt, for reference: "Next page: Space, quit: Q"
   pagingCmd: "terminal length 0"          # Disable paging command

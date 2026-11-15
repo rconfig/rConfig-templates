@@ -26,7 +26,7 @@ auth:
   hpAnyKeyPrmpt: "Press any key to continue" # Custom 'press any key' prompt
 
 config:
-  linebreak: "n" # Linebreak format (default: 'n')
+  linebreak: "n" # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   paging: off
   pagingCmd: "set cli scripting-mode on\nset cli pager off" # Disable paging command
   resetPagingCmd: "set cli scripting-mode off\nset cli pager on" # Reset paging command
@@ -34,6 +34,6 @@ config:
   exitCmd: "quit" # Exit command
 
 options:
-  AnsiHost: "yes" # ANSI terminal emulation enabled
-  setWindowSize: [240, 2048] # Terminal window size (v6 only)
-  setTerminalDimensions: [260, 1000] # Terminal dimensions for ANSI sessions (v6 only)
+  AnsiHost: "yes" # ANSI read path: strips VT100 escape codes from the output
+  setWindowSize: [240, 2048] # Terminal window size negotiated for the SSH session
+  setTerminalDimensions: [260, 1000] # Screen size for the ANSI read path. Raise the second value for very large configs

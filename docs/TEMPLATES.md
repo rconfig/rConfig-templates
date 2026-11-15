@@ -36,18 +36,21 @@ enable: true     # boolean true, not the string "true"
 `on`, `off`, `yes` and `no` are read as **strings** whether or not you quote them. `true`, `false`,
 `null` and `~` are read as their YAML types.
 
-The connection code compares switch keys against the strings `"on"` and `"yes"`, and several of
-those comparisons are strict. Keeping to `on` and `off` means every switch key behaves the same
-way, and each one does what the template says.
+How tolerant rConfig is of other spellings depends on the edition and version:
 
-For reference, a YAML boolean is evaluated differently depending on the key:
+- **Core 8.2.16 and later** normalise every switch key to `on` or `off` when the template is
+  loaded, accepting `on`, `yes`, `true`, `y`, `1`, `enable`, `enabled` (and their opposites) in any
+  case, and YAML booleans.
+- **Pro V8.3.2 and later** accept `on`, `yes`, `true` and `1` for some keys (`enable`,
+  `kexOverride`, `syncToPromptOnLogin`, and `paging` when enable mode is off), but still compare
+  other keys against one exact string. `paging: true` on an enable template leaves paging on, and
+  `AnsiHost` and `isMikrotik` only work as `yes`.
+- **Pro before V8.3.2 and Core before 8.2.16** compare most keys strictly, so `paging: true` leaves
+  paging on everywhere.
 
-| Written as | Result |
-| --- | --- |
-| `paging: true` | Paging stays enabled. The comparison is strict, and `true` is not `"on"`. |
-| `enable: true` | Enable mode is entered. The comparison is loose, and PHP casts the other side to boolean. |
-
-Both lines are valid YAML, so this is settled by convention rather than by the parser. The switch
+`on` and `off` (and `yes` for `AnsiHost` and `isMikrotik`) are the only spellings that work on
+every edition and version. See [Switch comparisons by key](#switch-comparisons-by-key) for the
+detail. The switch
 keys are `enable`, `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`, `sshInteractive`,
 `syncToPromptOnLogin`, `hasSplashScreen`, `hasSplashScreenEnterKey` and `enableUsername`.
 
@@ -151,11 +154,12 @@ Script templates never build a connection object, so neither key is read for `pr
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `protocol` | string | `ssh`, `telnet`, `script`, `tl1`, `ftp` | Mandatory | dispatcher | Core: `ssh`, `telnet`. Pro: all five | **Case sensitive in the dispatcher**: `SSH` does not match `ssh`. The fallback and inbound-only paths lowercase first, so the same value is treated case-insensitively there and case-sensitively here. `ftp` has no dispatcher branch; it is handled earlier in the download path. `MainConnectionManager.php:50,56,62,68`; Core `:25,29`; `ConnectionParams.php:33`; `ProtocolFallbackConnectionManager.php:220-229` |
+| `protocol` | string | `ssh`, `telnet`, `script`, `tl1`, `ftp` | Mandatory | dispatcher | Core: `ssh`, `telnet`. Pro: all five | Trimmed and lowercased before dispatch from Pro V8.3.2 and Core 8.2.16, so `SSH` works there. **Earlier releases match case-sensitively**, so write it in lowercase. `ftp` has no dispatcher branch; it is handled earlier in the download path. `MainConnectionManager.php:50,56,62,68`; Core `:25,29`; `ConnectionParams.php:33`; `ProtocolFallbackConnectionManager.php:220-229` |
 | `port` | int | 1 to 65535 | Mandatory | ssh, telnet, tl1 | Core and Pro | A device port override always wins over this value. The per-protocol classes apply no range check to the override; only the fallback manager does. `SSH/Connect.php:90`, `Telnet/Connect.php:79`, `TL1/Connect.php:69`, `ProtocolFallbackConnectionManager.php:75-90` |
 | `timeout` | int | seconds | Mandatory on ssh, telnet, tl1. Default `30` on script | all | Core and Pro | Passed straight to the SSH2 constructor, and restored after prompt sync. Script uses it as a process timeout with its own default. `SSH/Connect.php:157`, `SSH/Login.php:91`, `Script/ScriptConnectionManager.php:33` |
-| `isNonInteractiveMode` | string | truthy value | Optional, default none | ssh | Core and Pro | Switches command sending to a non-interactive exec instead of prompt-driven reads. Combines with `sshPrivKey` in the read-strategy order below. `SSH/Connect.php:91`, `SSH/SendCommand.php:24-50` |
-| `idletimeout` | int | seconds | Optional, default `30` | script | **Pro only** | All lowercase. `Script/ScriptConnectionManager.php:34` |
+| `isNonInteractiveMode` | string | truthy value | Optional, default none | ssh | Core and Pro | Switches command sending to a non-interactive exec instead of prompt-driven reads. Pro treats any truthy value as on, including the string `off`, so leave the key out to turn it off. See [noninteractive-ssh.md](noninteractive-ssh.md). Combines with `sshPrivKey` in the read-strategy order below. `SSH/Connect.php:91`, `SSH/SendCommand.php:24-50` |
+| `idletimeout` | int | seconds | Optional, default `30` | script | **Pro only** | Pro V8.3.2 and later also read the camelCase `idleTimeout`; when both are present the lowercase one wins. Earlier releases read only the lowercase spelling. `Script/ScriptConnectionManager.php` |
+| `idleTimeout` | int | seconds | Optional | script | **Pro only**, V8.3.2+ | Alternative spelling of `idletimeout`, read only when the lowercase key is absent. Older releases ignore it. `Script/ScriptConnectionManager.php` |
 | `sshAuth` | string | `none`, or anything else for password | Optional, default `password` | tl1 | **Pro only** | `none` skips transport authentication before the TL1 `ACT-USER` login. `TL1/Connect.php:70`, `Transport/SshTransport.php:33` |
 | `tl1Transport` | string | `telnet`, or anything else for ssh | Optional, default `ssh` | tl1 | **Pro only** | Anything that is not literally `telnet` falls back to SSH. `TL1/Connect.php:71`, `Transport/Tl1TransportFactory.php:15-20` |
 | `tl1Vendor` | string | `ciena`, `infinera`, `cisco-ons` | Optional, default `ciena` | tl1 | **Pro only** | Selects the TL1 dialect: the neighbour-discovery verb, the record format it returns, the node's prompt, and whether a routed reply's header SID can be compared to the addressed TID. An unrecognised value fails the collection with a readable message rather than falling back to Ciena, because a typo collecting as the wrong vendor would parse nothing, report no elements, and flag every element behind that gateway as missing on the next run. See [TL1.md](TL1.md). `TL1/Connect.php`, `TL1/Vendor/Tl1VendorRegistry.php` |
@@ -178,12 +182,12 @@ Every value here is a **prompt pattern** or a switch. No credential ever lives i
 | --- | --- | --- | --- | --- | --- | --- |
 | `username` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | On telnet, an empty value skips the username step entirely. On ssh it is only read when `sshInteractive` is on, and from Pro V8.4.2 an empty value skips the username step there too, for devices that ask only for a password inside the session. Older Pro and Core still send the username, which the device takes as a wrong password. `SSH/Connect.php:94`, `SSH/Login.php:136-141`, `Telnet/Connect.php:81`, `Telnet/Login.php:30-33` |
 | `password` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | `SSH/Connect.php:95`, `Telnet/Connect.php:82` |
-| `enable` | string | `on`, `off` | Mandatory | ssh, telnet | Core and Pro | **Loose comparison.** `enable: true` also activates enable mode, unlike `paging`. Use `on` or `off`. `SSH/Login.php:46`, `Telnet/Login.php:37`; Core `SSH/Login.php:41`, `Telnet/Login.php:38` |
+| `enable` | string | `on`, `off` | Mandatory | ssh, telnet | Core and Pro | Use `on` or `off`. Every current release also accepts `yes`, `true` and `1`; see [Switch comparisons by key](#switch-comparisons-by-key). `SSH/Login.php:46`, `Telnet/Login.php:37`; Core `SSH/Login.php:41`, `Telnet/Login.php:38` |
 | `enableCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | Sent after reading the enable prompt. On SSH, any `~` in the value is escaped before use. `SSH/Login.php:253,281-287`, `Telnet/Login.php:68` |
 | `enablePassPrmpt` | string | prompt pattern | Mandatory | ssh, telnet | Core and Pro | On SSH, any `~` is escaped before use. `SSH/Login.php:260,281-287`, `Telnet/Login.php:69` |
-| `enableUsername` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Strict comparison. Telnet has no equivalent branch, so a telnet device that asks for a username at enable time cannot be handled. `SSH/Login.php:255-258` |
+| `enableUsername` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Pro accepts only `on`. Telnet has no equivalent branch, so a telnet device that asks for a username at enable time cannot be handled. `SSH/Login.php:255-258` |
 | `enableUsernamePrmpt` | string | prompt pattern | Optional, default none | **ssh only** | Core and Pro | Only used when `enableUsername` is on. `SSH/Connect.php:99`, `SSH/Login.php:256` |
-| `hpAnyKeyStatus` | string | `on` | Mandatory | ssh, telnet | Core and Pro | Strict comparison. On SSH it sends two newlines after login, and also selects a VT100 character-scrubbing read path. `SSH/Login.php:274`, `SSH/SendCommand.php:127`; Core `SSH/Login.php:193`, `SSH/SendCommand.php:88` |
+| `hpAnyKeyStatus` | string | `on` | Mandatory | ssh, telnet | Core and Pro | Pro accepts only `on`. On SSH it sends two newlines after login, and also selects a VT100 character-scrubbing read path. `SSH/Login.php:274`, `SSH/SendCommand.php:127`; Core `SSH/Login.php:193`, `SSH/SendCommand.php:88` |
 | `hpAnyKeyPrmpt` | string | prompt string | Mandatory | **no runtime effect** | Core and Pro | Read on both protocols, not acted on. `SSH/Connect.php:102`, `Telnet/Connect.php:87` |
 | `sshInteractive` | string | `on` or `yes` | Optional, default none | **ssh only** | Core and Pro | The only key that accepts both spellings. Forces a manual read-and-write login after the library login: read `username`, send the username, read `password`, send the password. From Pro V8.4.2 an empty `username` skips the first two steps. `SSH/Login.php:134-147,205`; Core `:109`, `:52-57` |
 | `sshPrivKey` | boolean or string | any truthy value | Optional, default none | **ssh only** | Core and Pro | A flag, not key material. When truthy, rConfig loads the actual private key and passphrase from the credential set attached to the device. Telnet reads this key and ignores it. `SSH/Login.php:142-146,162-173`, `Telnet/Connect.php:89` |
@@ -196,7 +200,7 @@ For devices that show a menu or banner before the CLI prompt.
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `hasSplashScreen` | string | `on` | Optional, default none | ssh, telnet | Core and Pro | **SSH compares strictly, telnet compares loosely.** `SSH/Login.php:192`, `Telnet/Login.php:23` |
+| `hasSplashScreen` | string | `on` | Optional, default none | ssh, telnet | Core and Pro | Pro accepts only `on` on SSH. See [Switch comparisons by key](#switch-comparisons-by-key). `SSH/Login.php:192`, `Telnet/Login.php:23` |
 | `hasSplashScreenEnterKey` | string | `on` | Optional, default none | **ssh only** | Core and Pro | Sends a newline before reading the splash text. SSH only, so a telnet splash screen has no initial Enter step. `SSH/Login.php:196-199` |
 | `splashScreenReadToText` | string | text to read up to | Optional, default none | ssh, telnet | Core and Pro | `SSH/Login.php:201`, `Telnet/Login.php:26` |
 | `splashScreenSendControlCode` | string | control code to send | Optional, default none | ssh, telnet | Core and Pro | `SSH/Login.php:202`, `Telnet/Login.php:27` |
@@ -207,12 +211,12 @@ For devices that show a menu or banner before the CLI prompt.
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `paging` | string | `on` | Mandatory | ssh (telnet reads, does not act) | Core and Pro | Strict comparison, so use `on` or `off`. **On SSH this gates whether `pagingCmd` is sent. On telnet it does not: telnet sends `pagingCmd` unconditionally.** `SSH/Login.php:241,264`, `SSHConnectionManager.php:108,118`, `Telnet/Login.php:44-45` |
+| `paging` | string | `on` | Mandatory | ssh (telnet reads, does not act) | Core and Pro | Use `on` or `off`: on Pro, the enable-mode path and the teardown reset accept only `on`. **On SSH this gates whether `pagingCmd` is sent. On telnet it does not: telnet sends `pagingCmd` unconditionally.** `SSH/Login.php:241,264`, `SSHConnectionManager.php:108,118`, `Telnet/Login.php:44-45` |
 | `pagingCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | On SSH, sent only when `paging` is on, and any `~` is escaped first. On telnet, always sent after login regardless of `paging`. `SSH/Login.php:239-247,281-287`, `Telnet/Login.php:44-45` |
 | `resetPagingCmd` | string | CLI command | Mandatory | ssh, telnet | Core and Pro | **Different gates per protocol.** SSH sends it at disconnect only when `paging` is on. Telnet sends it whenever the value is non-empty, with no `paging` check. `SSHConnectionManager.php:106-112`, `SSH/SendCommand.php:164-168`, `Telnet/Quit.php:38-43` |
 | `saveConfig` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty. Read into an SSH property and not sent. `Telnet/Quit.php:45-51`, `SSH/Connect.php:117` |
 | `exitCmd` | string | CLI command | Mandatory | **telnet only** (ssh reads, does not act) | Core and Pro | Sent on telnet teardown when non-empty, and by the fallback probe (which deliberately skips `saveConfig`, because a probe must not write config). Read into an SSH property and not sent. `Telnet/Quit.php:53-58`, `PrimaryProtocolVerifier.php:83-95`, `SSH/Connect.php:118` |
-| `isMikrotik` | string | `yes` | Optional, default none | **ssh only** | Core and Pro | Strict comparison. Sends one Enter past the MikroTik banner at login, then blanks the device prompt for reads so output is captured with a match-anything pattern. `SSH/Login.php:97,95-128`, `SSH/SendCommand.php:43,45,67,68` |
+| `isMikrotik` | string | `yes` | Optional, default none | **ssh only** | Core and Pro | Pro accepts only `yes`. Sends one Enter past the MikroTik banner at login, then blanks the device prompt for reads so output is captured with a match-anything pattern. `SSH/Login.php:97,95-128`, `SSH/SendCommand.php:43,45,67,68` |
 | `linebreak` | string | `n` | Mandatory, for backward compatibility | **no runtime effect** | Core and Pro | Has never set the line ending on any version. It stays mandatory because rConfig Pro before V8.3.2 and Core before 8.2.16 read it without a fallback, so a template without it fails every job on those installs. Always set `"n"`. To change the line ending SSH commands are sent with, use `commandLinebreak`. `Telnet/Connect.php:91` |
 | `commandLinebreak` | string | `r`, `n`, `rn` | Optional, default `r` | **ssh only** | Core and Pro, from Pro V8.4.0 and Core 8.2.19 | Line ending appended to every command written to the interactive shell after login: show commands, the ANSI path, `resetPagingCmd` and, on Pro, snippet lines (RouterOS snippets keep their own `\r\n`). Opt-in, so templates without it keep sending `\r`. Set `n` for devices such as Dell Force10 FTOS that ignore a bare carriage return. **Older versions ignore the key without any error** and keep sending `\r`, so a template that needs it does not work on them. **Not covered:** the login steps always send `\n` whatever this key says (username, password, `enableCmd`, the enable password and `pagingCmd`); the exec channel used by `isNonInteractiveMode` always sends `\r`; telnet always sends `\r\n`; the Vector agent always sends `\n`. Write the value in lowercase: rConfig matches it case-insensitively and falls back to `r` for anything else, but the validator accepts only `r`, `n` and `rn`. Pro: `SSH/Connect.php:116,197-206`, `SSH/Send.php:16`. Core: `SSH/Connect.php:112,245-254`, `SSH/Send.php:16` |
 | `syncToPromptOnLogin` | string | `on` | Optional, default `off` | **ssh only** | **Pro only** | Undocumented before this legend. Set it when command output appears against the preceding command: it drains any prompt the login sequence left unread, so the first command waits for its own prompt. `SSH/Connect.php:113`, `SSH/Login.php:63-93` |
@@ -229,7 +233,7 @@ carries an explicit comment saying these are kept only for consistency.
 
 | Key | Type | Values | Mandatory / Default | Protocols | Edition | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
-| `AnsiHost` | string | `yes` | Optional, default none | **ssh only** | Core and Pro | Strict comparison. Selects the ANSI read path, which strips VT100 escape codes from output. Needed by HP and MikroTik devices. `SSH/SendCommand.php:39`; Core `:37` |
+| `AnsiHost` | string | `yes` | Optional, default none | **ssh only** | Core and Pro | Pro accepts only `yes`. Selects the ANSI read path, which strips VT100 escape codes from output. Needed by HP and MikroTik devices. `SSH/SendCommand.php:39`; Core `:37` |
 | `setWindowSize` | array | `[columns, rows]` | Optional, default none | **ssh only** | Core and Pro | Applied to the SSH session as a real window size. `SSH/Connect.php:136,158-160` |
 | `setTerminalDimensions` | array | `[width, height]` | Optional, default none | **ssh only** | Core and Pro | Affects ANSI post-processing only, not the negotiated terminal. Used to size the ANSI screen when the ANSI read path runs. For very large configurations, raise the second value. `SSH/Connect.php:138,161-163`, `SSH/SendCommand.php:61-63` |
 
@@ -318,15 +322,32 @@ such as `[admin@MikroTik] /interface>`, matches as typed.
 On releases before V8.3.2 the telnet prompt was interpolated unescaped, so keep the device prompt
 free of `/` characters if you are running an earlier version.
 
-### Strict and loose comparisons
+### Switch comparisons by key
 
-Strict, matching the string exactly: `paging`, `hpAnyKeyStatus`, `AnsiHost`, `isMikrotik`,
-`sshInteractive`, `syncToPromptOnLogin`, `enableUsername`, and `hasSplashScreen` on SSH.
+What each switch key accepts as "on" in the current releases. Core 8.2.16 and later normalise every
+key in its column before use, so the Core column is the same for each. "Tolerant" means `on`,
+`yes`, `true` or `1` in any case, or a YAML `true`.
 
-Loose: `enable` on both protocols, `hasSplashScreen` on telnet, `hasSplashScreenEnterKey`.
+| Key | Pro V8.3.2 to V8.4.2 | Core 8.2.16 and later |
+| --- | --- | --- |
+| `enable` | Tolerant, SSH and telnet | Normalised |
+| `paging` | SSH, enable off: tolerant. SSH, enable on, and the reset at teardown: `on` only. Telnet: not checked | Normalised |
+| `hpAnyKeyStatus` | `on` only | Normalised |
+| `AnsiHost` | `yes` only | Normalised, so `yes` and `on` both work |
+| `isMikrotik` | `yes` only | Normalised, so `yes` and `on` both work |
+| `sshInteractive` | `on` or `yes` | Normalised |
+| `enableUsername` | `on` only | Normalised |
+| `hasSplashScreen` | SSH: `on` only. Telnet: `on` or YAML `true` | Normalised |
+| `hasSplashScreenEnterKey` | `on` or YAML `true` | Normalised |
+| `syncToPromptOnLogin` | Tolerant. Any other value that is set, such as `off`, opts out | Not read |
+| `kexOverride` | Tolerant | Tolerant, from 8.2.19 |
+| `isNonInteractiveMode` | Any truthy value, including the string `off`. Leave the key out to turn it off | Normalised |
+| `tl1Gateway` | `true`, `on`, `1` or `yes`, any case | Not read |
+| `sshPrivKey` | Any truthy value | Any truthy value (not supported on Core, see [EDITIONS.md](EDITIONS.md)) |
 
-Writing `on` and `off` satisfies both forms, which is why the convention holds across every switch
-key.
+Pro before V8.3.2 and Core before 8.2.16 compared `enable` loosely (a YAML `true` worked, `yes`
+did not) and most other keys strictly. Writing `on` and `off`, and `yes` where the table says so, works on all of them,
+which is why the convention holds.
 
 ---
 
@@ -353,11 +374,12 @@ history; removing them is handled separately from this document.
 | --- | --- | --- | --- |
 | `ctrlYLogin` | `connect` | **Removed** from `avaya/avaya-ers-ssh-noenable-vector.yml` on 2026-08-16 | The name does not occur in either codebase. That device's control-code login is delivered by its `vt100` section, which now records this in a comment |
 | `linebreak` inside `auth` | `auth` | **Removed** from `hp/hp-1920-ssh-enable.yml` on 2026-08-16 | rConfig reads `config.linebreak` only, and that key has no runtime effect either. The confirmation keystroke is carried inside `enableCmd` |
-| `idleTimeout` | `connect` | Still present in `pro-features/sie/_base/script_template.yml` and `pro-features/sie/radware/radware-alteon-script-template.yml`, alongside a lowercase `idletimeout` | rConfig reads `idletimeout`, all lowercase. Key lookup is case sensitive, so the camelCase spelling never matches. Both templates now carry both spellings: the lowercase one works today, the camelCase one is kept for forward compatibility |
-
 The two removed keys are no longer allowlisted in `scripts/validate_templates.py`, so validation
-reports either as an unknown key if it reappears. `idleTimeout` stays allowlisted until the product
-accepts both spellings.
+reports either as an unknown key if it reappears.
+
+`idleTimeout` used to sit in this table. From Pro V8.3.2 rConfig reads both `idletimeout` and
+`idleTimeout`, lowercase first, so the camelCase spelling is now a recognised key (see the
+`connect` table) rather than an allowlisted one.
 
 `vt100`, by contrast, is fully active. Four shipped templates use it and both editions read it:
 `avaya/avaya-ers-ssh-noenable-vector.yml`, `avaya/avaya-ers-telnet-noenable.yml`,
@@ -413,10 +435,11 @@ This legend was compiled from a full read of the rConfig connection stack in bot
 | Evidence file | `legend-evidence.md` |
 | Updated | 2026-10-26: the `commandLinebreak`, `kexOverride` and `kexAlgorithms` rows, checked against rConfig Pro V8.4.1 and Core 8.2.19 |
 | Updated | 2026-10-26: the `snippet_errors` section, checked against rConfig Pro V8.4.1 (RCO-1534) |
+| Updated | 2026-11-15: switch value handling, protocol case and the `idleTimeout` spelling, checked against rConfig Pro V8.4.2 (RCO-1293, in V8.3.2) and Core 8.2.20 (`TemplateNormaliser`, in 8.2.16) |
 
-Coverage: 53 keys across 8 top-level sections. Core reads 36 of them, set out row by row in
-[EDITIONS.md](EDITIONS.md). The 17 that are Pro only are the four TL1 keys plus `tl1Vendor`, the
-three fallback keys, `idletimeout`, `sshAuth`, `syncToPromptOnLogin`, `promptSyncTimeout`, the
+Coverage: 54 keys across 8 top-level sections. Core reads 36 of them, set out row by row in
+[EDITIONS.md](EDITIONS.md). The 18 that are Pro only are the four TL1 keys plus `tl1Vendor`, the
+three fallback keys, `idletimeout` and `idleTimeout`, `sshAuth`, `syncToPromptOnLogin`, `promptSyncTimeout`, the
 three `failure_criteria` keys, and the two `snippet_errors` keys.
 
 Line references point at the two codebases above. They are accurate as of those commits and will

@@ -97,9 +97,9 @@ session to succeed or fail.
 
 Assign it to the device, then arrange for the device to push its file.
 
-Per the comments in the template itself, `xftp` is the protocol value on rConfig Pro releases
-**newer than 8.3.2**. Releases up to and including 8.3.2 accept only `ftp` for inbound-only
-devices. Check which your server is running before assuming a value.
+Per the comments in the template itself, `xftp` is the protocol value from rConfig Pro **V8.3.2**
+onwards. Releases before V8.3.2 accept only `ftp` for inbound-only devices, and later releases
+still accept `ftp`. Check which your server is running before assuming a value.
 
 ## Device-side push commands
 

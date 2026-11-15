@@ -37,15 +37,15 @@ the directory it sits in.**
 | Snippet error detection (`snippet_errors`) | No | From V8.4.1, SSH only | Reports a snippet send as Failed when the device rejects a line. Core, earlier Pro versions and telnet ignore the section without an error, so a template that carries it still works there, unchecked. See [TEMPLATES.md](TEMPLATES.md#snippet_errors-1) |
 | `auth.sshPrivKey` | **Not supported** | Yes | Code to read this key is present in Core, but private key authentication is supported on Pro only. This is a support position, not a code gate: it may appear to work in Core and is still not supported there. The template lives in `pro-features/ssh-private-key/` |
 
-## The 17 Pro-only keys
+## The 18 Pro-only keys
 
-Of the 53 keys in [TEMPLATES.md](TEMPLATES.md), 17 are read only by Pro.
+Of the 54 keys in [TEMPLATES.md](TEMPLATES.md), 18 are read only by Pro.
 
 | Section | Keys |
 | --- | --- |
 | `connect`, TL1 | `sshAuth`, `tl1Transport`, `tl1Vendor`, `tl1Gateway`, `tl1NeighbourCmd`, `tl1MaxConnections` |
 | `connect`, fallback | `fallbackProtocol`, `fallbackPort`, `probeTimeout` |
-| `connect`, script | `idletimeout` |
+| `connect`, script | `idletimeout`, `idleTimeout` (V8.3.2+) |
 | `config`, prompt sync | `syncToPromptOnLogin`, `promptSyncTimeout` |
 | `failure_criteria` | `exit_codes`, `error_patterns`, `success_patterns` |
 | `snippet_errors` | `error_patterns`, `warning_patterns` (from V8.4.1) |

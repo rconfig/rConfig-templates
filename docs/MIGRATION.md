@@ -217,8 +217,8 @@ wire-neutral: no connection behaviour changes, because none of these keys was ev
 | `pro-features/sie/radware/radware-alteon-script-template.yml` | Added `connect.idletimeout: 30` | As above |
 
 `pro-features/xftp/xftp-inbound-only.yml` keeps `protocol: xftp` unchanged. A comment now records
-that `xftp` requires an rConfig Pro release newer than 8.3.2, and that releases up to 8.3.2 accept
-only `ftp` for inbound-only devices.
+that `xftp` requires rConfig Pro V8.3.2 or later, and that earlier releases accept only `ftp` for
+inbound-only devices.
 
 ## A note on git history
 

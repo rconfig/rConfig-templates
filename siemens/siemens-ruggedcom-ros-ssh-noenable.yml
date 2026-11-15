@@ -24,7 +24,7 @@ auth:
   hpAnyKeyPrmpt: "Press 'Enter' to continue..."
 #\u0013
 config:
-  linebreak: ""
+  linebreak: "n"  # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   paging: off
   pagingCmd: ""
   resetPagingCmd: ""

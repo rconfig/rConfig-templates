@@ -23,7 +23,7 @@ auth:
   hpAnyKeyStatus: off
   hpAnyKeyPrmpt: "Press any key to continue"  
 config:
-  linebreak: "n"
+  linebreak: "n"  # Keep as "n". No effect, but rConfig before V8.3.2 fails without it. Line endings: commandLinebreak
   paging: on
   pagingCmd: "configure system \r\n cli-settings \r\n window-height 0 \r\n exit \r\n exit \r\n"
   resetPagingCmd: ""

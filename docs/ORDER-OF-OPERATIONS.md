@@ -134,7 +134,7 @@ Pro only. Entry point `ScriptConnectionManager::ScriptConnectionAndOutput()`,
 | Step | What happens | Keys driving it | Evidence |
 | --- | --- | --- | --- |
 | 1 | For each command, resolve and sanitise it | none | `Script/ScriptConnectionManager.php:29-31` |
-| 2 | Run the process | `connect.timeout`, `connect.idletimeout` | `Script/ScriptConnectionManager.php:33-35` |
+| 2 | Run the process | `connect.timeout`, `connect.idletimeout` (or `connect.idleTimeout` from V8.3.2) | `Script/ScriptConnectionManager.php:33-35` |
 | 3 | Decide whether the run failed | `failure_criteria.exit_codes`, `failure_criteria.error_patterns`, `failure_criteria.success_patterns` | `Script/ScriptConnectionManager.php:57 onward` |
 
 **No socket is opened and no connection object is built**, so `main`, `auth`, `config`, `options`
@@ -287,15 +287,15 @@ Find the symptom, get the stage, check those keys first.
 
 | Symptom | Stage it fails at | Keys to check |
 | --- | --- | --- |
-| No connection at all, immediate failure | 2 to 3, socket open | `connect.port`, `connect.protocol`, and any device port override. Remember the dispatcher matches `protocol` case sensitively, so `SSH` is not `ssh` |
+| No connection at all, immediate failure | 2 to 3, socket open | `connect.port`, `connect.protocol`, and any device port override. Before Pro V8.3.2 and Core 8.2.16 the dispatcher matches `protocol` case sensitively, so `SSH` is not `ssh`; later releases lowercase it first |
 | Connects, then hangs before any login prompt | 10, splash screen | `vt100.hasSplashScreen`, `vt100.splashScreenReadToText`, `vt100.splashScreenSendControlCode`. On SSH also `vt100.hasSplashScreenEnterKey`. A device showing a banner with no `vt100` section will hang here |
 | Connects, then hangs on a MikroTik | 11, banner sync | `config.isMikrotik`. Also confirm the username suffix on the device record |
 | Login fails or reports the wrong prompt | 7, authenticate | `auth.username`, `auth.password` as prompt patterns, plus the device main prompt on the device record. For key based auth, `auth.sshPrivKey` and the credential set attached to the device |
 | Login succeeds on SSH but times out waiting for a prompt | 9, interactive login | `auth.sshInteractive`. Some devices need the manual read and write login rather than the library one |
 | Login succeeds on SSH, then every command returns `Access denied` | 9, interactive login | The device asks for the password inside the session. Set `auth.sshInteractive` to `on`, and if it shows no username prompt, set `auth.username` to `""` (Pro V8.4.2 or later). See [sonicwall/README.md](../sonicwall/README.md) |
 | Enable mode fails or hangs | 12a | `auth.enable`, `auth.enableCmd`, `auth.enablePassPrmpt`, and the device enable prompt on the device record. If the device asks for a username at enable time, `auth.enableUsername` and `auth.enableUsernamePrmpt`, which are SSH only |
-| Enable appears to be ignored | 12a | `auth.enable` must be the string `on`. Check you have not written a YAML boolean |
-| Output is truncated, or full of `--More--` and paging prompts | 12a or 12b, paging | `config.paging` and `config.pagingCmd`. On SSH, `paging` must be the string `on` or the command is never sent. On telnet the command is always sent, so a truncation problem there is the command itself being wrong |
+| Enable appears to be ignored | 12a | Write `auth.enable: on`. Current releases also accept `yes`, `true` and `1`. Pro before V8.3.2 and Core before 8.2.16 accept `on` and a YAML `true`, but not `yes` |
+| Output is truncated, or full of `--More--` and paging prompts | 12a or 12b, paging | `config.paging` and `config.pagingCmd`. On SSH, write `paging: on`: Pro accepts only `on` on an enable template and at teardown, and releases before Pro V8.3.2 and Core 8.2.16 accept only `on` everywhere, so any other spelling can leave the command unsent. On telnet the command is always sent, so a truncation problem there is the command itself being wrong |
 | Login and enable succeed on SSH, then every command times out or comes back empty | 14, send command | `config.commandLinebreak`. Some devices, such as Dell Force10 FTOS, ignore a command ending in a bare `\r`, which is the default. Set `n`. Login is unaffected because it always sends `\n`. Needs Pro V8.4.0 or Core 8.2.19 or later; older versions ignore the key |
 | Output is full of escape codes and cursor junk | 14 to 15, read strategy | `options.AnsiHost` set to `yes`, and `options.setTerminalDimensions` for large configurations. On HP, `auth.hpAnyKeyStatus` also selects a scrubbing path |
 | Output appears under the wrong command, everything shifted by one | 13, prompt sync | `config.syncToPromptOnLogin` set to `on`, and `config.promptSyncTimeout` if the device is slow. Pro only |
@@ -328,6 +328,7 @@ Sequences reconstructed from a full read of the rConfig connection stack in both
 | Compiled | 2026-08-16 |
 | rConfig Pro analysed | V8.3.2, commit `832e530` |
 | rConfig Core analysed | branch `develop`, commit `cdcb518`, app version 8.2.15 |
+| Updated | 2026-11-15: switch value and protocol case rows in Debugging by stage, checked against rConfig Pro V8.4.2 and Core 8.2.20 |
 
 Core runs the SSH and telnet sequences only. TL1, script, the FTP short circuit and the fallback
 path are Pro. Line references are accurate as of those commits and will drift as the code
