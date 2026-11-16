@@ -10,6 +10,17 @@ A major version here means paths changed. Every rename and deletion is mapped in
 
 ## [Unreleased]
 
+## [2.2.2] - 2026-11-16
+
+No paths changed. Nothing to re-point.
+
+### Fixed
+- `fortinet/fortinet-fortios-ssh-noenable-banner.yml`: the header said the template only works on
+  rConfig Pro V8.1 and above. Every rConfig V8 Core release also reads the `vt100` section, so it
+  now says Core 8.0.0 or later, or Pro V8.1 or later.
+- `CLAUDE.md` described `master` as frozen at `3f162e7`. It has been a mirror of `main` since
+  2026-09-12, as `README.md` says, and the release steps now include syncing it and `dev`.
+
 ## [2.2.1] - 2026-11-15
 
 No paths changed. Nothing to re-point.
