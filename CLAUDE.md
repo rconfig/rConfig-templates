@@ -105,13 +105,20 @@ product pins it: a seeder or an import that references a path needs a ref that d
 3. If the merge changed any path, bump `VERSION`, date the `CHANGELOG.md` entry and confirm
    `docs/MIGRATION.md` covers every rename and deletion.
 4. Commit the version bump, create and push the annotated tag, then publish the GitHub Release.
-5. Tell the product side which tag to pin.
+5. Bring `dev` level with `main`, and sync `master` (below).
+6. Tell the product side which tag to pin.
 
-### The frozen master branch
+### The master mirror
 
-`master` is pinned at `3f162e7`, the last pre-restructure commit, so fielded installs with baked-in
-`raw.githubusercontent.com/.../master/...` URLs keep resolving against the tree they were written
-against. **Never push to `master`.** It is a compatibility shim, not a branch.
+`master` is a mirror of `main`, restored as one on 2026-09-12 (it was briefly frozen at `3f162e7`,
+the last pre-restructure commit). It exists because the repository was renamed from `master` to
+`main`, and older docs, bookmarks and `raw.githubusercontent.com/.../master/...` URLs still point at
+it. It carries no unique work: never commit to it, branch from it or merge into it. Whenever `main`
+moves, sync it, because a stale mirror silently serves old templates:
+
+```bash
+git push origin origin/main:refs/heads/master
+```
 
 ## Verification
 
